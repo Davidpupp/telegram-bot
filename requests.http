@@ -1,0 +1,235 @@
+# Coleção de requisições da API da Clínica Mutton.
+# Funciona no VS Code (extensão REST Client) e no JetBrains HTTP Client.
+# Os ids de médicos, serviços e convênios são fixos no seed (doc_fernando, catarata, ins_a…).
+
+@base = http://localhost:3333
+@token = {{login.response.body.token}}
+@phone = +5515991234567
+
+### Saúde
+GET {{base}}/health
+
+############################################################
+# PÚBLICO (paciente)
+############################################################
+
+### Dados da clínica
+GET {{base}}/public/clinic
+
+### Serviços (com ids dos médicos)
+GET {{base}}/public/services
+
+### Médicos que atendem um serviço
+GET {{base}}/public/doctors?serviceId=catarata
+
+### Convênios
+GET {{base}}/public/insurances
+
+### Horários livres (14 dias a partir de `from`)
+GET {{base}}/public/availability?doctorId=doc_fernando&serviceId=consulta-oftalmologica&from=2026-10-19&days=14
+
+### Criar agendamento → 201 { appointment, icsUrl } ou 409 SLOT_TAKEN { slots }
+# @name criar
+POST {{base}}/public/appointments
+Content-Type: application/json
+
+{
+  "serviceId": "consulta-oftalmologica",
+  "doctorId": "doc_fernando",
+  "insuranceId": "ins_a",
+  "start": "2026-10-19T12:00:00Z",
+  "patient": { "name": "Joana Aparecida Prestes", "phone": "(15) 99123-4567", "birthDate": "1962-04-18" },
+  "lgpdConsent": true,
+  "notes": "Primeira consulta"
+}
+
+### Mesmo horário de novo → 409 SLOT_TAKEN com os horários livres do dia
+POST {{base}}/public/appointments
+Content-Type: application/json
+
+{
+  "serviceId": "consulta-oftalmologica",
+  "doctorId": "doc_fernando",
+  "insuranceId": null,
+  "start": "2026-10-19T12:00:00Z",
+  "patient": { "name": "Carlos Camargo", "phone": "15998887766", "birthDate": "1958-09-02" },
+  "lgpdConsent": true
+}
+
+### Ver um agendamento
+GET {{base}}/public/appointments/{{criar.response.body.appointment.id}}
+
+### Arquivo .ics (calendário)
+GET {{base}}/public/appointments/{{criar.response.body.appointment.id}}/ics
+
+### Remarcar (paciente)
+POST {{base}}/public/appointments/{{criar.response.body.appointment.id}}/reschedule
+Content-Type: application/json
+
+{ "start": "2026-10-19T13:00:00Z" }
+
+### Conversa de WhatsApp (simulada) da paciente
+# @name conversa
+GET {{base}}/public/whatsapp/{{phone}}
+
+### Responder: buttonId = CONFIRM | RESCHEDULE (consulta) · OK | DOUBT | PAIN (pós-operatório)
+POST {{base}}/public/whatsapp/{{phone}}/reply
+Content-Type: application/json
+
+{ "messageId": "{{conversa.response.body.messages[0].id}}", "buttonId": "CONFIRM" }
+
+############################################################
+# AUTENTICAÇÃO
+############################################################
+
+### Login (devolve cookie httpOnly + token para usar como Bearer)
+# @name login
+POST {{base}}/auth/login
+Content-Type: application/json
+
+{ "email": "gerencia@mutton.demo", "password": "demo123" }
+
+### Quem está logado
+GET {{base}}/auth/me
+Authorization: Bearer {{token}}
+
+### Sair
+POST {{base}}/auth/logout
+
+############################################################
+# PAINEL (precisa de login)
+############################################################
+
+### Indicadores do dia
+GET {{base}}/admin/metrics?date=2026-10-08
+Authorization: Bearer {{token}}
+
+### Agenda do dia (todos os médicos ou um)
+# @name agenda
+GET {{base}}/admin/agenda?date=2026-10-09&doctorId=doc_fernando
+Authorization: Bearer {{token}}
+
+### Mudar status: PENDING | CONFIRMED | RESCHEDULED | CANCELED | NO_SHOW | DONE
+PATCH {{base}}/admin/appointments/{{agenda.response.body.appointments[0].id}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "status": "CONFIRMED" }
+
+### Remarcar/arrastar no painel (doctorId opcional)
+PATCH {{base}}/admin/appointments/{{agenda.response.body.appointments[0].id}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "start": "2026-10-21T13:20:00Z", "doctorId": "doc_fernando" }
+
+### Jornadas cirúrgicas
+# @name jornadas
+GET {{base}}/admin/journeys
+Authorization: Bearer {{token}}
+
+### Detalhe de uma jornada (etapas + mensagens)
+GET {{base}}/admin/journeys/{{jornadas.response.body.$[0].id}}
+Authorization: Bearer {{token}}
+
+### Avançar o tempo até a próxima etapa
+POST {{base}}/admin/journeys/{{jornadas.response.body.$[0].id}}/advance
+Authorization: Bearer {{token}}
+
+### Alertas abertos
+# @name alertas
+GET {{base}}/admin/alerts?open=true
+Authorization: Bearer {{token}}
+
+### Resolver alerta
+POST {{base}}/admin/alerts/{{alertas.response.body.$[0].id}}/resolve
+Authorization: Bearer {{token}}
+
+### Relatórios (últimos N dias)
+GET {{base}}/admin/reports?days=30
+Authorization: Bearer {{token}}
+
+### Médicos (com horários e serviços)
+GET {{base}}/admin/doctors
+Authorization: Bearer {{token}}
+
+### Horário de trabalho de um médico
+GET {{base}}/admin/doctors/doc_helena/working-hours
+Authorization: Bearer {{token}}
+
+### Substituir o horário de trabalho (weekday 1 = segunda … 5 = sexta)
+PUT {{base}}/admin/doctors/doc_helena/working-hours
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+[
+  { "weekday": 1, "start": "08:00", "end": "17:00", "breakStart": "12:00", "breakEnd": "13:00" },
+  { "weekday": 2, "start": "08:00", "end": "17:00", "breakStart": "12:00", "breakEnd": "13:00" },
+  { "weekday": 3, "start": "08:00", "end": "17:00", "breakStart": "12:00", "breakEnd": "13:00" },
+  { "weekday": 4, "start": "08:00", "end": "17:00", "breakStart": "12:00", "breakEnd": "13:00" }
+]
+
+### Bloqueios futuros
+GET {{base}}/admin/blocks
+Authorization: Bearer {{token}}
+
+### Criar bloqueio (sem doctorId = clínica toda)
+# @name bloqueio
+POST {{base}}/admin/blocks
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "doctorId": "doc_fernando", "start": "2026-10-23T11:00:00Z", "end": "2026-10-23T21:00:00Z", "reason": "Férias" }
+
+### Remover bloqueio
+DELETE {{base}}/admin/blocks/{{bloqueio.response.body.block.id}}
+Authorization: Bearer {{token}}
+
+### Conversa de uma paciente (painel)
+GET {{base}}/admin/patients/{{conversa.response.body.patient.id}}/messages
+Authorization: Bearer {{token}}
+
+############################################################
+# TEMPO REAL (SSE) — no navegador: new EventSource(url, { withCredentials: true })
+############################################################
+
+### Stream de eventos (heartbeat a cada 20 s)
+GET {{base}}/events?token={{token}}
+Accept: text/event-stream
+
+############################################################
+# DEMO (só com DEMO_MODE=true)
+############################################################
+
+### Lembrete da véspera para todos os agendamentos de amanhã
+POST {{base}}/demo/send-reminders
+
+### Uma paciente aleatória responde
+POST {{base}}/demo/simulate-reply
+
+### Criar agendamentos aleatórios nos próximos 7 dias
+POST {{base}}/demo/random-appointments?count=5
+
+### Reiniciar a demonstração (re-seed completo)
+POST {{base}}/demo/reset
+
+############################################################
+# WEBHOOK DO WHATSAPP (Meta Cloud API)
+############################################################
+
+### Verificação do webhook (a Meta chama isso ao cadastrar a URL)
+GET {{base}}/webhooks/whatsapp?hub.mode=subscribe&hub.verify_token=SEU_VERIFY_TOKEN&hub.challenge=123
+
+### Exemplo de toque em botão vindo da Meta (id = "<messageId>:<buttonId>")
+POST {{base}}/webhooks/whatsapp
+Content-Type: application/json
+
+{
+  "object": "whatsapp_business_account",
+  "entry": [{ "changes": [{ "value": { "messages": [{
+    "id": "wamid.EXEMPLO",
+    "from": "5515991234567",
+    "type": "interactive",
+    "interactive": { "type": "button_reply", "button_reply": { "id": "{{conversa.response.body.messages[0].id}}:CONFIRM", "title": "Confirmar" } }
+  }] } }] }]
+}

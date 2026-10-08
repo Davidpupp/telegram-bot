@@ -1,0 +1,234 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  RESCHEDULED
+  CANCELED
+  NO_SHOW
+  DONE
+}
+
+enum Channel {
+  SITE
+  WHATSAPP
+  PHONE
+}
+
+enum Procedure {
+  CATARATA
+  CROSSLINK
+  REFRATIVA
+  PTERIGIO
+}
+
+enum JourneyStepKey {
+  D_MINUS_7
+  D_MINUS_1
+  D_DAY
+  D_PLUS_1
+  FIRST_RETURN
+  D_PLUS_30
+}
+
+enum JourneyResponse {
+  OK
+  DOUBT
+  PAIN
+}
+
+enum AlertType {
+  POST_OP_PAIN
+  POST_OP_DOUBT
+}
+
+enum MessageDirection {
+  OUT
+  IN
+}
+
+enum MessageStatus {
+  SENT
+  DELIVERED
+  READ
+}
+
+enum RelatedType {
+  APPOINTMENT
+  JOURNEY
+}
+
+enum Role {
+  RECEPTION
+  MANAGER
+}
+
+model Doctor {
+  id             String           @id @default(cuid())
+  name           String
+  specialties    String[]
+  bio            String
+  avatarInitials String
+  active         Boolean          @default(true)
+  services       Service[]        @relation("DoctorServices")
+  workingHours   WorkingHours[]
+  blocks         Block[]
+  appointments   Appointment[]
+  journeys       SurgeryJourney[]
+}
+
+model Service {
+  id           String        @id @default(cuid())
+  slug         String        @unique
+  name         String
+  description  String
+  durationMin  Int
+  icon         String
+  doctors      Doctor[]      @relation("DoctorServices")
+  appointments Appointment[]
+}
+
+model Insurance {
+  id           String        @id @default(cuid())
+  name         String        @unique
+  active       Boolean       @default(true)
+  appointments Appointment[]
+}
+
+model WorkingHours {
+  id         String  @id @default(cuid())
+  doctorId   String
+  doctor     Doctor  @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  weekday    Int
+  start      String
+  end        String
+  breakStart String?
+  breakEnd   String?
+
+  @@unique([doctorId, weekday])
+}
+
+model Block {
+  id        String   @id @default(cuid())
+  doctorId  String?
+  doctor    Doctor?  @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  start     DateTime
+  end       DateTime
+  reason    String
+  createdAt DateTime @default(now())
+
+  @@index([start, end])
+}
+
+model Patient {
+  id            String           @id @default(cuid())
+  name          String
+  phone         String           @unique
+  birthDate     DateTime         @db.Date
+  lgpdConsentAt DateTime
+  createdAt     DateTime         @default(now())
+  appointments  Appointment[]
+  journeys      SurgeryJourney[]
+  messages      Message[]
+}
+
+model Appointment {
+  id             String            @id @default(cuid())
+  patientId      String
+  patient        Patient           @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  doctorId       String
+  doctor         Doctor            @relation(fields: [doctorId], references: [id])
+  serviceId      String
+  service        Service           @relation(fields: [serviceId], references: [id])
+  insuranceId    String?
+  insurance      Insurance?        @relation(fields: [insuranceId], references: [id])
+  start          DateTime
+  end            DateTime
+  status         AppointmentStatus @default(PENDING)
+  channel        Channel           @default(SITE)
+  notes          String?
+  reminderSentAt DateTime?
+  confirmedAt    DateTime?
+  /// Preenchido quando a paciente respondeu (confirmou ou remarcou) depois do lembrete: falta evitada.
+  noShowAvoidedAt DateTime?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  alerts         Alert[]
+
+  // Índice único parcial (doctorId, start) para status ativos é criado na migration SQL.
+  @@index([doctorId, start])
+  @@index([start])
+}
+
+model SurgeryJourney {
+  id            String          @id @default(cuid())
+  patientId     String
+  patient       Patient         @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  doctorId      String
+  doctor        Doctor          @relation(fields: [doctorId], references: [id])
+  procedure     Procedure
+  surgeryDate   DateTime
+  currentStep   JourneyStepKey?
+  simulatedNow  DateTime
+  createdAt     DateTime        @default(now())
+  steps         JourneyStep[]
+  alerts        Alert[]
+}
+
+model JourneyStep {
+  id           String           @id @default(cuid())
+  journeyId    String
+  journey      SurgeryJourney   @relation(fields: [journeyId], references: [id], onDelete: Cascade)
+  key          JourneyStepKey
+  scheduledFor DateTime
+  sentAt       DateTime?
+  readAt       DateTime?
+  response     JourneyResponse?
+
+  @@unique([journeyId, key])
+}
+
+model Alert {
+  id            String          @id @default(cuid())
+  journeyId     String?
+  journey       SurgeryJourney? @relation(fields: [journeyId], references: [id], onDelete: Cascade)
+  appointmentId String?
+  appointment   Appointment?    @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+  type          AlertType
+  message       String
+  createdAt     DateTime        @default(now())
+  resolvedAt    DateTime?
+  resolvedBy    String?
+}
+
+model Message {
+  id          String           @id @default(cuid())
+  patientId   String
+  patient     Patient          @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  direction   MessageDirection
+  body        String
+  buttons     Json?
+  status      MessageStatus    @default(SENT)
+  relatedType RelatedType?
+  relatedId   String?
+  /// id da mensagem na Meta Cloud API (wamid), quando enviada pelo WhatsApp oficial
+  externalId  String?          @unique
+  createdAt   DateTime         @default(now())
+
+  @@index([patientId, createdAt])
+}
+
+model User {
+  id           String @id @default(cuid())
+  email        String @unique
+  passwordHash String
+  name         String
+  role         Role
+}

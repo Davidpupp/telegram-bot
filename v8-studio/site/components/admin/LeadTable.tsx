@@ -99,7 +99,11 @@ export function LeadTable({ leads, cols, caption, ordem, onSort, inCard }: Props
                         </td>
                       );
                     case "servico":
-                      return <td key={c}>{SERVICO_ROTULO[l.respostas.need]}</td>;
+                      return (
+                        <td key={c} className={s.nowrap}>
+                          {SERVICO_ROTULO[l.respostas.need]}
+                        </td>
+                      );
                     case "origem":
                       return (
                         <td key={c} className={s.nowrap}>

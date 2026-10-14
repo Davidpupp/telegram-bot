@@ -303,6 +303,7 @@
 }
 .fields > * {
   min-width: 0;
+  align-content: start;
 }
 .full {
   grid-column: 1 / -1;

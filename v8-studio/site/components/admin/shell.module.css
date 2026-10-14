@@ -120,8 +120,12 @@
     align-items: center;
     gap: 14px;
   }
-  .who small,
-  .siteLink {
+  .who small {
+    display: none;
+  }
+}
+@media (max-width: 560px) {
+  .userLinks .siteLink {
     display: none;
   }
 }

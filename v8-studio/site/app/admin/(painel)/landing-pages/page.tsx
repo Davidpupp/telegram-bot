@@ -19,15 +19,15 @@ function Card({ lp, maior, i }: { lp: LandingPage; maior: number; i: number }) {
   const editar = `/admin/landing-pages/editor/?slug=${lp.slug}`;
   return (
     <Lift as="article" className={cx("card", l.lpCard)}>
+      <h3 className={l.lpTitle}>
+        <Link href={editar} className={l.stretch}>
+          {lp.tipo === "campanha" ? `Campanha ${lp.nome}` : lp.nome}
+        </Link>
+      </h3>
       <div className={l.lpTop}>
-        <h3>
-          <Link href={editar} className={l.stretch}>
-            {lp.tipo === "campanha" ? `Campanha ${lp.nome}` : lp.nome}
-          </Link>
-        </h3>
+        <span className={l.path}>{lp.caminho}</span>
         <span className={cx(l.estado, pub ? l.publicada : l.rascunho)}>{pub ? "Publicada" : "Rascunho"}</span>
       </div>
-      <p className={l.path}>{lp.caminho}</p>
       <dl className={l.nums}>
         <div>
           <dt>Visitas</dt>

@@ -15,6 +15,8 @@ v8-studio/
 ├── blog/                    index (listagem) e artigo (leitura)
 ├── admin/                   login, index (dashboard), leads, lead, post (editor), config
 ├── pranchas/                tokens, componentes, keyframes da abertura
+├── video/                   projeto Remotion do filme "Seu cliente procura" (24 s, ver video/README.md)
+├── v8-studio-filme*.mp4     filme final: master com som, versão do site sem som (1080p e 720p) e pôsteres
 ├── assets/styles.css        tokens e componentes (fonte da verdade do sistema visual)
 ├── assets/app.js            cabeçalho e rodapé injetados, logo, abertura, marquee, carrossel, acordeão
 ├── BRIEF-AGENTES.md         briefing técnico usado para construir as páginas
@@ -34,6 +36,10 @@ v8-studio/
 ## Logo
 
 A marca oficial (prancha de identidade enviada pelo cliente) foi vetorizada e vive em `assets/app.js` (`V8.LOGO_PATH`): um único `<path>` com `fill-rule: evenodd`. A ordem dos subcaminhos é a ordem em que a abertura desenha o contorno: o V nasce no vértice e sobe, depois a cunha, o 8 e seus contadores.
+
+## Filme
+
+O filme de 24 s foi feito em Remotion, com o roteiro e o mapa de batidas em `video/BEATMAP.md`. A versão do site não tem som, roda em loop perfeito (o último quadro emenda no primeiro) e entra na Home dentro de um card branco. Para refazer ou editar, veja `video/README.md`.
 
 ## Fotos
 

@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import Link from "next/link";
 import styles from "../pranchas.module.css";
 
@@ -25,16 +27,26 @@ const PAGES = [
   { route: "/admin/configuracoes/", file: "admin_configuracoes", title: "Admin · Configurações" },
 ];
 
+const DIR = path.join(process.cwd(), "public", "pranchas", "paginas");
+const has = (f: string) => fs.existsSync(path.join(DIR, f));
+
 export default function PagesBoard() {
+  // Só entram as páginas que já têm as duas capturas.
+  const ready = PAGES.filter((p) => has(`${p.file}-d.webp`) && has(`${p.file}-m.webp`));
   return (
     <div className="container">
       <div className={styles.head}>
         <p className="kicker">Prancha 4</p>
         <h1>Páginas</h1>
         <p className="lead muted">Cada página no computador e no celular. Role dentro de cada captura para ver a página inteira.</p>
+        {ready.length < PAGES.length ? (
+          <p className="small muted">
+            {ready.length} de {PAGES.length} páginas fotografadas. As outras entram aqui na próxima rodada de capturas.
+          </p>
+        ) : null}
       </div>
       <div className={styles.pages}>
-        {PAGES.map((p) => (
+        {ready.map((p) => (
           <section key={p.file} aria-labelledby={`p-${p.file}`}>
             <div className={styles.groupHead}>
               <span className={styles.layer}>Page / {p.file}</span>

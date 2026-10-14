@@ -1,0 +1,13 @@
+node_modules
+dist
+.DS_Store
+.env
+
+# Ignore the output video from Git but not videos you import into src/.
+out
+
+# Mídia de terceiros baixada por scripts/fetch_assets.py (licença Mixkit, não redistribuir)
+public/audio
+public/sfx
+# Pastas de trabalho do render
+stills

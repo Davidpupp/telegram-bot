@@ -86,6 +86,10 @@ Páginas do admin: `<body class="no-header">`, sem `data-header`/`data-footer`, 
 ```
 Varie a composição entre segmentos (hero com imagem cheia `.mini__img--p` e `.mini__h--light`, grade de produtos `.mini__cols--2`, lista de menu, formulário). Use `style="--mini-bg:#…"` para fundo escuro ou colorido do mini-site quando couber ao segmento.
 
+## Logo e vídeo
+- O logo oficial (V8 sólido, vetorizado da prancha de identidade do cliente) já vem do app.js no cabeçalho e no rodapé. Para usá-lo em outro lugar, chame `V8.logoSvg('', null)` depois do DOMContentLoaded. Não desenhe outro logo.
+- Vídeo da marca (24 s, loop perfeito, sem áudio na versão do site): `v8-studio-filme-site.mp4` (1080p) e `v8-studio-filme-site-720.mp4` (720p), pôster `v8-studio-filme-poster-logo.jpg`, todos na raiz de v8-studio. Use sempre `<video autoplay muted loop playsinline preload="metadata" poster="...">` dentro de um card branco com raio 28 e a sombra flutuante, com `aria-label` descrevendo o vídeo. Respeite `prefers-reduced-motion`: com movimento reduzido, pause o vídeo via JS e mostre só o pôster.
+
 ## Rodapé e cabeçalho
 Já vêm do app.js. Não escreva telefone, e-mail, WhatsApp ou redes sociais em lugar nenhum.
 

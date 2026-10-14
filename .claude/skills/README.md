@@ -8,3 +8,5 @@
 | `canvas-design` | anthropics/skills · skills/canvas-design | ver LICENSE.txt |
 | `remotion-best-practices` | anthropics/skills · PR #769 | ver repositório de origem |
 | `animate` | delphi-ai/animate-skill | ver repositório de origem |
+| `explainer-high-energy`, `explainer-default`, `explainer-engaging`, `motion-broll`, `object-separation`, `sound-effects` | Barty-Bart/motion-graphics | MIT (sfx: CC0; fontes Geist: OFL) |
+| `motion-design` (+ exemplo howseen-launch) | howseen-ai/claude-motion-design | MIT (mídia de terceiros baixada sob a própria licença) |

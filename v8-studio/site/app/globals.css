@@ -498,3 +498,21 @@ h4 { font-size: var(--text-xl); letter-spacing: -0.01em; line-height: 1.2; font-
 .mini__slot { height: 22px; border-radius: 5px; background: var(--p-soft); }
 .mini__slot--on { background: var(--p); }
 .showcase .marquee { margin-top: 0; }
+
+/* ---------- Texto longo (artigos do blog e prévia do editor) ---------- */
+.prose { font-size: 19px; line-height: 1.7; color: var(--color-ink); max-width: 68ch; }
+.prose > * + * { margin-top: 1.1em; }
+.prose h2 { font-size: clamp(28px, 3.2vw, 38px); line-height: 1.1; margin-top: 1.8em; }
+.prose h3 { font-size: 24px; margin-top: 1.5em; }
+.prose ul, .prose ol { padding-left: 1.3em; }
+.prose ul { list-style: disc; }
+.prose ol { list-style: decimal; }
+.prose li + li { margin-top: 0.4em; }
+.prose li::marker { color: var(--color-blue); }
+.prose a { color: var(--color-blue); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 2px; }
+.prose blockquote { margin: 0; padding: 4px 0 4px 24px; box-shadow: inset 3px 0 0 var(--color-blue); font-family: var(--font-display); font-weight: 700; font-size: 26px; line-height: 1.3; letter-spacing: -0.01em; }
+.prose code { font-size: 0.9em; background: var(--color-paper); padding: 0.1em 0.35em; border-radius: 6px; }
+.prose strong { font-weight: 600; }
+@media (max-width: 720px) { .prose { font-size: 17px; } .prose blockquote { font-size: 22px; } }
+.submenu a.submenu__all { border-top: 1px solid var(--color-line); margin-top: 6px; padding-top: 16px; border-radius: 0 0 14px 14px; }
+.submenu a.submenu__all strong { color: var(--color-blue); }

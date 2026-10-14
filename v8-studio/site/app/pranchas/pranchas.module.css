@@ -1,0 +1,67 @@
+/* Pranchas do sistema: documentação viva, fora do índice de busca. */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--color-white); box-shadow: 0 1px 0 var(--color-line); }
+.topIn { height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.nav { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; min-width: 0; }
+.nav::-webkit-scrollbar { display: none; }
+.nav a { height: 40px; padding-inline: 14px; border-radius: var(--radius-pill); display: inline-flex; align-items: center; font-size: var(--text-sm); font-weight: 500; white-space: nowrap; }
+.nav a:hover, .nav a[aria-current="page"] { background: var(--color-paper); }
+.nav a[aria-current="page"] { color: var(--color-blue); }
+.main { padding-block: 64px 120px; }
+.head { display: grid; gap: 16px; margin-bottom: 24px; max-width: 760px; }
+.head h1 { font-size: clamp(44px, 6vw, 80px); }
+.layer { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; color: var(--color-gray); letter-spacing: 0.02em; }
+.group { margin-top: 80px; }
+.groupHead { display: grid; gap: 8px; margin-bottom: 28px; }
+.groupHead h2 { font-size: clamp(30px, 3.4vw, 44px); }
+.groupHead p { color: var(--color-gray); max-width: 64ch; }
+
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--gutter); }
+.indexCard { display: grid; gap: 10px; align-content: start; min-height: 200px; }
+.indexCard h2 { font-size: var(--h3); }
+
+.swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: var(--gutter); }
+.swatch { border-radius: 22px; overflow: hidden; box-shadow: var(--shadow-card); background: var(--color-white); display: grid; }
+.swatchColor { height: 112px; box-shadow: inset 0 -1px 0 var(--color-line); }
+.swatchBody { padding: 14px 18px 18px; display: grid; gap: 4px; }
+.swatchBody strong { font-weight: 600; }
+.swatchBody span { font-size: var(--text-sm); color: var(--color-gray); }
+
+.typeRow { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 24px; align-items: baseline; padding-block: 22px; border-bottom: 1px solid var(--color-line); }
+.typeRow > * { min-width: 0; }
+.typeMeta { display: grid; gap: 4px; }
+.typeMeta strong { font-weight: 600; }
+
+.specs { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--gutter); }
+.spec { display: grid; gap: 12px; align-content: start; }
+.specVisual { height: 96px; border-radius: 16px; background: var(--color-paper); position: relative; overflow: hidden; display: grid; place-items: center; }
+
+.springs { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--gutter); }
+.springCard { display: grid; gap: 12px; }
+.springCard svg { width: 100%; height: auto; display: block; }
+.track { position: relative; height: 36px; border-radius: 18px; background: var(--color-paper); }
+.ball { position: absolute; top: 6px; left: 6px; width: 24px; height: 24px; border-radius: 50%; background: var(--color-blue); }
+
+.stage { position: relative; border-radius: var(--radius-card); background: var(--color-paper); padding: 40px; display: grid; gap: 24px; overflow: hidden; }
+.stageRow { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.stage > * { min-width: 0; }
+.replay { justify-self: start; }
+.kitBox { position: relative; overflow: hidden; }
+
+.frames { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+.frame { display: grid; gap: 8px; align-content: start; }
+.frameImg { border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-card); background: var(--color-white); }
+.frame p { font-size: var(--text-sm); color: var(--color-gray); line-height: 1.45; }
+
+.pages { display: grid; gap: 56px; }
+.pageRow { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 1fr); gap: var(--gutter); align-items: start; }
+.shot { border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-card); background: var(--color-white); }
+.shot img { width: 100%; height: auto; display: block; }
+@media (max-width: 720px) {
+  .typeRow { grid-template-columns: 1fr; gap: 8px; }
+  .pageRow { grid-template-columns: 1fr; }
+  .stage { padding: 24px; }
+}
+
+.board { --k: 0.5; }
+@media (max-width: 720px) { .board { --k: 0.3; } }
+.shotScroll { max-height: 640px; overflow-y: auto; overscroll-behavior: contain; }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { spring } from "remotion";
+import { spring } from "./lib/physics";
 import { useInView, useReducedMotion } from "./hooks";
 import { FPS, SPRINGS } from "./lib/timing";
 

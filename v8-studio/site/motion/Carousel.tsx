@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { spring } from "remotion";
+import { spring } from "./lib/physics";
 import { useReducedMotion } from "./hooks";
 import { FPS, SPRINGS } from "./lib/timing";
 

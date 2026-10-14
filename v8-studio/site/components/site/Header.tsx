@@ -34,6 +34,7 @@ function MobileNav({ onClose, pathname }: { onClose: () => void; pathname: strin
   const fade = reduce ? 1 : clamp(sp(frame, 0, "snappy") * 1.4);
   const items = [
     ...SERVICES.map((s) => ({ href: serviceHref(s.slug), label: s.short, sub: true })),
+    { href: "/servicos/", label: "Todos os serviços", sub: true },
     ...LINKS.map((l) => ({ ...l, sub: false })),
   ];
   return (
@@ -137,6 +138,10 @@ export function Header() {
                       <span>{s.line}</span>
                     </Link>
                   ))}
+                  <Link href="/servicos/" className="submenu__all" aria-current={pathname === "/servicos/" ? "page" : undefined}>
+                    <strong>Todos os serviços</strong>
+                    <span>Compare e descubra qual é o certo para o seu negócio.</span>
+                  </Link>
                 </div>
               </li>
               {LINKS.map((l) => (

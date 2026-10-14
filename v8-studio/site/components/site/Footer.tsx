@@ -28,6 +28,9 @@ export function Footer() {
                   <Link href={serviceHref(s.slug)}>{s.name}</Link>
                 </li>
               ))}
+              <li>
+                <Link href="/servicos/">Todos os serviços</Link>
+              </li>
             </ul>
           </div>
           <div>

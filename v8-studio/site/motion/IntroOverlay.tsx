@@ -1,12 +1,13 @@
 "use client";
 
-import { Player, type PlayerRef } from "@remotion/player";
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
-import LogoIntro, { type LogoIntroProps } from "./compositions/LogoIntro";
+import type { PlayerRef } from "@remotion/player";
+import { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useState, useSyncExternalStore } from "react";
+import type { LogoIntroProps } from "./compositions/LogoIntro";
 import { useMounted } from "./hooks";
 import { INTRO_CLASS, finishIntro, introRequested } from "./intro";
 
-const noop = () => null;
+// O Remotion só é baixado quando a abertura vai tocar.
+const IntroPlayer = lazy(() => import("./IntroPlayer"));
 const noopSubscribe = () => () => {};
 const subscribeResize = (cb: () => void) => {
   window.addEventListener("resize", cb);
@@ -30,7 +31,8 @@ export function IntroOverlay() {
   const viewport = useSyncExternalStore(subscribeResize, readViewport, () => "1920x1080");
   const dockKey = useSyncExternalStore(subscribeResize, readDock, () => "");
   const [closed, setClosed] = useState(false);
-  const player = useRef<PlayerRef>(null);
+  const [player, setPlayer] = useState<PlayerRef | null>(null);
+  const onRef = useCallback((p: PlayerRef | null) => setPlayer(p), []);
 
   const [w, h] = viewport.split("x").map(Number);
   const props = useMemo<LogoIntroProps>(() => {
@@ -50,56 +52,45 @@ export function IntroOverlay() {
     if (requested && !closed) document.documentElement.classList.add(INTRO_CLASS);
   }, [requested, closed]);
 
+  // Se o código da abertura demorar ou falhar, a página nunca fica presa atrás da camada branca.
   useEffect(() => {
     if (!mounted || !requested || closed) return;
-    const p = player.current;
-    if (!p) return;
-    const onFrame = (e: { detail: { frame: number } }) => {
-      if (e.detail.frame >= 176) finishIntro();
-    };
-    p.addEventListener("frameupdate", onFrame);
-    p.addEventListener("ended", close);
-    p.play();
-    // Trava de segurança: a página nunca fica presa atrás da abertura.
-    const failsafe = window.setTimeout(close, 6000);
+    const failsafe = window.setTimeout(close, 9000);
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") close();
     };
     window.addEventListener("keydown", onKey);
     return () => {
-      p.removeEventListener("frameupdate", onFrame);
-      p.removeEventListener("ended", close);
-      window.removeEventListener("keydown", onKey);
       window.clearTimeout(failsafe);
+      window.removeEventListener("keydown", onKey);
     };
   }, [mounted, requested, closed, close]);
 
+  useEffect(() => {
+    if (!player || closed) return;
+    const onFrame = (e: { detail: { frame: number } }) => {
+      if (e.detail.frame >= 176) finishIntro();
+    };
+    player.addEventListener("frameupdate", onFrame);
+    player.addEventListener("ended", close);
+    player.play();
+    const failsafe = window.setTimeout(close, 6000);
+    return () => {
+      player.removeEventListener("frameupdate", onFrame);
+      player.removeEventListener("ended", close);
+      window.clearTimeout(failsafe);
+    };
+  }, [player, closed, close]);
+
   if (!requested || closed) return null;
-  const playing = mounted;
 
   return (
-    <div className={playing ? "intro is-playing" : "intro"}>
-      {playing ? (
+    <div className={player ? "intro is-playing" : "intro"}>
+      {mounted ? (
         <div className="intro__stage" aria-hidden="true">
-          <Player
-            ref={player}
-            component={LogoIntro}
-            inputProps={props}
-            durationInFrames={200}
-            compositionWidth={w}
-            compositionHeight={h}
-            fps={60}
-            controls={false}
-            clickToPlay={false}
-            doubleClickToFullscreen={false}
-            spaceKeyToPlayOrPause={false}
-            allowFullscreen={false}
-            errorFallback={noop}
-            renderLoading={noop}
-            acknowledgeRemotionLicense
-            initiallyMuted
-            style={{ width: "100%", height: "100%" }}
-          />
+          <Suspense fallback={null}>
+            <IntroPlayer w={w} h={h} props={props} onRef={onRef} />
+          </Suspense>
         </div>
       ) : null}
       <button type="button" className="intro__skip" onClick={close}>

@@ -1,7 +1,7 @@
 "use client";
 
 import { RefObject, useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { spring } from "remotion";
+import { spring } from "./lib/physics";
 import { FPS, SPRINGS } from "./lib/timing";
 
 type SpringConfig = { stiffness: number; damping: number; mass: number };

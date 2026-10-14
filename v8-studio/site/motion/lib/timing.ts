@@ -1,6 +1,7 @@
-import { Easing, interpolate, spring } from "remotion";
+import { Easing, interpolateClamped, spring } from "./physics";
 
 // Mesma grade e as mesmas molas do filme: 60 quadros por segundo, 130 BPM.
+// A matemática vem de ./physics (idêntica à do Remotion), para as páginas não precisarem baixar o Remotion.
 export const FPS = 60;
 export const BPM = 130;
 export const BEAT_FRAMES = (60 / BPM) * FPS;
@@ -17,10 +18,7 @@ export const SPRINGS = {
 export type SpringPreset = keyof typeof SPRINGS;
 
 /** Mola de 0 a 1 que começa no quadro `start`. Antes de `start` vale 0. */
-export const sp = (frame: number, start: number, preset: SpringPreset = "base") =>
-  spring({ frame: frame - start, fps: FPS, config: SPRINGS[preset] });
-
-const clampOpts = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
+export const sp = (frame: number, start: number, preset: SpringPreset = "base") => spring({ frame: frame - start, fps: FPS, config: SPRINGS[preset] });
 
 export const E = {
   io: Easing.inOut(Easing.cubic),
@@ -31,8 +29,7 @@ export const E = {
 };
 
 /** Progresso de 0 a 1 entre os quadros a e b, com easing. */
-export const ramp = (frame: number, a: number, b: number, easing: (t: number) => number = E.io) =>
-  interpolate(frame, [a, b], [0, 1], { ...clampOpts, easing });
+export const ramp = (frame: number, a: number, b: number, easing: (t: number) => number = E.io) => interpolateClamped(frame, [a, b], [0, 1], easing);
 
 export const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 export const clamp = (x: number, lo = 0, hi = 1) => Math.min(hi, Math.max(lo, x));
@@ -44,8 +41,7 @@ export const bump = (frame: number, start: number, dur: number) => {
 };
 
 /** Raio que limpa o canto mais distante a partir de (x, y), com 5 % de folga. */
-export const coverRadius = (x: number, y: number, w: number, h: number) =>
-  Math.hypot(Math.max(x, w - x), Math.max(y, h - y)) * 1.05;
+export const coverRadius = (x: number, y: number, w: number, h: number) => Math.hypot(Math.max(x, w - x), Math.max(y, h - y)) * 1.05;
 
 /** Gerador pseudoaleatório com semente (mulberry32). */
 export const rng = (seed: number) => {

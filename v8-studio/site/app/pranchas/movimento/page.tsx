@@ -1,4 +1,4 @@
-import { Frame } from "@/components/pranchas/BoardTools";
+import { Frame } from "@/components/pranchas/Frame";
 import styles from "../pranchas.module.css";
 
 export const metadata = { title: "Movimento" };

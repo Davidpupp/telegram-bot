@@ -71,14 +71,20 @@ npm run build    # hoje gera o site estático em out/
 - Use os componentes que já existem em `site/motion/`: `KineticText` (frase que sobe palavra por palavra), `Reveal`, `Flood` (faixa que inunda de azul), `Lift` e `PressLink` (hover e clique com mola), `Marquee`, `Carousel`, `Steps`, `Accordion`, `MotionPlayer` e `IntroOverlay`. As molas ficam em `site/motion/lib/timing.ts`.
 - Novas composições vão em `site/motion/compositions/` e entram no registro `registry.ts`. Quatro entradas são provisórias e apontam para a demo de landing page: `demo-site`, `demo-loja`, `demo-sistema` e `demo-app`. Crie as quatro demos de verdade, no padrão de `DemoLanding.tsx` (800 × 720, loop de cerca de 7 s, marca fictícia, cursor e notificação).
 - Todo `<Player>` precisa de `initiallyMuted`. Sem isso o Player espera um clique liberar o áudio do navegador e não anda; foi assim que a abertura do logo travou a página uma vez.
+- A matemática das molas, dos easings e do `interpolate` está em `site/motion/lib/physics.ts`, com resultado idêntico ao do Remotion, e é usada por `site/motion/lib/timing.ts`. Componentes de página não importam `remotion`: só as composições (`motion/compositions/` e `motion/film/`) importam, porque rodam dentro do `<Player>`. Assim o Remotion só é baixado nas páginas que mostram uma composição.
+- O `<Player>` é carregado sob demanda (`React.lazy`) no `MotionPlayer` e na abertura do logo (`IntroPlayer.tsx`). Mantenha assim.
 - Código que importa `remotion` só pode rodar em componentes de cliente (`"use client"`). Constantes usadas por componentes de servidor ficam em arquivos sem `"use client"`, como `intro-constants.ts`.
 - Respeite `prefers-reduced-motion`: sem abertura, frases e faixas prontas, composições paradas no quadro-pôster.
 
 ## O que já está pronto
 
+Antes de começar, rode `git log` na branch e confira o que existe: páginas podem ter sido construídas depois que este prompt foi escrito. Não refaça o que já estiver pronto; complete e conecte ao backend.
+
 - Home completa: abertura do logo, filme do topo que muda conforme o tipo de negócio escolhido pelo visitante, vitrine de mini-sites, faixa de serviços com demos, passos, conversa interativa, compromissos, blog, perguntas e chamada final.
 - Cabeçalho com submenu de serviços e menu de celular, rodapé, ícone, fontes, sistema de movimento.
 - Conteúdo inicial em `site/content/`: serviços, Home e os 6 artigos do blog (título e resumo, sem o texto).
+- Pranchas vivas em `/pranchas/` (fora do índice de busca): tokens com as molas desenhadas, componentes funcionando, quadros-chave do movimento renderizados pelo Remotion e capturas das páginas.
+- `site/BRIEF-AGENTES.md`: briefing curto para quem constrói páginas novas neste site. Leia também.
 - Lint, TypeScript e build passando.
 
 ## Parte A · Páginas que faltam

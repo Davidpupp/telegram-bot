@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Leads — Painel V8 Studio</title>
+<meta name="description" content="Lista completa de leads do V8 Studio com filtros.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/styles.css">
+<style>
+/* Layout comum do painel */
+.admin__side .logo { padding: 4px 10px; }
+.admin__nav { display: grid; gap: 4px; }
+.admin__nav a svg { flex: 0 0 auto; }
+.admin__nav hr { border: 0; height: 1px; background: var(--color-line); margin: 10px 14px; }
+.admin__top h1 { font-size: 36px; }
+.admin__top .row { gap: 12px; }
+.admin .card h3 { font-size: 22px; margin-bottom: 18px; }
+.card__head { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 18px; flex-wrap: wrap; }
+.card__head h3 { margin-bottom: 0 !important; }
+.admin .card--flush { padding: 0; }
+.admin .card--flush .card__head { padding: 24px 32px 0; margin-bottom: 8px; }
+.card--flush .table-wrap { box-shadow: none; border-radius: 0; }
+.g8 { grid-column: span 8; } .g4 { grid-column: span 4; } .g6 { grid-column: span 6; } .g12 { grid-column: 1 / -1; }
+.notice { display: none; align-items: center; gap: 8px; font-size: var(--text-sm); color: var(--color-ok); font-weight: 500; }
+.notice.is-on { display: inline-flex; }
+.notice::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--color-ok); }
+.link { color: var(--color-blue); font-weight: 600; }
+.link:hover { text-decoration: underline; }
+@media (max-width: 1024px) {
+  .admin__side { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 16px 10px; }
+  .admin__nav { flex: 1 0 100%; display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; margin-inline: -16px; padding-inline: 16px; }
+  .admin__nav::-webkit-scrollbar { display: none; }
+  .admin__nav a { padding: 8px 12px; white-space: nowrap; font-size: var(--text-xs); }
+  .admin__nav hr { display: none; }
+  .admin__top h1 { font-size: 30px; }
+  .g8, .g4, .g6 { grid-column: 1 / -1; }
+  .admin .card--flush .card__head { padding: 22px 24px 0; }
+}
+@media (max-width: 720px) { .admin .card { padding: 24px; } .kpis { gap: 16px; } .kpi { padding: 22px 24px; } .kpi .stat__n { font-size: 40px; } }
+.filters-card { margin-bottom: var(--gutter); }
+.filters .field { min-width: 160px; flex: 1 1 160px; }
+.filters .field--busca { flex: 2 1 220px; }
+.filters label { font-size: var(--text-xs); color: var(--color-gray); margin-bottom: 6px; }
+.filters select, .filters input { padding-inline: 16px; }
+.count { color: var(--color-gray); font-size: var(--text-sm); font-weight: 500; }
+.lead-cell a { color: var(--color-ink); font-weight: 600; } .lead-cell a:hover { color: var(--color-blue); }
+.lead-cell span { display: block; font-size: var(--text-xs); color: var(--color-gray); font-weight: 400; }
+.empty { display: none; padding: 56px 24px; text-align: center; }
+.empty.is-on { display: grid; justify-items: center; gap: 16px; }
+.empty p { color: var(--color-gray); }
+</style>
+</head>
+<body class="no-header">
+<div class="admin">
+<aside class="admin__side">
+  <a class="logo" href="index.html" aria-label="V8 Studio, painel"></a>
+  <nav class="admin__nav" aria-label="Painel">
+    <a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Visão geral</span></a>
+    <a href="leads.html" class="is-active" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18.5 14.5c2 .8 3 2.6 3 5.5"/></svg><span>Leads</span></a>
+    <a href="post.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg><span>Posts</span></a>
+    <a href="config.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h9M18.5 7H20M4 17h3.5M12.5 17H20"/><circle cx="15.5" cy="7" r="2.5"/><circle cx="10" cy="17" r="2.5"/></svg><span>Configurações</span></a>
+    <hr>
+    <a href="../index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>Ver site</span></a>
+  </nav>
+</aside>
+<main class="admin__main">
+<div class="admin__top">
+  <div class="row"><h1>Leads</h1><span class="count" id="contador">12 leads</span></div>
+  <div class="admin__user"><i>R</i><span>Rodrigo Vale</span></div>
+</div>
+  <div class="card filters-card">
+    <div class="filters">
+      <div class="field"><label for="f-status">Status</label><select id="f-status"><option value="">Todos</option><option value="novo">Novo</option><option value="contato">Em contato</option><option value="proposta">Proposta enviada</option><option value="fechado">Fechado</option><option value="perdido">Perdido</option></select></div>
+      <div class="field"><label for="f-servico">Serviço</label><select id="f-servico"><option value="">Todos</option><option>Site</option><option>Landing page</option><option>Loja virtual</option><option>Sistema</option><option>Aplicativo</option></select></div>
+      <div class="field"><label for="f-min">Pontuação mínima</label><select id="f-min"><option value="0">Qualquer</option><option value="50">50 ou mais</option><option value="70">70 ou mais</option><option value="85">85 ou mais</option></select></div>
+      <div class="field field--busca"><label for="f-busca">Buscar</label><input id="f-busca" type="search" placeholder="Nome ou empresa"></div>
+    </div>
+  </div>
+  <div class="card card--flush">
+    <div class="table-wrap">
+      <table class="table" id="tabela">
+        <thead><tr><th>Lead</th><th>Serviço</th><th>Segmento</th><th>Pontuação</th><th>Status</th><th>Data</th><th></th></tr></thead>
+        <tbody id="linhas"></tbody>
+      </table>
+    </div>
+    <div class="empty" id="vazio"><p>Nenhum lead com esses filtros.</p><button class="btn btn--ghost btn--sm" type="button" id="limpar">Limpar filtros</button></div>
+  </div>
+</main>
+</div>
+<script src="../assets/app.js" data-root="../" defer></script>
+<script>
+/* Dados fictícios do painel. Os mesmos 12 leads aparecem em todas as páginas. */
+var LEADS = [
+  { id: 1, nome: "Mariana Lopes", empresa: "Clínica Bem Viver", segmento: "Clínica", servico: "Site", objetivo: "Agendar mais consultas pelo site", atual: "Sim, mas está desatualizado", prazo: "Até 30 dias", faixa: "R$ 15 a 30 mil", papel: "Sócia", pontos: 86, status: "proposta", data: "2026-10-13",
+    motivos: [["Faixa de investimento compatível com o serviço", 30], ["Prazo curto e definido", 20], ["Sócia decide sem depender de terceiros", 20]],
+    notas: [["13/10/2026 09:40", "Lead chegou pelo formulário. Pediu referência de clínicas já atendidas."], ["13/10/2026 15:10", "Reunião de diagnóstico marcada para quinta. Proposta enviada no fim do dia."]] },
+  { id: 2, nome: "Rafael Nogueira", empresa: "Nogueira & Prado Advogados", segmento: "Advocacia", servico: "Site", objetivo: "Passar mais credibilidade para novos clientes", atual: "Sim, feito em plataforma pronta", prazo: "1 a 2 meses", faixa: "R$ 8 a 15 mil", papel: "Sócio", pontos: 74, status: "contato", data: "2026-10-13",
+    motivos: [["Sócio com poder de decisão", 20], ["Prazo definido para o próximo bimestre", 15], ["Faixa de investimento no limite inferior do serviço", -10]],
+    notas: [["13/10/2026 11:05", "Primeiro contato por e-mail. Quer ver exemplos de escritórios de advocacia."]] },
+  { id: 3, nome: "Camila Ferraz", empresa: "Ferraz Moda Íntima", segmento: "Moda", servico: "Loja virtual", objetivo: "Vender para todo o Brasil sem depender de marketplace", atual: "Não, vendo só por redes sociais", prazo: "Até 30 dias", faixa: "R$ 30 a 60 mil", papel: "Fundadora", pontos: 92, status: "novo", data: "2026-10-12",
+    motivos: [["Faixa de investimento alta para loja virtual", 35], ["Urgência real: quer vender na Black Friday", 25], ["Fundadora decide sozinha", 20]],
+    notas: [["12/10/2026 18:22", "Lead chegou pelo formulário. Ainda sem contato."]] },
+  { id: 4, nome: "Diego Martins", empresa: "Sabor da Serra", segmento: "Restaurante", servico: "Landing page", objetivo: "Divulgar o cardápio e receber reservas", atual: "Não tenho site", prazo: "2 a 3 meses", faixa: "Até R$ 8 mil", papel: "Gerente", pontos: 48, status: "novo", data: "2026-10-12",
+    motivos: [["Objetivo claro e simples de atender", 15], ["Faixa de investimento abaixo do mínimo do serviço", -20], ["Gerente precisa aprovar com o dono", -10]],
+    notas: [["12/10/2026 10:15", "Lead chegou pelo formulário. Ainda sem contato."]] },
+  { id: 5, nome: "Luciana Prado", empresa: "Prado Imóveis", segmento: "Imobiliária", servico: "Sistema", objetivo: "Organizar carteira de imóveis e clientes em um só lugar", atual: "Uso planilhas", prazo: "3 a 6 meses", faixa: "R$ 30 a 60 mil", papel: "Diretora", pontos: 79, status: "proposta", data: "2026-10-10",
+    motivos: [["Faixa de investimento compatível com sistema sob medida", 30], ["Diretora com poder de decisão", 20], ["Prazo longo, sem urgência", -5]],
+    notas: [["10/10/2026 14:30", "Reunião de diagnóstico feita. Hoje usam três planilhas e um caderno."], ["11/10/2026 09:00", "Proposta enviada em duas fases: cadastro e depois relatórios."]] },
+  { id: 6, nome: "Thiago Almeida", empresa: "Colégio Horizonte", segmento: "Educação", servico: "Aplicativo", objetivo: "App para pais acompanharem notas e avisos", atual: "Sim, só o site institucional", prazo: "3 a 6 meses", faixa: "Acima de R$ 60 mil", papel: "Diretor", pontos: 88, status: "contato", data: "2026-10-09",
+    motivos: [["Faixa de investimento acima de R$ 60 mil", 35], ["Diretor com poder de decisão", 20], ["Prazo compatível com o ciclo escolar", 10]],
+    notas: [["09/10/2026 16:45", "Ligação de 20 minutos. Querem lançar no início do ano letivo."], ["10/10/2026 11:20", "Enviado material sobre apps para escolas. Aguardando retorno da coordenação."]] },
+  { id: 7, nome: "Fernanda Castro", empresa: "Studio Castro Arquitetura", segmento: "Arquitetura", servico: "Site", objetivo: "Mostrar o portfólio e receber pedidos de orçamento", atual: "Não tenho site", prazo: "1 a 2 meses", faixa: "R$ 8 a 15 mil", papel: "Fundadora", pontos: 70, status: "fechado", data: "2026-10-08",
+    motivos: [["Fundadora decide sozinha", 20], ["Objetivo claro: portfólio e orçamento", 15], ["Faixa de investimento no limite inferior do serviço", -10]],
+    notas: [["08/10/2026 10:10", "Lead chegou pelo formulário."], ["08/10/2026 17:30", "Proposta enviada após reunião."], ["11/10/2026 09:15", "Contrato assinado. Início do projeto em 20/10."]] },
+  { id: 8, nome: "Bruno Teixeira", empresa: "Teixeira Metalúrgica", segmento: "Indústria", servico: "Sistema", objetivo: "Controlar ordens de produção e estoque", atual: "Uso um sistema antigo", prazo: "Sem prazo definido", faixa: "R$ 15 a 30 mil", papel: "Gerente", pontos: 55, status: "novo", data: "2026-10-07",
+    motivos: [["Problema real e bem descrito", 15], ["Sem prazo definido", -15], ["Gerente precisa aprovar com a diretoria", -10]],
+    notas: [["07/10/2026 08:50", "Lead chegou pelo formulário. Ainda sem contato."]] },
+  { id: 9, nome: "Patrícia Mendes", empresa: "Mendes Consultoria Tributária", segmento: "Consultoria", servico: "Landing page", objetivo: "Captar empresas para a consultoria", atual: "Sim, mas não gera contatos", prazo: "Até 30 dias", faixa: "Até R$ 8 mil", papel: "Sócia", pontos: 63, status: "perdido", data: "2026-10-06",
+    motivos: [["Sócia com poder de decisão", 20], ["Prazo curto e definido", 15], ["Faixa de investimento abaixo do mínimo do serviço", -20]],
+    notas: [["06/10/2026 13:00", "Primeiro contato feito. Quer algo pronto em duas semanas."], ["09/10/2026 10:40", "Optou por uma solução mais barata. Lead marcado como perdido."]] },
+  { id: 10, nome: "André Souza", empresa: "Academia Corpo Ativo", segmento: "Academia", servico: "Aplicativo", objetivo: "App de treinos para os alunos", atual: "Sim, só o site institucional", prazo: "2 a 3 meses", faixa: "R$ 15 a 30 mil", papel: "Sócio", pontos: 68, status: "contato", data: "2026-10-03",
+    motivos: [["Sócio com poder de decisão", 20], ["Prazo definido", 15], ["Faixa de investimento abaixo do usual para aplicativo", -15]],
+    notas: [["03/10/2026 15:20", "Ligação feita. Explicado o escopo mínimo de um app de treinos."], ["07/10/2026 09:05", "Pediu uma versão enxuta para começar. Vamos avaliar."]] },
+  { id: 11, nome: "Juliana Rocha", empresa: "Rocha Agro Insumos", segmento: "Agro", servico: "Loja virtual", objetivo: "Vender insumos para produtores de todo o estado", atual: "Não, vendo por telefone", prazo: "1 a 2 meses", faixa: "R$ 30 a 60 mil", papel: "Diretora comercial", pontos: 81, status: "fechado", data: "2026-10-01",
+    motivos: [["Faixa de investimento compatível com loja virtual", 30], ["Diretora comercial decide com a família", 15], ["Prazo definido para a safra", 15]],
+    notas: [["01/10/2026 10:30", "Lead chegou pelo formulário."], ["02/10/2026 16:00", "Reunião de diagnóstico. Catálogo com cerca de 400 itens."], ["06/10/2026 11:10", "Contrato assinado. Início em 13/10."]] },
+  { id: 12, nome: "Gustavo Lima", empresa: "Lima Software", segmento: "Tecnologia", servico: "Landing page", objetivo: "Lançar um novo produto", atual: "Sim, feito internamente", prazo: "Sem prazo definido", faixa: "Até R$ 8 mil", papel: "Analista de marketing", pontos: 34, status: "perdido", data: "2026-09-28",
+    motivos: [["Sem prazo definido", -15], ["Faixa de investimento abaixo do mínimo do serviço", -20], ["Analista sem poder de decisão", -15]],
+    notas: [["28/09/2026 09:12", "Lead chegou pelo formulário."], ["30/09/2026 14:00", "Sem retorno após dois contatos. Lead marcado como perdido."]] }
+];
+var STATUS = { novo: "Novo", contato: "Em contato", proposta: "Proposta enviada", fechado: "Fechado", perdido: "Perdido" };
+var SERVICOS = ["Site", "Landing page", "Loja virtual", "Sistema", "Aplicativo"];
+var PERGUNTAS = ["O que você precisa?", "Qual é o seu segmento?", "Qual é o principal objetivo?", "Você já tem site ou sistema hoje?", "Para quando precisa?", "Qual faixa de investimento?", "Qual é o seu papel na empresa?"];
+function respostas(l) { return [l.servico, l.segmento, l.objetivo, l.atual, l.prazo, l.faixa, l.papel]; }
+function fmtData(iso) { var p = iso.split("-"); return p[2] + "/" + p[1] + "/" + p[0]; }
+function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+function scoreHtml(n) { return '<span class="score"><b>' + n + '</b><i style="--v:' + n + '%"></i></span>'; }
+function statusHtml(s) { return '<span class="status status--' + s + '">' + STATUS[s] + '</span>'; }
+document.addEventListener("DOMContentLoaded", function () {
+  "use strict";
+  document.querySelectorAll("a.logo").forEach(function (a) { a.innerHTML = window.V8.logoSvg("", null) + "<span>Studio</span>"; });
+  var tbody = document.getElementById("linhas");
+  var ordenados = LEADS.slice().sort(function (a, b) { return a.data < b.data ? 1 : a.data > b.data ? -1 : a.id - b.id; });
+  tbody.innerHTML = ordenados.map(function (l) {
+    return "<tr data-id=\"" + l.id + "\" data-status=\"" + l.status + "\" data-servico=\"" + esc(l.servico) + "\" data-pontos=\"" + l.pontos + "\" data-busca=\"" + esc((l.nome + " " + l.empresa).toLowerCase()) + "\">" +
+      "<td class=\"lead-cell\"><a href=\"lead.html?id=" + l.id + "\">" + esc(l.nome) + "</a><span>" + esc(l.empresa) + "</span></td>" +
+      "<td>" + esc(l.servico) + "</td><td>" + esc(l.segmento) + "</td><td>" + scoreHtml(l.pontos) + "</td><td>" + statusHtml(l.status) + "</td><td class=\"muted\">" + fmtData(l.data) + "</td>" +
+      "<td><a href=\"lead.html?id=" + l.id + "\">Abrir</a></td></tr>";
+  }).join("");
+
+  var fStatus = document.getElementById("f-status"), fServico = document.getElementById("f-servico"), fMin = document.getElementById("f-min"), fBusca = document.getElementById("f-busca");
+  var contador = document.getElementById("contador"), vazio = document.getElementById("vazio"), tabela = document.getElementById("tabela");
+  function normal(s) { return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); }
+  function filtrar() {
+    var st = fStatus.value, sv = fServico.value, min = parseInt(fMin.value, 10) || 0, q = normal(fBusca.value.trim());
+    var n = 0;
+    tbody.querySelectorAll("tr").forEach(function (tr) {
+      var ok = (!st || tr.dataset.status === st) && (!sv || tr.dataset.servico === sv) && parseInt(tr.dataset.pontos, 10) >= min && (!q || normal(tr.dataset.busca).indexOf(q) !== -1);
+      tr.hidden = !ok; if (ok) n++;
+    });
+    contador.textContent = n === 1 ? "1 lead" : n + " leads";
+    vazio.classList.toggle("is-on", n === 0);
+    tabela.parentNode.style.display = n === 0 ? "none" : "";
+  }
+  [fStatus, fServico, fMin].forEach(function (el) { el.addEventListener("change", filtrar); });
+  fBusca.addEventListener("input", filtrar);
+  document.getElementById("limpar").addEventListener("click", function () { fStatus.value = ""; fServico.value = ""; fMin.value = "0"; fBusca.value = ""; filtrar(); fBusca.focus(); });
+  filtrar();
+});
+</script>
+</body>
+</html>

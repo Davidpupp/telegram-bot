@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Entrar — Painel V8 Studio</title>
+<meta name="description" content="Acesso ao painel administrativo do V8 Studio.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/styles.css">
+<style>
+.login { min-height: 100vh; display: grid; place-items: center; padding: 24px var(--gutter); }
+.login .card { width: 100%; max-width: 440px; padding: 40px; display: grid; gap: 20px; }
+.login .logo { margin-bottom: 8px; }
+.login h2 { font-size: 32px; }
+.login .btn { width: 100%; margin-top: 4px; }
+.login .muted.small a { color: var(--color-gray); text-decoration: underline; text-underline-offset: 3px; }
+.login .muted.small a:hover { color: var(--color-ink); }
+@media (max-width: 720px) { .login .card { padding: 32px 28px; } }
+</style>
+</head>
+<body class="no-header">
+<main class="login">
+  <form class="card" data-demo id="form-login" novalidate>
+    <a class="logo" href="../index.html" aria-label="V8 Studio"></a>
+    <h2>Entrar no painel</h2>
+    <div class="field"><label for="email">E-mail</label><input id="email" type="email" name="email" autocomplete="username" placeholder="voce@v8studio.com.br" required></div>
+    <div class="field"><label for="senha">Senha</label><input id="senha" type="password" name="senha" autocomplete="current-password" required></div>
+    <label class="check"><input type="checkbox" name="lembrar" checked> Manter conectado</label>
+    <button class="btn btn--primary" type="submit">Entrar</button>
+    <p class="muted small center"><a href="#" onclick="return false">Esqueci a senha</a></p>
+  </form>
+</main>
+<script src="../assets/app.js" data-root="../" defer></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  "use strict";
+  document.querySelectorAll("a.logo").forEach(function (a) { a.innerHTML = window.V8.logoSvg("", null) + "<span>Studio</span>"; });
+  document.getElementById("form-login").addEventListener("submit", function (e) { e.preventDefault(); window.location.href = "index.html"; });
+});
+</script>
+</body>
+</html>

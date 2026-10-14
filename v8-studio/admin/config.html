@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Configurações — Painel V8 Studio</title>
+<meta name="description" content="Números, dados do fundador e textos da home do V8 Studio.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/styles.css">
+<style>
+/* Layout comum do painel */
+.admin__side .logo { padding: 4px 10px; }
+.admin__nav { display: grid; gap: 4px; }
+.admin__nav a svg { flex: 0 0 auto; }
+.admin__nav hr { border: 0; height: 1px; background: var(--color-line); margin: 10px 14px; }
+.admin__top h1 { font-size: 36px; }
+.admin__top .row { gap: 12px; }
+.admin .card h3 { font-size: 22px; margin-bottom: 18px; }
+.card__head { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 18px; flex-wrap: wrap; }
+.card__head h3 { margin-bottom: 0 !important; }
+.admin .card--flush { padding: 0; }
+.admin .card--flush .card__head { padding: 24px 32px 0; margin-bottom: 8px; }
+.card--flush .table-wrap { box-shadow: none; border-radius: 0; }
+.g8 { grid-column: span 8; } .g4 { grid-column: span 4; } .g6 { grid-column: span 6; } .g12 { grid-column: 1 / -1; }
+.notice { display: none; align-items: center; gap: 8px; font-size: var(--text-sm); color: var(--color-ok); font-weight: 500; }
+.notice.is-on { display: inline-flex; }
+.notice::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--color-ok); }
+.link { color: var(--color-blue); font-weight: 600; }
+.link:hover { text-decoration: underline; }
+@media (max-width: 1024px) {
+  .admin__side { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 16px 10px; }
+  .admin__nav { flex: 1 0 100%; display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; margin-inline: -16px; padding-inline: 16px; }
+  .admin__nav::-webkit-scrollbar { display: none; }
+  .admin__nav a { padding: 8px 12px; white-space: nowrap; font-size: var(--text-xs); }
+  .admin__nav hr { display: none; }
+  .admin__top h1 { font-size: 30px; }
+  .g8, .g4, .g6 { grid-column: 1 / -1; }
+  .admin .card--flush .card__head { padding: 22px 24px 0; }
+}
+@media (max-width: 720px) { .admin .card { padding: 24px; } .kpis { gap: 16px; } .kpi { padding: 22px 24px; } .kpi .stat__n { font-size: 40px; } }
+.config { display: grid; gap: var(--gutter); }
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px var(--gutter); }
+.two .g12 { grid-column: 1 / -1; }
+.nums { display: grid; grid-template-columns: 5fr 7fr; gap: 32px; align-items: start; }
+.nums .fields { display: grid; gap: 16px; }
+.preview-home { background: var(--color-paper); border-radius: 20px; padding: 28px; }
+.preview-home .kicker { margin-bottom: 18px; }
+.preview-home .stats { gap: 20px; }
+.preview-home .stat__n { font-size: 40px; }
+.preview-home .stat__l { font-size: var(--text-xs); margin-top: 4px; }
+.save-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+@media (max-width: 1024px) { .nums { grid-template-columns: 1fr; } }
+@media (max-width: 720px) { .two { grid-template-columns: 1fr; } .preview-home .stats { grid-template-columns: 1fr; gap: 16px; } .preview-home { padding: 22px; } }
+</style>
+</head>
+<body class="no-header">
+<div class="admin">
+<aside class="admin__side">
+  <a class="logo" href="index.html" aria-label="V8 Studio, painel"></a>
+  <nav class="admin__nav" aria-label="Painel">
+    <a href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Visão geral</span></a>
+    <a href="leads.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18.5 14.5c2 .8 3 2.6 3 5.5"/></svg><span>Leads</span></a>
+    <a href="post.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg><span>Posts</span></a>
+    <a href="config.html" class="is-active" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h9M18.5 7H20M4 17h3.5M12.5 17H20"/><circle cx="15.5" cy="7" r="2.5"/><circle cx="10" cy="17" r="2.5"/></svg><span>Configurações</span></a>
+    <hr>
+    <a href="../index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg><span>Ver site</span></a>
+  </nav>
+</aside>
+<main class="admin__main">
+<div class="admin__top">
+  <div class="row"><h1>Configurações</h1></div>
+  <div class="admin__user"><i>R</i><span>Rodrigo Vale</span></div>
+</div>
+  <form class="config" data-demo id="form-config">
+    <div class="card">
+      <h3>Números da home</h3>
+      <div class="nums">
+        <div class="fields">
+          <div class="field"><label for="n-projetos">Projetos entregues</label><input id="n-projetos" type="number" min="0" value="120"></div>
+          <div class="field"><label for="n-anos">Anos de experiência</label><input id="n-anos" type="number" min="0" value="8"></div>
+          <div class="field"><label for="n-satisf">Satisfação (%)</label><input id="n-satisf" type="number" min="0" max="100" value="98"></div>
+        </div>
+        <div class="preview-home" aria-live="polite">
+          <p class="kicker">Como aparece na home</p>
+          <div class="stats">
+            <div class="stat"><div class="stat__n" id="p-projetos">120+</div><div class="stat__l">projetos entregues</div></div>
+            <div class="stat"><div class="stat__n" id="p-anos">8</div><div class="stat__l">anos de experiência</div></div>
+            <div class="stat"><div class="stat__n" id="p-satisf">98%</div><div class="stat__l">de satisfação</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Dados do fundador</h3>
+      <div class="two">
+        <div class="field"><label for="f-nome">Nome</label><input id="f-nome" type="text" value="Rodrigo Vale"></div>
+        <div class="field"><label for="f-papel">Papel</label><input id="f-papel" type="text" value="Fundador e diretor de projetos"></div>
+        <div class="field g12"><label for="f-bio">Bio curta</label><textarea id="f-bio" maxlength="400">Desenvolvedor há mais de dez anos, fundou o V8 Studio para entregar sites e sistemas que trazem resultado de verdade para negócios brasileiros, com prazo cumprido e código que o cliente leva para casa.</textarea><div class="field__hint"><span>Aparece na seção sobre o estúdio</span><span id="c-bio">0/280</span></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Textos do site</h3>
+      <div class="two">
+        <div class="field g12"><label for="t-headline">Headline da home</label><input id="t-headline" type="text" value="Sites, sistemas e aplicativos que fazem o seu negócio crescer"></div>
+        <div class="field g12"><label for="t-nota">Nota do botão Começar</label><input id="t-nota" type="text" value="Sete perguntas, menos de dois minutos. Sem compromisso."></div>
+      </div>
+    </div>
+    <div class="save-row">
+      <button class="btn btn--primary" type="submit">Salvar alterações</button>
+      <span class="notice" id="aviso" role="status" aria-live="polite"></span>
+    </div>
+  </form>
+</main>
+</div>
+<script src="../assets/app.js" data-root="../" defer></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  "use strict";
+  document.querySelectorAll("a.logo").forEach(function (a) { a.innerHTML = window.V8.logoSvg("", null) + "<span>Studio</span>"; });
+  function liga(inId, outId, suf) { var i = document.getElementById(inId), o = document.getElementById(outId); i.addEventListener("input", function () { o.textContent = (i.value || "0") + suf; }); }
+  liga("n-projetos", "p-projetos", "+"); liga("n-anos", "p-anos", ""); liga("n-satisf", "p-satisf", "%");
+  var bio = document.getElementById("f-bio"), cBio = document.getElementById("c-bio");
+  function contarBio() { var n = bio.value.length; cBio.textContent = n + "/280"; cBio.classList.toggle("over", n > 280); }
+  bio.addEventListener("input", contarBio); contarBio();
+  var aviso = document.getElementById("aviso");
+  document.getElementById("form-config").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var d = new Date(); var h = (d.getHours() < 10 ? "0" : "") + d.getHours() + ":" + (d.getMinutes() < 10 ? "0" : "") + d.getMinutes();
+    aviso.textContent = "Alterações salvas às " + h; aviso.classList.add("is-on");
+  });
+});
+</script>
+</body>
+</html>

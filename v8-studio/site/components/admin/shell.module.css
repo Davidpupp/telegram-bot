@@ -1,0 +1,132 @@
+/* Moldura do painel: barra lateral no computador, barra de topo com navegação que rola sozinha no celular. */
+
+.side.side {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 28px 20px 24px;
+  z-index: 2;
+}
+/* A coluna da barra lateral fica branca até o fim da página, mesmo quando a página é mais alta que a tela. */
+@media (min-width: 1025px) {
+  .admin.admin {
+    box-shadow: inset 259px 0 0 var(--color-white), inset 260px 0 0 var(--color-line);
+  }
+}
+.brand {
+  padding: 4px 10px;
+  align-self: flex-start;
+}
+.nav a[aria-current="true"] {
+  background: var(--color-blue);
+  color: var(--color-white);
+}
+.nav a svg {
+  flex: 0 0 auto;
+}
+.user {
+  margin-top: auto;
+  display: grid;
+  gap: 14px;
+  padding: 18px 10px 0;
+  border-top: 1px solid var(--color-line);
+}
+.who {
+  display: grid;
+  line-height: 1.35;
+  min-width: 0;
+}
+.who strong {
+  font-weight: 600;
+}
+.who small {
+  font-size: var(--text-xs);
+  color: var(--color-gray);
+}
+.userLinks {
+  display: flex;
+  gap: 4px 18px;
+  flex-wrap: wrap;
+  font-size: var(--text-sm);
+}
+.userLinks a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-gray);
+  font-weight: 500;
+  min-height: 32px;
+}
+.userLinks a:hover {
+  color: var(--color-ink);
+}
+.userLinks svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Cards do painel um pouco mais justos no celular. */
+@media (max-width: 720px) {
+  .admin.admin :global(.card) {
+    padding: 24px 20px;
+  }
+  .admin.admin :global(.kpis) {
+    gap: 12px;
+  }
+  .admin.admin :global(.kpi) {
+    padding: 20px 18px;
+  }
+  .admin.admin :global(.kpi) :global(.stat__n) {
+    font-size: 40px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .side.side {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 14px 16px;
+    padding: 14px 16px 12px;
+  }
+  .brand {
+    padding: 4px 0;
+  }
+  .nav.nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-inline: -16px;
+    padding: 2px 16px 4px;
+  }
+  .nav.nav::-webkit-scrollbar {
+    display: none;
+  }
+  .nav.nav a {
+    flex: 0 0 auto;
+    padding: 10px 14px;
+    white-space: nowrap;
+  }
+  .user {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .who small,
+  .siteLink {
+    display: none;
+  }
+}
+@media (max-width: 420px) {
+  .who {
+    display: none;
+  }
+}

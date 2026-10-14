@@ -1,0 +1,437 @@
+/* Peças comuns do painel. Sem transition nem animation: todo movimento vem das molas (motion/hooks). */
+
+/* ---------- Aviso do modo demonstração ---------- */
+.notice {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0 0 28px;
+  padding: 14px 20px;
+  border-radius: 18px;
+  background: var(--color-white);
+  box-shadow: inset 0 0 0 1px var(--color-line);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--color-gray);
+}
+.notice::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-warn);
+  transform: translateY(-1px);
+}
+.notice strong {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+/* ---------- Cabeçalho da página ---------- */
+.head.head {
+  align-items: flex-end;
+  margin-bottom: 28px;
+}
+.head.head h1 {
+  font-size: clamp(34px, 3.4vw, 44px);
+}
+.titles {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+.meta {
+  color: var(--color-gray);
+  font-size: var(--text-sm);
+}
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ---------- Cards ---------- */
+.cardHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.cardTitle.cardTitle {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  margin: 0;
+}
+.cardSub {
+  margin-top: 4px;
+  font-size: var(--text-sm);
+  color: var(--color-gray);
+}
+.panel {
+  background: var(--color-white);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  min-width: 0;
+}
+.panelHead {
+  padding: 26px 32px 18px;
+}
+.scroll {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+/* Contêiner posicionado: textos escondidos (position: absolute) dentro da tabela não escapam da rolagem. */
+.scroll,
+.sticky {
+  position: relative;
+}
+.link {
+  color: var(--color-blue);
+  font-weight: 600;
+  font-size: var(--text-sm);
+}
+.link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+@media (max-width: 720px) {
+  .panelHead {
+    padding: 22px 20px 14px;
+  }
+}
+
+/* ---------- Tabelas dentro de cards ---------- */
+.tableInCard :global(.table) th:first-child,
+.tableInCard :global(.table) td:first-child {
+  padding-left: 32px;
+}
+.tableInCard :global(.table) th:last-child,
+.tableInCard :global(.table) td:last-child {
+  padding-right: 32px;
+}
+.leadCell {
+  display: grid;
+  gap: 2px;
+  min-width: 170px;
+}
+.leadCell a {
+  justify-self: start;
+}
+.leadCell span {
+  font-size: var(--text-xs);
+  color: var(--color-gray);
+}
+.when {
+  white-space: nowrap;
+  color: var(--color-gray);
+  font-variant-numeric: tabular-nums;
+}
+.nowrap {
+  white-space: nowrap;
+}
+.sortBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.sortBtn:hover {
+  color: var(--color-ink);
+}
+/* Primeira coluna fixa quando a tabela rola para o lado, no celular. */
+@media (max-width: 1024px) {
+  .sticky :global(.table) th:first-child,
+  .sticky :global(.table) td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: var(--color-white);
+    box-shadow: 1px 0 0 var(--color-line);
+  }
+  .sticky :global(.table) tbody tr:hover td:first-child {
+    background: var(--color-paper);
+  }
+}
+@media (max-width: 720px) {
+  .tableInCard :global(.table) th:first-child,
+  .tableInCard :global(.table) td:first-child {
+    padding-left: 20px;
+  }
+  .tableInCard :global(.table) th:last-child,
+  .tableInCard :global(.table) td:last-child {
+    padding-right: 20px;
+  }
+}
+
+/* ---------- Escolha em segmentos (o fundo branco corre com mola) ---------- */
+.segField {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.seg {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px;
+  margin: 0;
+  border: 0;
+  border-radius: 18px;
+  background: var(--color-paper);
+  box-shadow: inset 0 0 0 1px var(--color-line);
+  width: fit-content;
+  max-width: 100%;
+  min-width: 0;
+}
+.segThumb {
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 14px;
+  background: var(--color-white);
+  box-shadow: 0 6px 16px -8px rgba(13, 32, 96, 0.35), 0 1px 3px rgba(13, 32, 96, 0.12);
+  pointer-events: none;
+}
+.segOpt {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 14px;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-gray);
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+}
+.segOpt:hover,
+.segOpt[data-on="true"] {
+  color: var(--color-ink);
+}
+/* Antes da primeira medida (HTML do servidor), a opção marcada já aparece com o fundo branco. */
+.segOptStatic {
+  background: var(--color-white);
+  box-shadow: 0 6px 16px -8px rgba(13, 32, 96, 0.35), 0 1px 3px rgba(13, 32, 96, 0.12);
+}
+.segOpt input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  pointer-events: none;
+}
+.segOpt:has(input:focus-visible) {
+  outline: 3px solid var(--color-blue);
+  outline-offset: 2px;
+}
+.segOpt :global(.status) {
+  font-weight: inherit;
+}
+.segLegend {
+  padding: 0;
+  margin-bottom: 10px;
+  font-weight: 600;
+  font-size: var(--text-sm);
+}
+
+/* ---------- Interruptor ---------- */
+.switch {
+  position: relative;
+  flex: 0 0 auto;
+  width: 46px;
+  height: 28px;
+  border-radius: var(--radius-pill);
+  background: var(--color-line);
+}
+.switch[disabled] {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+.knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-white);
+  box-shadow: 0 2px 6px rgba(11, 18, 32, 0.25);
+}
+
+/* ---------- Aviso de salvo ---------- */
+.saved {
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-ok);
+}
+.savedTxt {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.savedTxt::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-ok);
+}
+
+/* ---------- Campos ---------- */
+.fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 24px;
+}
+.fields > * {
+  min-width: 0;
+}
+.full {
+  grid-column: 1 / -1;
+}
+.prefixLabel {
+  font-weight: 600;
+  font-size: var(--text-sm);
+}
+.fieldError {
+  font-size: var(--text-xs);
+  color: var(--color-bad);
+  font-weight: 500;
+}
+.prefix {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  border-radius: 16px;
+  border: 2px solid var(--color-line);
+  background: var(--color-white);
+  overflow: hidden;
+  min-width: 0;
+}
+.prefix:focus-within {
+  border-color: var(--color-blue);
+  box-shadow: 0 0 0 4px rgba(35, 71, 214, 0.14);
+}
+.prefix > span {
+  padding-left: 18px;
+  color: var(--color-gray);
+  white-space: nowrap;
+}
+.prefix.prefix input,
+.prefix.prefix input:focus {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0 18px 0 1px;
+  background: transparent;
+}
+.hintRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: var(--text-xs);
+  color: var(--color-gray);
+}
+.hintRow > :last-child {
+  flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+}
+.textBtn {
+  color: var(--color-blue);
+  font-weight: 600;
+  font-size: var(--text-xs);
+}
+.textBtn:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+@media (max-width: 720px) {
+  .fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Prévia do resultado de busca ---------- */
+.serp {
+  display: grid;
+  gap: 6px;
+  padding: 22px 24px;
+  border-radius: 20px;
+  background: var(--color-white);
+  box-shadow: inset 0 0 0 1px var(--color-line);
+  min-width: 0;
+}
+.serpSite {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.serpIcon {
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--color-paper);
+  color: var(--color-blue);
+}
+.serpIcon svg {
+  width: 17px;
+  height: auto;
+}
+.serpSite > span:last-child {
+  display: grid;
+  min-width: 0;
+  line-height: 1.3;
+}
+.serpSite strong {
+  font-size: 14px;
+  font-weight: 500;
+}
+.serpSite small {
+  font-size: 12px;
+  color: var(--color-gray);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.serpTitle {
+  font-size: 20px;
+  line-height: 1.3;
+  color: var(--color-blue-ink);
+  overflow-wrap: anywhere;
+}
+.serpDesc {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--color-gray);
+  overflow-wrap: anywhere;
+}
+.serpEmpty {
+  font-style: normal;
+  color: var(--color-gray);
+  opacity: 0.7;
+}

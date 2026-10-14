@@ -7,12 +7,12 @@ import { absoluteUrl, PRIVACY_UPDATED } from "@/content/site";
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const newestPost = POSTS.map((p) => p.date).sort().at(-1);
+  const postDates = POSTS.map((p) => p.date).sort();
   return [
     { url: absoluteUrl("/") },
     { url: absoluteUrl("/servicos/") },
     ...SERVICES.map((s) => ({ url: absoluteUrl(serviceHref(s.slug)) })),
-    { url: absoluteUrl("/blog/"), lastModified: newestPost },
+    { url: absoluteUrl("/blog/"), lastModified: postDates.at(-1) },
     ...POSTS.map((p) => ({ url: absoluteUrl(postHref(p.slug)), lastModified: p.date })),
     { url: absoluteUrl("/sobre/") },
     { url: absoluteUrl("/comecar/") },

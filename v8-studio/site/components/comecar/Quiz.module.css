@@ -1,0 +1,392 @@
+/* Formulário Começar. Sem transition nem animation: todo movimento vem das molas (components/comecar/anim.ts). */
+
+/* ---------- Card ---------- */
+.quiz {
+  padding: 48px;
+  overflow: hidden;
+  position: relative;
+}
+.top {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+.top :global(.progress) {
+  flex: 1;
+  min-width: 0;
+}
+.count {
+  display: inline-flex;
+  align-items: flex-start;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-gray);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  line-height: 1.4;
+}
+.odometer {
+  display: inline-block;
+  height: 1.4em;
+  overflow: hidden;
+}
+.digits {
+  display: grid;
+  will-change: transform;
+}
+.digits span {
+  display: block;
+  height: 1.4em;
+  text-align: right;
+}
+
+/* ---------- Palco: as telas ficam uma sobre a outra na mesma célula ---------- */
+.stage {
+  display: grid;
+  position: relative;
+}
+.screen {
+  grid-area: 1 / 1;
+  min-width: 0;
+  align-self: start;
+}
+.kicker {
+  margin-bottom: 10px;
+  max-width: 60ch;
+}
+.title {
+  font-size: clamp(32px, 4.2vw, 46px);
+}
+.title:focus {
+  outline: none;
+}
+.fallbackStage {
+  min-height: 470px;
+}
+
+/* ---------- Opções ---------- */
+.options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 32px;
+}
+.options > * {
+  min-width: 0;
+}
+.options > :last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+.options3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.options3 > :last-child:nth-child(odd) {
+  grid-column: auto;
+}
+.options3 > :last-child:nth-child(3n + 1) {
+  grid-column: 1 / -1;
+}
+.options :global(.option) strong {
+  text-wrap: balance;
+}
+.options3 :global(.option) {
+  padding: 22px 24px;
+}
+.options3 :global(.option) strong {
+  font-size: 18px;
+}
+/* .quiz na frente: a regra global .card p pinta todo parágrafo de cinza. */
+.quiz .hint {
+  padding-top: 16px;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-ink);
+}
+
+/* ---------- Ações ---------- */
+.actions {
+  margin-top: 36px;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.dim {
+  opacity: 0.45;
+}
+
+/* ---------- Contato ---------- */
+.form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 22px 20px;
+  margin-top: 32px;
+}
+.form > * {
+  min-width: 0;
+}
+.full {
+  grid-column: 1 / -1;
+}
+/* Nos campos daqui o espaço vem de margens, não do gap da grade: um aviso fechado (altura 0) não deixa sobra. */
+.form :global(.field) {
+  gap: 0;
+}
+.form :global(.field) > label,
+.groupLabel {
+  margin-bottom: 8px;
+}
+.formActions {
+  margin-top: 14px;
+}
+.invalid input,
+.invalid input:focus {
+  border-color: var(--color-bad);
+}
+.invalid input:focus {
+  box-shadow: 0 0 0 4px rgba(200, 50, 59, 0.14);
+}
+.groupLabel {
+  font-weight: 600;
+  font-size: var(--text-sm);
+}
+.choices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.choice {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 56px;
+  padding-inline: 18px;
+  border-radius: 16px;
+  background: var(--color-white);
+  box-shadow: inset 0 0 0 2px var(--color-line);
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 0;
+}
+.choice:hover {
+  box-shadow: inset 0 0 0 2px #bcc5db;
+}
+.choice:has(input:checked) {
+  box-shadow: inset 0 0 0 2px var(--color-blue), 0 0 0 4px rgba(35, 71, 214, 0.14);
+}
+.choice input {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  flex: 0 0 auto;
+  accent-color: var(--color-blue);
+}
+.consent a {
+  color: var(--color-blue);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+/* Mensagem de erro: o espaço acima dela fica por dentro, para sumir junto quando o aviso fecha. */
+.quiz .error :global(.field__error) {
+  padding-top: 8px;
+  color: var(--color-bad);
+}
+.quiz .consentError :global(.field__error) {
+  padding-left: 34px;
+}
+.nowrap {
+  white-space: nowrap;
+}
+.quiz .sendError {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-bad);
+}
+
+/* ---------- Resultado ---------- */
+.result {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr);
+  gap: 48px;
+  align-items: start;
+  margin-top: 36px;
+}
+.ringFig {
+  margin: 0;
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+  text-align: center;
+}
+.ring {
+  position: relative;
+  width: 180px;
+  height: 180px;
+}
+.ring svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  overflow: visible;
+}
+.ringTrack,
+.ringArc {
+  fill: none;
+  stroke-width: 10;
+}
+.ringTrack {
+  stroke: var(--color-line);
+}
+.ringArc {
+  stroke: var(--color-blue);
+  stroke-linecap: round;
+}
+.ringValue {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 50px;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.ringValue small {
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  margin-left: 2px;
+}
+.ringCaption {
+  display: grid;
+  gap: 6px;
+  justify-items: center;
+}
+.ringLabel {
+  font-weight: 600;
+  font-size: var(--text-sm);
+}
+.ringNote {
+  max-width: 24ch;
+  font-size: var(--text-xs);
+  line-height: 1.45;
+  color: var(--color-gray);
+}
+.resultText {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+.resultText p {
+  color: var(--color-gray);
+}
+.resultText .resultLead {
+  font-size: var(--text-lg);
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+.sla {
+  display: grid;
+  gap: 2px;
+  margin-top: 4px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-line);
+}
+.resultText .sla p:first-child {
+  font-weight: 600;
+  color: var(--color-ink);
+}
+.resultText .slaNote {
+  font-size: var(--text-sm);
+}
+/* O contato vai inteiro para a linha de baixo quando não cabe; só um e-mail enorme quebra no meio. */
+.contactShown {
+  display: inline-block;
+  max-width: 100%;
+  color: var(--color-ink);
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.resultActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+/* ---------- Tablet ---------- */
+@media (max-width: 1024px) {
+  .options3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .options3 > :last-child:nth-child(3n + 1) {
+    grid-column: auto;
+  }
+  .options3 > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ---------- Celular ---------- */
+@media (max-width: 720px) {
+  .quiz {
+    padding: 28px 20px;
+  }
+  .top {
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .title {
+    font-size: 30px;
+  }
+  .options,
+  .options3 {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .options :global(.option),
+  .options3 :global(.option) {
+    padding: 18px 20px;
+  }
+  .options :global(.option) strong {
+    font-size: 18px;
+  }
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+    margin-top: 28px;
+  }
+  .actions :global(.btn) {
+    width: 100%;
+  }
+  .form {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+    margin-top: 24px;
+  }
+  .choices {
+    gap: 10px;
+  }
+  .formActions {
+    margin-top: 4px;
+  }
+  .fallbackStage {
+    min-height: 640px;
+  }
+  .result {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    margin-top: 28px;
+  }
+  .resultActions :global(.btn) {
+    width: 100%;
+    padding-inline: 20px;
+  }
+}

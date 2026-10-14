@@ -1,0 +1,37 @@
+/* Topo da landing page: texto à esquerda, demo num card grande à direita; empilha abaixo de 1025 px. */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 64px;
+  align-items: center;
+  padding-block: 72px 56px;
+}
+.solo { grid-template-columns: minmax(0, 1fr); max-width: calc(860px + var(--gutter) * 2); }
+
+.copy { display: grid; justify-items: start; min-width: 0; }
+.title { font-size: clamp(44px, 5vw, 72px); margin-top: 18px; }
+.lead { margin-top: 24px; color: var(--color-gray); max-width: 44ch; }
+.cta { margin-top: 36px; }
+
+.media { min-width: 0; }
+.frame {
+  position: relative;
+  aspect-ratio: 10 / 9;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background: var(--color-paper);
+  box-shadow: var(--shadow-float);
+}
+.caption { margin-top: 16px; text-align: center; }
+
+@media (max-width: 1024px) {
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 48px; padding-block: 56px 40px; }
+  .lead { max-width: 52ch; }
+  .media { max-width: 680px; width: 100%; justify-self: center; }
+}
+@media (max-width: 720px) {
+  .hero { padding-block: 40px 24px; gap: 40px; }
+  .title { margin-top: 14px; }
+  .lead { margin-top: 20px; }
+  .cta { margin-top: 28px; }
+}

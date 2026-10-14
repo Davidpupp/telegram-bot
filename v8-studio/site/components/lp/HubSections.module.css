@@ -1,0 +1,53 @@
+/* ---------- Grade dos serviços: três em cima, dois largos embaixo ---------- */
+.grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--gutter); }
+.grid > * { min-width: 0; }
+/* padding 0 explícito: no celular a regra global .card { padding: 28px } vence .card--flush. */
+.card { position: relative; padding: 0; grid-column: span 2; display: grid; grid-template-rows: auto minmax(0, 1fr); height: 100%; color: var(--color-ink); }
+.head { display: grid; gap: 6px; align-content: start; padding: 28px 28px 22px; }
+.head h3 { font-size: var(--text-xl); margin: 0; }
+.head p { color: var(--color-gray); font-size: var(--text-sm); line-height: 1.5; max-width: 40ch; }
+.media { position: relative; min-height: 300px; background: var(--color-paper); }
+
+/* Cards largos: texto à esquerda, demo à direita. */
+.wide { grid-column: span 3; grid-template-rows: none; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); }
+.wide .head { align-content: center; padding: 36px 32px; }
+.wide .head h3 { font-size: var(--h3); }
+.wide .media { min-height: 320px; }
+
+/* ---------- Comparação ---------- */
+.table { padding: 4px 40px 8px; }
+.row { display: grid; grid-template-columns: minmax(0, 1.1fr) repeat(3, minmax(0, 1fr)); gap: 32px; padding: 28px 0; border-bottom: 1px solid var(--color-line); align-items: start; }
+.rows .row:last-child { border-bottom: 0; }
+.headRow { padding: 26px 0 18px; }
+.headRow span { font-size: var(--text-sm); font-weight: 600; color: var(--color-gray); }
+.service { display: grid; gap: 6px; justify-items: start; }
+.service h3 { font-size: var(--text-xl); margin: 0; }
+.link { font-size: var(--text-sm); font-weight: 600; color: var(--color-blue); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.link:hover { color: var(--color-blue-ink); }
+.cell { min-width: 0; color: var(--color-ink); line-height: 1.55; }
+.label { display: none; font-size: var(--text-xs); font-weight: 600; color: var(--color-gray); margin-bottom: 4px; }
+
+@media (max-width: 1024px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .card, .wide { grid-column: span 1; grid-template-columns: none; grid-template-rows: auto minmax(0, 1fr); }
+  .wide .head { align-content: start; padding: 28px 28px 22px; }
+  .wide .head h3 { font-size: var(--text-xl); }
+  .wide:last-child { grid-column: 1 / -1; }
+  .wide:last-child .media { min-height: 360px; }
+
+  .headRow { display: none; }
+  .rows .row:first-child { padding-top: 32px; }
+  .row { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 24px; }
+  .service { grid-column: 1 / -1; grid-template-columns: auto auto; justify-content: space-between; align-items: baseline; }
+  .label { display: block; }
+}
+@media (max-width: 720px) {
+  .grid { grid-template-columns: minmax(0, 1fr); }
+  .wide:last-child { grid-column: auto; }
+  .media, .wide .media, .wide:last-child .media { min-height: 260px; }
+
+  .table { padding: 0 24px 4px; }
+  .row { grid-template-columns: minmax(0, 1fr); gap: 14px; padding: 24px 0; }
+  .rows .row:first-child { padding-top: 24px; }
+  .service { grid-template-columns: minmax(0, 1fr); }
+}

@@ -114,20 +114,39 @@ export function readUtm(params: ParamReader): LeadUtm {
   };
 }
 
-/** Origem do lead a partir da URL do formulário e do referrer. Só roda no navegador (na hora do envio). */
+type HistoryNav = { currentEntry?: { index: number } | null; entries?: () => { url: string | null }[] };
+
+/**
+ * Origem do lead a partir da URL do formulário e do histórico. Só roda no navegador (na hora do envio).
+ * Página de origem, nesta ordem: ?origem=/caminho/ no link; a página anterior do próprio site pela Navigation API
+ * (pega também a navegação no cliente do next/link, em que o document.referrer não muda); o referrer do mesmo site.
+ */
 export function readSource(params: ParamReader): LeadSource {
   const { origin, pathname, search } = window.location;
   let page: string | null = null;
   let referrer: string | null = null;
+  const sitePath = (url: string | null | undefined) => {
+    if (!url) return null;
+    const u = new URL(url);
+    return u.origin === origin && !u.pathname.startsWith("/comecar") ? u.pathname : null;
+  };
 
   const origem = clean(params.get("origem"), 300);
   if (origem && origem.startsWith("/") && !origem.startsWith("//")) page = origem;
 
   try {
+    const nav = (window as { navigation?: HistoryNav }).navigation;
+    const i = nav?.currentEntry?.index ?? -1;
+    if (!page && i > 0) page = sitePath(nav?.entries?.()[i - 1]?.url);
+  } catch {
+    // Sem Navigation API: segue para o referrer.
+  }
+
+  try {
     if (document.referrer) {
       const r = new URL(document.referrer);
       referrer = `${r.origin}${r.pathname}`;
-      if (!page && r.origin === origin && !r.pathname.startsWith("/comecar")) page = r.pathname;
+      if (!page) page = sitePath(document.referrer);
     }
   } catch {
     // Referrer ilegível: fica sem.

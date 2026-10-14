@@ -1,0 +1,49 @@
+/* Lista de posts. */
+
+.titleCell {
+  display: grid;
+  gap: 2px;
+  min-width: 260px;
+}
+.titleCell a {
+  justify-self: start;
+}
+.titleCell span {
+  font-size: var(--text-xs);
+  color: var(--color-gray);
+}
+.estado {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.estado::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.publicado::before {
+  background: var(--color-ok);
+}
+.rascunho::before {
+  box-shadow: inset 0 0 0 2px var(--color-gray);
+}
+.acoes {
+  display: flex;
+  gap: 16px;
+  white-space: nowrap;
+}
+.acoes a:last-child:not(:first-child) {
+  color: var(--color-gray);
+  font-weight: 500;
+}
+.acoes a:last-child:not(:first-child):hover {
+  color: var(--color-ink);
+}
+.muted {
+  color: var(--color-gray);
+  white-space: nowrap;
+}

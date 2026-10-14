@@ -471,7 +471,7 @@ export const DEMOS: { id: CompId; servico: string; nome: string; descricao: stri
   id: DEMO_BY_SERVICE[s.slug as keyof typeof DEMO_BY_SERVICE],
   servico: s.slug,
   nome: s.name,
-  descricao: DEMO_LABELS[s.slug].replace(/^Animação: /, ""),
+  descricao: DEMO_LABELS[s.slug].replace(/^Animação: (.)/, (_, c: string) => c.toUpperCase()),
 }));
 
 export type LandingPage = {

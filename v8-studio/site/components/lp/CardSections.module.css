@@ -1,0 +1,36 @@
+/* ---------- Grade de cards (incluso, opções) ---------- */
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gutter); }
+.grid > * { min-width: 0; }
+.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.one { grid-template-columns: minmax(0, 1fr); max-width: 720px; }
+
+/* Card com altura da linha inteira: na mesma linha, todos terminam juntos. */
+.card { height: 100%; display: grid; align-content: start; gap: 10px; }
+.card h3 { font-size: var(--text-xl); margin: 0; }
+
+/* Lista com marcador azul (opções de pagamento, frete...). */
+.list { display: grid; gap: 10px; margin-top: 10px; padding-top: 18px; border-top: 1px solid var(--color-line); }
+.list li { position: relative; padding-left: 22px; color: var(--color-ink); line-height: 1.45; }
+.list li::before { content: ""; position: absolute; left: 0; top: 0.5em; width: 8px; height: 8px; border-radius: 50%; background: var(--color-blue); }
+
+/* ---------- "Para quem é": título fixo à esquerda, situações empilhadas à direita ---------- */
+.audience { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 64px; align-items: start; }
+.audienceHead { display: grid; gap: 20px; position: sticky; top: calc(var(--header-h) + 48px); }
+.audienceHead > * { min-width: 0; }
+.audienceHead p:last-child { max-width: 40ch; }
+.audienceList { display: grid; gap: var(--gutter); }
+.situation { padding: 32px 36px; }
+
+@media (max-width: 1024px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .trio { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .audience { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .audienceHead { position: static; }
+}
+@media (max-width: 900px) {
+  .trio { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 720px) {
+  .grid, .two, .trio { grid-template-columns: minmax(0, 1fr); }
+  .situation { padding: 28px; }
+}

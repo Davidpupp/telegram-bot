@@ -1,0 +1,235 @@
+/* Página Sobre. Sem transition nem animation: o movimento vem das molas do Remotion. */
+
+/* ---------- Topo ---------- */
+.hero {
+  padding-block: 104px var(--section);
+}
+.heroGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 28px 64px;
+  align-items: end;
+}
+.heroSide {
+  display: grid;
+  gap: 32px;
+  min-width: 0;
+}
+.heroCta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.heroPhoto {
+  margin-top: 80px;
+  aspect-ratio: 21 / 9;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+@media (max-width: 1024px) {
+  .heroGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 720px) {
+  .hero {
+    padding-top: 56px;
+  }
+  .heroPhoto {
+    margin-top: 48px;
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* ---------- O que fazemos e para quem ---------- */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 48px 72px;
+  align-items: start;
+}
+.splitText {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+}
+.copy {
+  display: grid;
+  gap: 16px;
+  margin-top: 8px;
+  font-size: var(--text-lg);
+  line-height: 1.55;
+  color: var(--color-gray);
+}
+.sidePhoto {
+  margin-top: 20px;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+@media (max-width: 1024px) {
+  .split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.services:global(.card) {
+  padding: 8px 0;
+}
+.serviceRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px;
+  padding: 24px 32px;
+}
+.services li + li .serviceRow {
+  border-top: 1px solid var(--color-line);
+}
+.serviceText {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+.serviceName {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-xl);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+.serviceLine {
+  font-size: var(--text-sm);
+  color: var(--color-gray);
+  line-height: 1.5;
+}
+.rowArrow {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--color-blue);
+  box-shadow: inset 0 0 0 2px var(--color-line);
+}
+.serviceRow:hover .serviceName {
+  color: var(--color-blue);
+}
+.serviceRow:hover .rowArrow {
+  background: var(--color-blue);
+  color: var(--color-white);
+  box-shadow: none;
+}
+@media (max-width: 720px) {
+  .serviceRow {
+    padding: 20px 24px;
+  }
+}
+
+/* ---------- Filme ---------- */
+.film {
+  box-shadow: var(--shadow-float);
+}
+.filmNote {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* ---------- Como trabalhamos ---------- */
+.remote {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 40px 64px;
+  align-items: center;
+  margin-top: 96px;
+}
+.remotePhoto {
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+.remoteText {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+.remoteText p {
+  color: var(--color-gray);
+  font-size: var(--text-lg);
+  line-height: 1.55;
+}
+@media (max-width: 1024px) {
+  .remote {
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 72px;
+  }
+}
+
+/* ---------- Princípios (sobre o azul) ---------- */
+.principles {
+  display: grid;
+  border-top: 1px solid var(--color-line-blue);
+}
+.principle {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 16px 48px;
+  align-items: baseline;
+  padding: 44px 0;
+  border-bottom: 1px solid var(--color-line-blue);
+}
+.principleWord {
+  font-weight: 800;
+  font-size: clamp(44px, 5.6vw, 84px);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.principleText {
+  font-size: var(--text-lg);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.86);
+  max-width: 54ch;
+}
+@media (max-width: 720px) {
+  .principle {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 32px 0;
+  }
+}
+
+/* ---------- O que esperar ---------- */
+.expect {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 64px;
+}
+.expectItem {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  padding: 28px 0 32px;
+  border-top: 1px solid var(--color-line);
+  min-width: 0;
+}
+.expectItem:nth-last-child(-n + 2) {
+  border-bottom: 1px solid var(--color-line);
+}
+.expectItem h3 {
+  font-size: var(--text-xl);
+}
+.expectItem p {
+  color: var(--color-gray);
+}
+@media (max-width: 720px) {
+  .expect {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .expectItem:nth-last-child(2) {
+    border-bottom: 0;
+  }
+  .expectItem {
+    padding: 24px 0 26px;
+  }
+}

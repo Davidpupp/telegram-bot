@@ -1,7 +1,7 @@
 import { readingMinutes } from "@/components/Markdown";
 
 // Artigos do blog. `body` é Markdown simples (##, ###, parágrafos, listas com "- " e "1. ", citações com "> ",
-// **negrito**, *itálico* e [links](/caminho/)). Os minutos de leitura são calculados a partir do texto.
+// **negrito**, *itálico* e [links](/caminho/)). Os minutos de leitura saem do próprio texto (readingMinutes).
 export type Post = {
   slug: string;
   title: string;
@@ -140,9 +140,9 @@ Se qualquer uma das respostas demorar, você já encontrou o primeiro problema. 
 
 ## 1. Ninguém entende o que você faz nos primeiros segundos
 
-Frases como "Bem-vindo ao nosso site" ou "Qualidade e excelência em soluções" ocupam o lugar mais valioso da página sem dizer nada. O visitante não sabe se está no lugar certo e volta para a busca.
+Frases como “Bem-vindo ao nosso site” ou “Qualidade e excelência em soluções” ocupam o lugar mais valioso da página sem dizer nada. O visitante não sabe se está no lugar certo e volta para a busca.
 
-**Como corrigir:** troque o título por uma frase concreta. Diga o que você faz, para quem e, se o atendimento for local, onde. "Reformas de apartamento com orçamento detalhado e prazo por escrito" diz mais do que qualquer slogan. Veja como montar essa frase em [o que escrever na primeira tela do seu site](/blog/primeira-tela-do-site/).
+**Como corrigir:** troque o título por uma frase concreta. Diga o que você faz, para quem e, se o atendimento for local, onde. “Reformas de apartamento com orçamento detalhado e prazo por escrito” diz mais do que qualquer slogan. Veja como montar essa frase em [o que escrever na primeira tela do seu site](/blog/primeira-tela-do-site/).
 
 ## 2. O caminho até o contato é longo demais
 
@@ -224,46 +224,46 @@ O título é a frase maior da página. Ele não é lugar para slogan, saudação
 
 Evite frases que qualquer concorrente poderia usar:
 
-- "Bem-vindo ao nosso site."
-- "Excelência e compromisso com você."
-- "Soluções inovadoras para o seu negócio."
+- “Bem-vindo ao nosso site.”
+- “Excelência e compromisso com você.”
+- “Soluções inovadoras para o seu negócio.”
 
 Prefira frases concretas. Uma fórmula simples ajuda: **o que você faz, para quem ou onde, e um diferencial que dá para comprovar**.
 
-- "Contabilidade para pequenas empresas, com atendimento pelo WhatsApp."
-- "Reformas de apartamento com orçamento detalhado e prazo por escrito."
-- "Aulas de natação para bebês a partir de seis meses, em turmas pequenas."
+- “Contabilidade para pequenas empresas, com atendimento pelo WhatsApp.”
+- “Reformas de apartamento com orçamento detalhado e prazo por escrito.”
+- “Aulas de natação para bebês a partir de seis meses, em turmas pequenas.”
 
-Repare que nenhum desses exemplos diz "o melhor" ou "o mais completo". Diferencial bom é o que o cliente consegue verificar.
+Repare que nenhum desses exemplos diz “o melhor” ou “o mais completo”. Diferencial bom é o que o cliente consegue verificar.
 
 ### Antes e depois
 
 Veja como uma troca simples muda o que o visitante entende. Os exemplos são ilustrativos:
 
-- Antes: "Soluções em climatização." Depois: "Instalação e limpeza de ar-condicionado para casas e escritórios, com visita agendada pelo site."
-- Antes: "Seu momento especial merece o melhor." Depois: "Bolos de aniversário sob encomenda, com retirada na loja ou entrega no seu bairro."
-- Antes: "Tradição e confiança há anos." Depois: "Escritório de contabilidade para MEI e pequenas empresas, com abertura de empresa e folha de pagamento."
+- Antes: “Soluções em climatização.” Depois: “Instalação e limpeza de ar-condicionado para casas e escritórios, com visita agendada pelo site.”
+- Antes: “Seu momento especial merece o melhor.” Depois: “Bolos de aniversário sob encomenda, com retirada na loja ou entrega no seu bairro.”
+- Antes: “Tradição e confiança há anos.” Depois: “Escritório de contabilidade para MEI e pequenas empresas, com abertura de empresa e folha de pagamento.”
 
-Em todos os casos, o "depois" responde ao que a pessoa queria saber. O "antes" obriga a pessoa a adivinhar.
+Em todos os casos, o “depois” responde ao que a pessoa queria saber. O “antes” obriga a pessoa a adivinhar.
 
 ## O subtítulo: responda à próxima dúvida
 
-Logo abaixo do título, uma ou duas frases curtas resolvem a dúvida que vem em seguida. Pense no que os clientes perguntam primeiro quando ligam: "Vocês atendem no meu bairro?", "Funciona aos sábados?", "Precisa marcar?".
+Logo abaixo do título, uma ou duas frases curtas resolvem a dúvida que vem em seguida. Pense no que os clientes perguntam primeiro quando ligam: “Vocês atendem no meu bairro?”, “Funciona aos sábados?”, “Precisa marcar?”.
 
-Um exemplo: "Atendemos toda a zona sul, de segunda a sábado. Orçamento sem custo, com visita marcada pelo site."
+Um exemplo: “Atendemos toda a zona sul, de segunda a sábado. Orçamento sem custo, com visita marcada pelo site.”
 
 ## O botão: um verbo e uma promessa clara
 
 O botão diz o que acontece ao clicar. Use um verbo de ação ligado ao que a pessoa quer:
 
-- "Pedir orçamento"
-- "Agendar avaliação"
-- "Ver cardápio"
-- "Falar no WhatsApp"
+- “Pedir orçamento”
+- “Agendar avaliação”
+- “Ver cardápio”
+- “Falar no WhatsApp”
 
-Fuja de "Saiba mais" e "Clique aqui", que não dizem nada. Tenha um botão principal e, no máximo, um secundário. Dois botões disputando a atenção acabam dividindo os cliques.
+Fuja de “Saiba mais” e “Clique aqui”, que não dizem nada. Tenha um botão principal e, no máximo, um secundário. Dois botões disputando a atenção acabam dividindo os cliques.
 
-Logo abaixo do botão, uma frase curta pode tirar o receio de clicar, como "Sem compromisso" ou "Resposta no mesmo dia". Só use se for verdade.
+Logo abaixo do botão, uma frase curta pode tirar o receio de clicar, como “Sem compromisso” ou “Resposta no mesmo dia”. Só use se for verdade.
 
 ## A imagem: mostre o que é real
 
@@ -308,7 +308,7 @@ Todo projeto da V8 inclui ajuda com os textos, a começar pela primeira tela. Ve
     date: "2026-08-25",
     author: "Equipe V8 Studio",
     service: "sites",
-    body: `Quando alguém digita "dentista perto de mim" ou "conserto de geladeira em Curitiba", o Google mostra um mapa com empresas e, logo abaixo, uma lista de sites. Estar nessa lista não depende de truque. Depende de deixar claro, para quem procura e para o próprio Google, o que você faz, onde atende e por que merece confiança.
+    body: `Quando alguém digita “dentista perto de mim” ou “conserto de geladeira em Curitiba”, o Google mostra um mapa com empresas e, logo abaixo, uma lista de sites. Estar nessa lista não depende de truque. Depende de deixar claro, para quem procura e para o próprio Google, o que você faz, onde atende e por que merece confiança.
 
 Este é o básico que todo pequeno negócio pode fazer, explicado sem jargão.
 
@@ -328,7 +328,7 @@ Peça avaliações para clientes satisfeitos e responda a todas, inclusive às n
 
 ## Uma página para cada serviço
 
-Se você faz implante, clareamento e aparelho, cada um merece uma página própria. Uma página única chamada "Serviços", com tudo listado, disputa pior na busca do que páginas específicas.
+Se você faz implante, clareamento e aparelho, cada um merece uma página própria. Uma página única chamada “Serviços”, com tudo listado, disputa pior na busca do que páginas específicas.
 
 Cada página de serviço deve responder:
 
@@ -344,14 +344,14 @@ Assim, quem procura exatamente aquele serviço encontra uma página feita para e
 
 Na lista de resultados, cada site aparece com um título e uma descrição curta. Esses textos podem ser escritos por você, página por página. Escreva para pessoas, não para robôs:
 
-- **Título:** o serviço, a cidade e o nome da empresa. Por exemplo: "Clareamento dental em Campinas | Clínica Exemplo".
+- **Título:** o serviço, a cidade e o nome da empresa. Por exemplo: “Clareamento dental em Campinas | Clínica Exemplo”.
 - **Descrição:** uma ou duas frases que dizem o que a pessoa vai encontrar e por que vale clicar.
 
 Cada página precisa de um título diferente. Títulos repetidos confundem quem procura e quem organiza os resultados.
 
 ## Escreva com as palavras do seu cliente
 
-O cliente procura "conserto de celular", não "assistência técnica em dispositivos móveis". Use no site as mesmas palavras que aparecem nas mensagens e nas ligações que você recebe. Cite com naturalidade a cidade e os bairros que você atende.
+O cliente procura “conserto de celular”, não “assistência técnica em dispositivos móveis”. Use no site as mesmas palavras que aparecem nas mensagens e nas ligações que você recebe. Cite com naturalidade a cidade e os bairros que você atende.
 
 ## O básico técnico que não pode faltar
 
@@ -369,12 +369,12 @@ Você não precisa entender de programação, mas vale conferir se o seu site te
 - Texto importante escrito dentro de imagens, como banners com preço ou horário. A busca entende muito melhor o texto escrito na própria página.
 - Páginas com o mesmo texto, trocando só o nome da cidade.
 - Texto copiado de outro site, inclusive do fornecedor.
-- Uma página "em construção" que fica no ar por meses.
+- Uma página “em construção” que fica no ar por meses.
 - Endereço do site trocado sem redirecionar o antigo, o que faz quem chega por um link velho cair numa página de erro.
 
 ## Conteúdo que responde perguntas
 
-Cada dúvida que um cliente tem antes de comprar pode virar um artigo: "Quanto tempo dura um clareamento?", "Preciso de autorização do condomínio para reformar?". Quem procura essas perguntas pode encontrar a sua resposta e, junto com ela, a sua empresa.
+Cada dúvida que um cliente tem antes de comprar pode virar um artigo: “Quanto tempo dura um clareamento?”, “Preciso de autorização do condomínio para reformar?”. Quem procura essas perguntas pode encontrar a sua resposta e, junto com ela, a sua empresa.
 
 Constância vale mais do que volume. Um artigo útil por mês, durante um ano, ajuda mais do que vinte publicados de uma vez e depois esquecidos.
 
@@ -503,7 +503,7 @@ Veja como funcionam as nossas [lojas virtuais](/servicos/lojas-virtuais/). Se a 
 
 É nessa tela do tamanho de uma mão que ele decide se liga, se pede orçamento ou se volta para a busca. Um site desenhado para o computador e ajustado depois para o celular costuma mostrar isso logo de cara.
 
-## O que significa "celular primeiro"
+## O que significa “celular primeiro”
 
 Celular primeiro é começar o projeto pela tela pequena. Primeiro se decide o que é mais importante, em que ordem aparece e o que pode sair. Só depois a página cresce para o computador, ganhando espaço e detalhes.
 

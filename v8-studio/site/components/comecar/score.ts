@@ -120,22 +120,22 @@ const SEGMENT_FOCUS: Record<SegmentKey, string> = {
   outro: "Na conversa, a gente entende o que o seu cliente precisa ver primeiro.",
 };
 
+/** Prazo e investimento numa frase só, conforme cada um combina ou não com o serviço. */
+function fitSentence(a: LeadAnswers, service: ServiceSlug) {
+  const deadlineOk = DEADLINE_FIT[a.deadline][service] >= 0.8;
+  if (a.budget === "proposta") {
+    return deadlineOk
+      ? "O prazo combina com esse tipo de projeto, e a proposta traz opções de tamanho para você escolher."
+      : "O prazo é curto para esse tipo de projeto: a proposta separa o que entra primeiro e traz opções de tamanho.";
+  }
+  const budgetOk = budgetFit(a.budget, service) === 1;
+  if (deadlineOk && budgetOk) return "Prazo e investimento combinam com esse tipo de projeto.";
+  if (deadlineOk) return "O prazo combina, mas o investimento pede um começo enxuto: a proposta mostra o que cabe agora e o que pode vir depois.";
+  if (budgetOk) return "O investimento combina, mas o prazo é curto: a proposta separa o que entra primeiro.";
+  return "Prazo e investimento pedem um começo enxuto: a proposta separa o que entra primeiro e o que pode vir depois.";
+}
+
 /** Dois parágrafos curtos que explicam a indicação. */
 export function resultLines(a: LeadAnswers, service: ServiceSlug): [string, string] {
-  const first = `Para ${GOAL_PHRASE[a.goal]}, a proposta parte de ${SERVICE_PITCH[service]}.`;
-  const d = DEADLINE_FIT[a.deadline][service];
-  const deadline =
-    a.deadline === "sempressa"
-      ? "Sem pressa, dá para planejar e testar cada etapa."
-      : d >= 0.8
-        ? "O prazo que você quer combina com esse tipo de projeto."
-        : "O prazo é curto para esse tipo de projeto, então a proposta separa o que entra primeiro.";
-  const b = budgetFit(a.budget, service);
-  const budget =
-    a.budget === "proposta"
-      ? "Sem faixa definida, a proposta mostra opções de tamanho e você escolhe."
-      : b === 1
-        ? "A faixa de investimento comporta esse tipo de projeto."
-        : "A faixa de investimento pede um começo enxuto: a proposta mostra o que cabe agora e o que pode vir depois.";
-  return [first, `${SEGMENT_FOCUS[a.segment]} ${deadline} ${budget}`];
+  return [`Para ${GOAL_PHRASE[a.goal]}, a proposta parte de ${SERVICE_PITCH[service]}.`, `${SEGMENT_FOCUS[a.segment]} ${fitSentence(a, service)}`];
 }

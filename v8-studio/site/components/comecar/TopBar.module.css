@@ -1,0 +1,76 @@
+/* Moldura da página Começar: papel de ponta a ponta, topo mínimo e o card no centro. */
+.shell {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--color-paper);
+  display: flex;
+  flex-direction: column;
+}
+.main {
+  flex: 1 0 auto;
+}
+
+.bar {
+  flex: 0 0 auto;
+  height: var(--header-h);
+  padding-top: env(safe-area-inset-top, 0px);
+  box-sizing: content-box;
+}
+.inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.back {
+  display: inline-flex;
+  align-items: center;
+  height: 44px;
+  padding-inline: 18px;
+  margin-right: -18px;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-gray);
+  white-space: nowrap;
+}
+.back:hover {
+  color: var(--color-ink);
+  background: var(--color-white);
+}
+
+/* Página */
+.page {
+  padding-block: 24px 96px;
+}
+.wrap {
+  max-width: 880px;
+  margin-inline: auto;
+}
+.intro {
+  text-align: center;
+  color: var(--color-gray);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+.note {
+  text-align: center;
+  color: var(--color-gray);
+  font-size: var(--text-sm);
+  margin-top: 24px;
+}
+
+@media (max-width: 720px) {
+  .back {
+    margin-right: -12px;
+    padding-inline: 12px;
+  }
+  .page {
+    padding-block: 8px 64px;
+  }
+  .intro {
+    margin-bottom: 16px;
+  }
+}

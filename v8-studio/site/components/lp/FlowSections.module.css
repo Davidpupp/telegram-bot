@@ -1,0 +1,9 @@
+/* Etapas: a grade global tem 4 colunas; com 3 ou 5 etapas, a linha se ajusta (no celular as etapas empilham). */
+@media (min-width: 721px) {
+  .three :global(.steps) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .five :global(.steps) { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+
+.note { margin-top: 28px; }
+
+.faqHead { align-content: start; }

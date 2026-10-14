@@ -1,0 +1,265 @@
+/* Listagem do blog: topo, filtro, destaque e grade de cards. Sem transition nem animation:
+   o movimento vem das molas do Remotion (Reveal, Lift e o traço do filtro). */
+
+/* ---------- Topo ---------- */
+.hero {
+  padding-block: 104px var(--section);
+}
+@media (max-width: 720px) {
+  .hero {
+    padding-top: 56px;
+  }
+}
+
+/* ---------- Filtro por categoria ---------- */
+.filterRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px 40px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+.filter {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 28px;
+  row-gap: 2px;
+  min-width: 0;
+}
+.filterBtn {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-lg);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: var(--color-gray);
+  padding: 10px 0 14px;
+  white-space: nowrap;
+}
+.filterBtn:hover,
+.filterBtn[aria-pressed="true"] {
+  color: var(--color-ink);
+}
+.filterBar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--color-blue);
+  pointer-events: none;
+}
+.count {
+  font-size: var(--text-sm);
+  color: var(--color-gray);
+  padding-bottom: 14px;
+}
+@media (max-width: 720px) {
+  .filterRow {
+    margin-bottom: 28px;
+  }
+  .filter {
+    column-gap: 20px;
+  }
+  .filterBtn {
+    font-size: var(--text-md);
+    padding: 8px 0 12px;
+  }
+  .count {
+    padding-bottom: 0;
+    margin-top: 8px;
+  }
+}
+
+/* No celular, o globals.css dá padding de 28px a todo .card e passa por cima do .card--flush.
+   Os cards com capa precisam continuar sem padding (a capa encosta nas bordas). */
+.flush:global(.card) {
+  padding: 0;
+}
+
+/* ---------- Destaque ---------- */
+.list {
+  display: grid;
+  gap: var(--gutter);
+}
+.featured {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  min-height: 460px;
+}
+.featuredCover {
+  background: var(--color-paper);
+  display: flex;
+  align-items: flex-end;
+  padding: 48px;
+  min-width: 0;
+}
+.featuredCover span {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(56px, 6.8vw, 108px);
+  letter-spacing: -0.045em;
+  line-height: 0.92;
+  color: var(--color-blue);
+  max-width: 9ch;
+  text-wrap: balance;
+}
+.featuredBody {
+  padding: 44px 44px 36px;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: 32px;
+  min-width: 0;
+}
+.featuredText {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+.meta {
+  font-size: var(--text-xs);
+  color: var(--color-gray);
+}
+.featured .featuredTitle {
+  font-size: clamp(30px, 2.9vw, 42px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.04;
+  margin: 0;
+}
+.featured .featuredExcerpt {
+  font-size: var(--text-md);
+  line-height: 1.55;
+}
+.featuredFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-line);
+}
+.featuredTime {
+  font-size: var(--text-sm);
+  color: var(--color-gray);
+  white-space: nowrap;
+}
+.featuredGo {
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-weight: 600;
+  color: var(--color-blue);
+}
+.arrow {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--color-blue);
+  color: var(--color-white);
+  flex: 0 0 auto;
+}
+@media (max-width: 1024px) {
+  .featured {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+  .featuredCover {
+    aspect-ratio: 16 / 9;
+    padding: 36px;
+  }
+  .featuredCover span {
+    font-size: clamp(44px, 9vw, 84px);
+  }
+}
+@media (max-width: 720px) {
+  .featuredCover {
+    aspect-ratio: 4 / 3;
+    padding: 28px;
+  }
+  .featuredCover span {
+    font-size: 46px;
+  }
+  .featuredBody {
+    padding: 28px 28px 24px;
+    gap: 24px;
+  }
+  .featured .featuredTitle {
+    font-size: 28px;
+  }
+  .featuredFoot {
+    padding-top: 20px;
+  }
+  .arrow {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* ---------- Grade: pares em cima, trios embaixo ---------- */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--gutter);
+}
+.cards > * {
+  grid-column: span 2;
+  min-width: 0;
+}
+.cards > .cellWide {
+  grid-column: span 3;
+}
+.cardBody {
+  grid-template-rows: auto auto 1fr auto;
+}
+.cardTime {
+  padding-top: 6px;
+  font-size: var(--text-xs);
+}
+.wide :global(.post-card__cover) {
+  aspect-ratio: 2 / 1;
+  padding: 36px;
+}
+.wide :global(.post-card__cover span) {
+  font-size: clamp(44px, 4.6vw, 62px);
+}
+@media (max-width: 1024px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .cards > *,
+  .cards > .cellWide {
+    grid-column: span 1;
+  }
+  .cards > .cellTabletFull {
+    grid-column: 1 / -1;
+  }
+  .wide :global(.post-card__cover) {
+    aspect-ratio: 16 / 10;
+    padding: 28px;
+  }
+  .wide :global(.post-card__cover span) {
+    font-size: 44px;
+  }
+  .cellTabletFull :global(.post-card__cover) {
+    aspect-ratio: 21 / 9;
+  }
+}
+@media (max-width: 720px) {
+  .cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cards > *,
+  .cards > .cellWide,
+  .cards > .cellTabletFull {
+    grid-column: 1 / -1;
+  }
+  .cellTabletFull :global(.post-card__cover) {
+    aspect-ratio: 16 / 10;
+  }
+}

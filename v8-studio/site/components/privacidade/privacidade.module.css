@@ -1,0 +1,264 @@
+/* Página de privacidade: topo, resumo sobre o azul, texto com sumário e formulário de pedidos.
+   Sem transition nem animation: o movimento vem das molas do Remotion. */
+
+/* ---------- Topo ---------- */
+.hero {
+  padding-block: 104px 96px;
+  display: grid;
+  gap: 24px;
+  justify-items: start;
+}
+.hero h1 {
+  max-width: 14ch;
+}
+.hero :global(.lead) {
+  max-width: 62ch;
+}
+.updated {
+  font-size: var(--text-sm);
+  color: var(--color-gray);
+}
+@media (max-width: 720px) {
+  .hero {
+    padding-block: 56px 64px;
+    gap: 18px;
+  }
+}
+
+/* ---------- Em resumo (sobre o azul) ---------- */
+.summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gutter);
+}
+.summary > * {
+  min-width: 0;
+}
+.summaryCard:global(.card) {
+  padding: 32px 30px;
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+.summary .summaryCard h3 {
+  font-size: var(--text-xl);
+  margin: 0;
+}
+@media (max-width: 1024px) {
+  .summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 720px) {
+  .summary {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .summaryCard:global(.card) {
+    padding: 28px;
+  }
+}
+
+/* ---------- Texto com sumário ---------- */
+.layout {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--gutter);
+}
+.aside {
+  grid-column: 1 / span 3;
+  min-width: 0;
+}
+.asideSticky {
+  position: sticky;
+  top: calc(var(--header-h) + 32px);
+}
+.main {
+  grid-column: 5 / span 8;
+  min-width: 0;
+}
+@media (max-width: 1024px) {
+  .aside {
+    display: none;
+  }
+  .main {
+    grid-column: 1 / -1;
+  }
+}
+
+.policy :global(h2),
+.anchor {
+  scroll-margin-top: calc(var(--header-h) + 28px);
+}
+.policy > :global(h2:first-child) {
+  margin-top: 0;
+}
+.policy :global(h2:focus) {
+  outline: none;
+}
+.policy :global(h3) {
+  font-size: 22px;
+}
+
+/* Dado que o usuário ainda precisa preencher. */
+.fill {
+  background: rgba(35, 71, 214, 0.1);
+  color: var(--color-blue-ink);
+  font-weight: 600;
+  padding: 0.05em 0.22em;
+  border-radius: 6px;
+}
+
+.controller:global(.card) {
+  padding: 6px 32px;
+  display: grid;
+}
+.controller > div {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: 4px 24px;
+  align-items: baseline;
+  padding: 16px 0;
+}
+.controller > div + div {
+  border-top: 1px solid var(--color-line);
+}
+.controller dt {
+  font-size: var(--text-sm);
+  color: var(--color-gray);
+  line-height: 1.4;
+}
+.controller dd {
+  margin: 0;
+  font-size: var(--text-md);
+  line-height: 1.5;
+}
+@media (max-width: 720px) {
+  .controller:global(.card) {
+    padding: 4px 24px;
+  }
+  .controller > div {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.bases {
+  display: grid;
+  border-top: 1px solid var(--color-line);
+}
+.bases > div {
+  display: grid;
+  gap: 4px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--color-line);
+}
+.bases dt {
+  font-weight: 600;
+  line-height: 1.45;
+}
+.bases dd {
+  margin: 0;
+  color: var(--color-gray);
+  line-height: 1.55;
+}
+
+/* ---------- Pedido ---------- */
+.request {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 40px 72px;
+  align-items: start;
+}
+.requestText {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+}
+.formCard:global(.card) {
+  padding: 40px;
+}
+@media (max-width: 1024px) {
+  .request {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 720px) {
+  .formCard:global(.card) {
+    padding: 28px 22px;
+  }
+}
+
+.form {
+  display: grid;
+  gap: 24px;
+}
+.form [aria-invalid="true"] {
+  border-color: var(--color-bad);
+}
+/* Dentro do card, o globals.css pinta todo <p> de cinza; a mensagem de erro precisa continuar vermelha. */
+.form :global(.field__error) {
+  color: var(--color-bad);
+}
+.select {
+  position: relative;
+  display: block;
+}
+.select select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 52px;
+  cursor: pointer;
+  text-overflow: ellipsis;
+}
+.select svg {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  translate: 0 -50%;
+  pointer-events: none;
+  color: var(--color-gray);
+}
+.checkField {
+  display: grid;
+  gap: 8px;
+}
+.submitRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  padding-top: 4px;
+}
+.submitNote {
+  font-size: var(--text-sm);
+  color: var(--color-gray);
+}
+
+.done {
+  display: grid;
+  gap: 14px;
+  justify-items: start;
+}
+.doneTitle {
+  font-size: clamp(32px, 3.4vw, 44px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+.doneTitle:focus {
+  outline: none;
+}
+.done p {
+  font-size: var(--text-lg);
+  line-height: 1.5;
+}
+.done .doneNote {
+  font-size: var(--text-sm);
+}
+.doneActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}

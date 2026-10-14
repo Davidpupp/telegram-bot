@@ -27,6 +27,7 @@ const noop = () => null;
 /**
  * <Player> do Remotion embutido na página: toca sozinho quando aparece na tela, pausa quando sai,
  * sem controles nem som. Com movimento reduzido, mostra só o quadro-pôster da composição.
+ * Começa mudo: sem isso o Player espera um clique liberar o áudio do navegador antes de andar.
  */
 export function MotionPlayer({ id, label, inputProps, className, style, restartKey, gate = true, loop = true }: Props) {
   const meta = COMPOSITIONS[id];
@@ -86,6 +87,7 @@ export function MotionPlayer({ id, label, inputProps, className, style, restartK
           errorFallback={noop}
           renderLoading={noop}
           acknowledgeRemotionLicense
+          initiallyMuted
           style={{ width: "100%", height: "100%" }}
         />
       ) : null}

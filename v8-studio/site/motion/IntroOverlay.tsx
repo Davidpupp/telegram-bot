@@ -55,6 +55,8 @@ export function IntroOverlay() {
     p.addEventListener("frameupdate", onFrame);
     p.addEventListener("ended", onEnded);
     p.play();
+    // Trava de segurança: a página nunca fica presa atrás da abertura.
+    const failsafe = window.setTimeout(onEnded, 6000);
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onEnded();
     };
@@ -63,6 +65,7 @@ export function IntroOverlay() {
       p.removeEventListener("frameupdate", onFrame);
       p.removeEventListener("ended", onEnded);
       window.removeEventListener("keydown", onKey);
+      window.clearTimeout(failsafe);
     };
   }, [state, end]);
 
@@ -88,6 +91,7 @@ export function IntroOverlay() {
             errorFallback={noop}
             renderLoading={noop}
             acknowledgeRemotionLicense
+            initiallyMuted
             style={{ width: "100%", height: "100%" }}
           />
         </div>

@@ -68,10 +68,13 @@ export function Header() {
     return () => window.removeEventListener("scroll", f);
   }, []);
 
-  useEffect(() => {
+  // Fecha os menus quando a rota muda (ajuste de estado durante a renderização, sem efeito extra).
+  const [lastPath, setLastPath] = useState(pathname);
+  if (pathname !== lastPath) {
+    setLastPath(pathname);
     setMenu(false);
     setSub(false);
-  }, [pathname]);
+  }
 
   useEffect(() => {
     const root = document.documentElement;

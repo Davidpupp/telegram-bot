@@ -1,18 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
+import { INTRO_CLASS, INTRO_KEY } from "./intro-constants";
 
 // Estado da abertura do logo (só na Home, uma vez por sessão). As animações do topo da página esperam
 // a abertura terminar para não acontecerem escondidas atrás dela.
-import { INTRO_CLASS, INTRO_KEY } from "./intro-constants";
-
 export { INTRO_CLASS, INTRO_KEY };
 const DONE_EVENT = "v8:intro-done";
 
 let done = false;
+// Decisão lida uma vez por carregamento: o React de desenvolvimento remonta a página e limpa a classe do <html>.
+let decided: boolean | null = null;
 
-export const isIntroPending = () =>
-  typeof document !== "undefined" && !done && document.documentElement.classList.contains(INTRO_CLASS);
+/** true se o script do <head> pediu a abertura neste carregamento. */
+export const introRequested = () => {
+  if (typeof document === "undefined") return false;
+  if (decided === null) decided = document.documentElement.classList.contains(INTRO_CLASS);
+  return decided;
+};
+
+export const isIntroPending = () => introRequested() && !done;
 
 export function finishIntro() {
   if (done) return;
@@ -23,17 +30,16 @@ export function finishIntro() {
   window.dispatchEvent(new Event(DONE_EVENT));
 }
 
+const subscribe = (cb: () => void) => {
+  window.addEventListener(DONE_EVENT, cb);
+  return () => window.removeEventListener(DONE_EVENT, cb);
+};
+
 /** Libera o quadro inicial das animações: true quando não há abertura pendente ou quando ela terminou. */
 export function useIntroGate() {
-  const [open, setOpen] = useState(false);
-  useEffect(() => {
-    if (!isIntroPending()) {
-      setOpen(true);
-      return;
-    }
-    const f = () => setOpen(true);
-    window.addEventListener(DONE_EVENT, f);
-    return () => window.removeEventListener(DONE_EVENT, f);
-  }, []);
-  return open;
+  return useSyncExternalStore(
+    subscribe,
+    () => !isIntroPending(),
+    () => false,
+  );
 }

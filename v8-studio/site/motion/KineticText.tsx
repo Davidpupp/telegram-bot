@@ -1,6 +1,6 @@
 "use client";
 
-import { createElement, Fragment, useContext, useRef } from "react";
+import { Fragment, useContext, useRef } from "react";
 import { FloodContext } from "./flood-context";
 import { useInView, useReducedMotion, useTimeline } from "./hooks";
 import { useIntroGate } from "./intro";
@@ -66,5 +66,11 @@ export function KineticText({ text, as = "h2", className, id, delay = 0, stagger
     </Fragment>
   ));
 
-  return createElement(as, { ref, id, className: cx("kinetic", live && "is-live", className) }, children);
+  // O tipo é fixado em h2 só para o TypeScript; a tag real vem de `as`.
+  const Tag = as as "h2";
+  return (
+    <Tag ref={ref as React.RefObject<HTMLHeadingElement>} id={id} className={cx("kinetic", live && "is-live", className)}>
+      {children}
+    </Tag>
+  );
 }

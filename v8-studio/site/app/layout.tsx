@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { preload } from "react-dom";
 import { Hydrated } from "@/components/site/Hydrated";
 import { JS_FLAG_SCRIPT } from "@/motion/intro-constants";
 import "./globals.css";
@@ -17,11 +18,12 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
+  // Uma dica de pré-carregamento por fonte (o React evita duplicar a tag).
+  preload("/fonts/bricolage-latin.woff2", { as: "font", type: "font/woff2", crossOrigin: "" });
+  preload("/fonts/inter-latin.woff2", { as: "font", type: "font/woff2", crossOrigin: "" });
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <head>
-        <link rel="preload" href="/fonts/bricolage-latin.woff2" as="font" type="font/woff2" crossOrigin="" />
-        <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossOrigin="" />
         <script dangerouslySetInnerHTML={{ __html: JS_FLAG_SCRIPT }} />
       </head>
       <body>

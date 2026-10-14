@@ -1,40 +1,37 @@
 "use client";
 
-import { RefObject, useEffect, useRef, useState } from "react";
+import { RefObject, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { spring } from "remotion";
 import { FPS, SPRINGS } from "./lib/timing";
 
 type SpringConfig = { stiffness: number; damping: number; mass: number };
 
+const noopSubscribe = () => () => {};
+
 /** true depois da hidratação. Antes disso o HTML do servidor fica visível e parado. */
 export function useMounted() {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  return mounted;
+  return useSyncExternalStore(
+    noopSubscribe,
+    () => true,
+    () => false,
+  );
+}
+
+/** Lê uma media query sem renderização extra; no servidor e na hidratação vale false. */
+export function useMediaQuery(query: string) {
+  return useSyncExternalStore(
+    (cb) => {
+      const m = window.matchMedia(query);
+      m.addEventListener("change", cb);
+      return () => m.removeEventListener("change", cb);
+    },
+    () => window.matchMedia(query).matches,
+    () => false,
+  );
 }
 
 export function useReducedMotion() {
-  const [reduce, setReduce] = useState(false);
-  useEffect(() => {
-    const m = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const f = () => setReduce(m.matches);
-    f();
-    m.addEventListener("change", f);
-    return () => m.removeEventListener("change", f);
-  }, []);
-  return reduce;
-}
-
-export function useMediaQuery(query: string) {
-  const [match, setMatch] = useState(false);
-  useEffect(() => {
-    const m = window.matchMedia(query);
-    const f = () => setMatch(m.matches);
-    f();
-    m.addEventListener("change", f);
-    return () => m.removeEventListener("change", f);
-  }, [query]);
-  return match;
+  return useMediaQuery("(prefers-reduced-motion: reduce)");
 }
 
 export function useInView<T extends Element>(
@@ -45,10 +42,6 @@ export function useInView<T extends Element>(
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (!("IntersectionObserver" in window)) {
-      setInView(true);
-      return;
-    }
     const io = new IntersectionObserver(
       ([e]) => {
         if (e.isIntersecting) {
@@ -95,7 +88,7 @@ export function useTimeline({ play, duration = Infinity, reducedFrame }: { play:
   return frame;
 }
 
-/** Valor que persegue `target` com a mola do Remotion (hover, abrir e fechar). */
+/** Valor que persegue `target` com a mola do Remotion (hover, abrir e fechar). Com movimento reduzido, pula direto. */
 export function useSpringTo(target: number, config: SpringConfig = SPRINGS.snappy) {
   const reduce = useReducedMotion();
   const [value, setValue] = useState(target);
@@ -104,7 +97,7 @@ export function useSpringTo(target: number, config: SpringConfig = SPRINGS.snapp
     const st = s.current;
     if (reduce) {
       st.v = target;
-      setValue(target);
+      st.to = target;
       return;
     }
     if (st.to === target && st.v === target) return;
@@ -129,5 +122,5 @@ export function useSpringTo(target: number, config: SpringConfig = SPRINGS.snapp
     // config é estável (vem de SPRINGS)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [target, reduce]);
-  return value;
+  return reduce ? target : value;
 }

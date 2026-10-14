@@ -1,13 +1,23 @@
 "use client";
 
 import { Player, type PlayerRef } from "@remotion/player";
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
-import LogoIntro, { type LogoIntroProps, type Rect } from "./compositions/LogoIntro";
-import { INTRO_CLASS, finishIntro, isIntroPending } from "./intro";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import LogoIntro, { type LogoIntroProps } from "./compositions/LogoIntro";
+import { useMounted } from "./hooks";
+import { INTRO_CLASS, finishIntro, introRequested } from "./intro";
 
 const noop = () => null;
-// Decisão tomada uma vez por carregamento (o React de desenvolvimento monta os efeitos duas vezes).
-let decided: boolean | null = null;
+const noopSubscribe = () => () => {};
+const subscribeResize = (cb: () => void) => {
+  window.addEventListener("resize", cb);
+  return () => window.removeEventListener("resize", cb);
+};
+const readViewport = () => `${Math.round(window.innerWidth)}x${Math.round(window.innerHeight)}`;
+/** Onde o logo do cabeçalho está: é ali que o logo da abertura pousa. */
+const readDock = () => {
+  const r = document.querySelector("[data-logo-mark]")?.getBoundingClientRect();
+  return r && r.width > 0 ? `${r.left},${r.top},${r.width},${r.height}` : "";
+};
 
 /**
  * Abertura do logo na Home: só na primeira visita da sessão e nunca com movimento reduzido.
@@ -15,73 +25,69 @@ let decided: boolean | null = null;
  * se ela aparece (classe intro-pending no <html>).
  */
 export function IntroOverlay() {
-  const [state, setState] = useState<"idle" | "playing" | "done">("idle");
-  const [size, setSize] = useState({ w: 1920, h: 1080 });
-  const [props, setProps] = useState<LogoIntroProps>({ dock: null });
+  const requested = useSyncExternalStore(noopSubscribe, introRequested, () => true);
+  const mounted = useMounted();
+  const viewport = useSyncExternalStore(subscribeResize, readViewport, () => "1920x1080");
+  const dockKey = useSyncExternalStore(subscribeResize, readDock, () => "");
+  const [closed, setClosed] = useState(false);
   const player = useRef<PlayerRef>(null);
 
-  const end = useCallback(() => {
+  const [w, h] = viewport.split("x").map(Number);
+  const props = useMemo<LogoIntroProps>(() => {
+    if (!dockKey) return { dock: null };
+    const [x, y, dw, dh] = dockKey.split(",").map(Number);
+    return { dock: { x, y, w: dw, h: dh } };
+  }, [dockKey]);
+
+  const close = useCallback(() => {
     finishIntro();
     document.documentElement.classList.remove(INTRO_CLASS);
-    setState("done");
+    setClosed(true);
   }, []);
 
+  // O React de desenvolvimento remonta a página e limpa a classe do <html>: devolve enquanto a abertura toca.
   useLayoutEffect(() => {
-    if (decided === null) decided = isIntroPending();
-    if (!decided) {
-      setState("done");
-      return;
-    }
-    document.documentElement.classList.add(INTRO_CLASS);
-    const el = document.querySelector("[data-logo-mark]");
-    const r = el?.getBoundingClientRect();
-    const dock: Rect | null = r && r.width > 0 ? { x: r.left, y: r.top, w: r.width, h: r.height } : null;
-    setSize({ w: Math.round(window.innerWidth), h: Math.round(window.innerHeight) });
-    setProps({ dock });
-    setState("playing");
-  }, []);
+    if (requested && !closed) document.documentElement.classList.add(INTRO_CLASS);
+  }, [requested, closed]);
 
   useEffect(() => {
-    if (state !== "playing") return;
+    if (!mounted || !requested || closed) return;
     const p = player.current;
     if (!p) return;
     const onFrame = (e: { detail: { frame: number } }) => {
       if (e.detail.frame >= 176) finishIntro();
     };
-    const onEnded = () => {
-      decided = false;
-      end();
-    };
     p.addEventListener("frameupdate", onFrame);
-    p.addEventListener("ended", onEnded);
+    p.addEventListener("ended", close);
     p.play();
     // Trava de segurança: a página nunca fica presa atrás da abertura.
-    const failsafe = window.setTimeout(onEnded, 6000);
+    const failsafe = window.setTimeout(close, 6000);
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onEnded();
+      if (e.key === "Escape") close();
     };
     window.addEventListener("keydown", onKey);
     return () => {
       p.removeEventListener("frameupdate", onFrame);
-      p.removeEventListener("ended", onEnded);
+      p.removeEventListener("ended", close);
       window.removeEventListener("keydown", onKey);
       window.clearTimeout(failsafe);
     };
-  }, [state, end]);
+  }, [mounted, requested, closed, close]);
 
-  if (state === "done") return null;
+  if (!requested || closed) return null;
+  const playing = mounted;
 
   return (
-    <div className={state === "playing" ? "intro is-playing" : "intro"}>
-      {state === "playing" ? (
+    <div className={playing ? "intro is-playing" : "intro"}>
+      {playing ? (
         <div className="intro__stage" aria-hidden="true">
           <Player
             ref={player}
             component={LogoIntro}
             inputProps={props}
             durationInFrames={200}
-            compositionWidth={size.w}
-            compositionHeight={size.h}
+            compositionWidth={w}
+            compositionHeight={h}
             fps={60}
             controls={false}
             clickToPlay={false}
@@ -96,14 +102,7 @@ export function IntroOverlay() {
           />
         </div>
       ) : null}
-      <button
-        type="button"
-        className="intro__skip"
-        onClick={() => {
-          decided = false;
-          end();
-        }}
-      >
+      <button type="button" className="intro__skip" onClick={close}>
         Pular abertura
       </button>
     </div>

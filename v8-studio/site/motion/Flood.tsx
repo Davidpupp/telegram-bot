@@ -1,6 +1,6 @@
 "use client";
 
-import { createElement, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { FloodContext } from "./flood-context";
 import { useInView, useReducedMotion, useTimeline } from "./hooks";
 import { cx } from "./lib/cx";
@@ -44,15 +44,14 @@ export function Flood({ as = "section", tone = "blue", origin = [0.5, 0], classN
   const r = p * coverRadius(ox, oy, box.w, box.h);
   const bg = live && !reduce && p < 1 ? { clipPath: `circle(${r.toFixed(1)}px at ${ox.toFixed(1)}px ${oy.toFixed(1)}px)` } : undefined;
   const ctx = useMemo(() => ({ ready }), [ready]);
+  const Tag = as as "section";
 
   return (
     <FloodContext.Provider value={ctx}>
-      {createElement(
-        as,
-        { ref, id, className: cx("flood", `flood--${tone}`, tone === "blue" && "band", live && "is-live", className), ...aria },
-        <div className="flood__bg" style={bg} aria-hidden="true" />,
-        children,
-      )}
+      <Tag ref={ref as React.RefObject<HTMLElement>} id={id} className={cx("flood", `flood--${tone}`, tone === "blue" && "band", live && "is-live", className)} {...aria}>
+        <div className="flood__bg" style={bg} aria-hidden="true" />
+        {children}
+      </Tag>
     </FloodContext.Provider>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { createElement, useContext, useRef } from "react";
+import { useContext, useRef } from "react";
 import { FloodContext } from "./flood-context";
 import { useInView, useReducedMotion, useTimeline } from "./hooks";
 import { useIntroGate } from "./intro";
@@ -37,5 +37,10 @@ export function Reveal({ as = "div", className, id, children, delay = 0, y = 28,
     const u = sp(frame, delay, "soft");
     if (Math.abs(1 - u) > 0.0005) s = { ...style, opacity: clamp(u * 1.5), transform: `translateY(${((1 - u) * y).toFixed(2)}px)` };
   }
-  return createElement(as, { ref, id, className: cx("reveal", live && "is-live", className), style: s }, children);
+  const Tag = as as "div";
+  return (
+    <Tag ref={ref as React.RefObject<HTMLDivElement>} id={id} className={cx("reveal", live && "is-live", className)} style={s}>
+      {children}
+    </Tag>
+  );
 }

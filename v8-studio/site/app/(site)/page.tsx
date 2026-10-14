@@ -108,6 +108,9 @@ export default function Home() {
             </LiftLink>
           ))}
         </Carousel>
+        <p className="container small muted" style={{ marginTop: 28 }}>
+          Demonstrações ilustrativas com negócios fictícios.
+        </p>
       </Flood>
 
       {/* 4 · Como funciona (branco) */}

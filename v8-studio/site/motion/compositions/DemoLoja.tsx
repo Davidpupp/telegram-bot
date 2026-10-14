@@ -19,7 +19,7 @@ const PRODUCTS: { name: string; price: string; art: Art }[] = [
   { name: "Bule Terra", price: "R$ 189,00", art: "pot" },
 ];
 const PICK = 1;
-const GRID = { y: 196, w: 204, h: 340, gap: 18, img: 190, btnTop: 276, btnH: 48 };
+const GRID = { y: 206, w: 204, h: 340, gap: 18, img: 190, btnTop: 276, btnH: 48 };
 const cardX = (i: number) => 36 + i * (GRID.w + GRID.gap);
 const ADD = { x: OX + cardX(PICK) + GRID.w / 2 + 10, y: OY + GRID.y + GRID.btnTop + GRID.btnH / 2 + 4 };
 const THUMB_FROM = { x: OX + cardX(PICK) + GRID.w / 2, y: OY + GRID.y + GRID.img / 2 };
@@ -35,8 +35,8 @@ const T = {
   open: 172,
   buy: 214,
   paid: 222,
-  toast: 262,
-  exit: 356,
+  toast: 266,
+  exit: 352,
 };
 
 /** Peças de cerâmica em traço, na cor da marca. */
@@ -115,203 +115,202 @@ const DemoLoja: React.FC = () => {
   const cur = pathAt(f, keys);
 
   return (
-    <AbsoluteFill style={{ backgroundColor: C.paper, opacity: 1 - exit, transform: `translateY(${-30 * exit}px)` }}>
-      <div style={{ opacity: clamp(pageIn * 1.5), transform: `translateY(${(1 - pageIn) * 40}px)` }}>
-        <Browser x={B.x} y={B.y} w={B.w} h={B.h} bar={B.bar} url={BRAND.url} radius={26}>
-          {/* Cabeçalho da loja */}
-          <div style={{ position: "absolute", left: 36, top: 22, fontFamily: FONT.display, fontWeight: 800, fontSize: 30, color: BRAND.color, letterSpacing: "-0.03em" }}>
-            {BRAND.name}
-          </div>
-          {[
-            ["Coleção", 456],
-            ["Sobre", 563],
-          ].map(([label, x]) => (
-            <div key={label} style={{ position: "absolute", left: x, top: 28, fontFamily: FONT.ui, fontWeight: 500, fontSize: 20, lineHeight: "26px", color: C.gray }}>
-              {label}
+    <AbsoluteFill style={{ backgroundColor: C.paper }}>
+      <AbsoluteFill style={{ opacity: 1 - exit, transform: `translateY(${-30 * exit}px)` }}>
+        <div style={{ opacity: clamp(pageIn * 1.5), transform: `translateY(${(1 - pageIn) * 40}px)` }}>
+          <Browser x={B.x} y={B.y} w={B.w} h={B.h} bar={B.bar} url={BRAND.url} radius={26}>
+            {/* Cabeçalho da loja */}
+            <div style={{ position: "absolute", left: 36, top: 22, fontFamily: FONT.display, fontWeight: 800, fontSize: 30, color: BRAND.color, letterSpacing: "-0.03em" }}>
+              {BRAND.name}
             </div>
-          ))}
-          <div style={{ position: "absolute", left: CART.x, top: CART.y, width: CART.size, height: CART.size, transform: `scale(${1 + 0.14 * cartBump})` }}>
-            <BagIcon size={CART.size} />
-          </div>
-          <div
-            style={{
-              position: "absolute",
-              left: CART.x + CART.size - 12,
-              top: CART.y - 8,
-              width: 28,
-              height: 28,
-              borderRadius: 14,
-              background: BRAND.color,
-              overflow: "hidden",
-              transform: `scale(${badge})`,
-              boxShadow: `0 0 0 3px ${C.white}`,
-            }}
-          >
-            <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: FONT.ui, fontWeight: 700, fontSize: 18, color: C.white, transform: `translateY(${(1 - digit) * 100}%)` }}>
-              1
-            </div>
-          </div>
-
-          {/* Vitrine */}
-          <Words text="Cerâmica feita à mão." frame={f} start={10} size={46} color={C.ink} align="left" x={36} y={88} width={648} />
-          <div style={{ position: "absolute", left: 36, top: 148, fontFamily: FONT.ui, fontSize: 20, color: C.gray, ...rise(sp(f, 22, "soft"), 14) }}>
-            Peças únicas, feitas em pequenos lotes.
-          </div>
-          {PRODUCTS.map((p, i) => {
-            const press = i === PICK ? bump(f, T.add, 12) : 0;
-            return (
-              <div
-                key={p.name}
-                style={{
-                  position: "absolute",
-                  left: cardX(i),
-                  top: GRID.y,
-                  width: GRID.w,
-                  height: GRID.h,
-                  borderRadius: 22,
-                  background: C.white,
-                  boxShadow: `inset 0 0 0 2px ${C.line}`,
-                  overflow: "hidden",
-                  ...rise(sp(f, 30 + i * 8, "soft"), 60),
-                }}
-              >
-                <div style={{ position: "absolute", left: 0, top: 0, right: 0, height: GRID.img, background: BRAND.soft, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <Ware art={p.art} size={128} />
-                </div>
-                <div style={{ position: "absolute", left: 18, top: 206, fontFamily: FONT.ui, fontWeight: 600, fontSize: 21, color: C.ink }}>{p.name}</div>
-                <div style={{ position: "absolute", left: 18, top: 236, fontFamily: FONT.ui, fontWeight: 500, fontSize: 20, color: C.gray }}>{p.price}</div>
-                <div
-                  style={{
-                    position: "absolute",
-                    left: 16,
-                    right: 16,
-                    top: GRID.btnTop,
-                    height: GRID.btnH,
-                    borderRadius: GRID.btnH / 2,
-                    background: BRAND.color,
-                    color: C.white,
-                    fontFamily: FONT.ui,
-                    fontWeight: 600,
-                    fontSize: 19,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    transform: `scale(${1 - 0.06 * press})`,
-                  }}
-                >
-                  Adicionar
-                </div>
+            {[
+              ["Coleção", 456],
+              ["Sobre", 563],
+            ].map(([label, x]) => (
+              <div key={label} style={{ position: "absolute", left: x, top: 28, fontFamily: FONT.ui, fontWeight: 500, fontSize: 20, lineHeight: "26px", color: C.gray }}>
+                {label}
               </div>
-            );
-          })}
-
-          {/* Carrinho aberto */}
-          {f >= T.open ? (
+            ))}
+            <div style={{ position: "absolute", left: CART.x, top: CART.y, width: CART.size, height: CART.size, transform: `scale(${1 + 0.14 * cartBump})` }}>
+              <BagIcon size={CART.size} />
+            </div>
             <div
               style={{
                 position: "absolute",
-                left: POP.x,
-                top: POP.y,
-                width: POP.w,
-                height: POP.h,
-                borderRadius: 24,
-                background: C.white,
-                boxShadow: SHADOW_HI,
+                left: CART.x + CART.size - 12,
+                top: CART.y - 8,
+                width: 28,
+                height: 28,
+                borderRadius: 14,
+                background: BRAND.color,
                 overflow: "hidden",
-                opacity: clamp(pop * 1.6),
-                transformOrigin: "88% 0%",
-                transform: `translateY(${(1 - pop) * -16}px) scale(${lerp(0.9, 1, pop)})`,
-                zIndex: 50,
+                transform: `scale(${badge})`,
+                boxShadow: `0 0 0 3px ${C.white}`,
               }}
             >
-              <div style={{ position: "absolute", inset: 0, opacity: clamp(1 - paid * 1.6), transform: `translateY(${-30 * paid}px)` }}>
-                <div style={{ position: "absolute", left: 24, top: 22, fontFamily: FONT.display, fontWeight: 800, fontSize: 28, letterSpacing: "-0.03em", color: C.ink }}>Seu carrinho</div>
-                <div style={{ position: "absolute", left: 24, top: 74, width: 76, height: 76, borderRadius: 16, background: BRAND.soft, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <Ware art={PRODUCTS[PICK].art} size={58} />
-                </div>
-                <div style={{ position: "absolute", left: 116, top: 84, fontFamily: FONT.ui, fontWeight: 600, fontSize: 21, color: C.ink }}>{PRODUCTS[PICK].name}</div>
-                <div style={{ position: "absolute", left: 116, top: 114, fontFamily: FONT.ui, fontSize: 19, color: C.gray }}>1 × {PRODUCTS[PICK].price}</div>
-                <div style={{ position: "absolute", left: 24, right: 24, top: 172, height: 2, background: C.line }} />
-                <div style={{ position: "absolute", left: 24, top: 192, fontFamily: FONT.ui, fontWeight: 500, fontSize: 20, color: C.gray }}>Total</div>
-                <div style={{ position: "absolute", right: 24, top: 190, fontFamily: FONT.ui, fontWeight: 700, fontSize: 22, color: C.ink }}>{PRODUCTS[PICK].price}</div>
+              <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: FONT.ui, fontWeight: 700, fontSize: 18, color: C.white, transform: `translateY(${(1 - digit) * 100}%)` }}>
+                1
+              </div>
+            </div>
+
+            {/* Vitrine */}
+            <Words text={"Cerâmica\nfeita à mão."} frame={f} start={10} size={46} color={C.ink} align="left" x={36} y={84} width={300} />
+            {PRODUCTS.map((p, i) => {
+              const press = i === PICK ? bump(f, T.add, 12) : 0;
+              return (
                 <div
+                  key={p.name}
                   style={{
                     position: "absolute",
-                    left: 24,
-                    right: 24,
-                    top: 240,
-                    height: 58,
-                    borderRadius: 29,
-                    background: BRAND.color,
-                    color: C.white,
-                    fontFamily: FONT.ui,
-                    fontWeight: 600,
-                    fontSize: 20,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    transform: `scale(${1 - 0.05 * bump(f, T.buy, 12)})`,
+                    left: cardX(i),
+                    top: GRID.y,
+                    width: GRID.w,
+                    height: GRID.h,
+                    borderRadius: 22,
+                    background: C.white,
+                    boxShadow: `inset 0 0 0 2px ${C.line}`,
+                    overflow: "hidden",
+                    ...rise(sp(f, 30 + i * 8, "soft"), 60),
                   }}
                 >
-                  Finalizar compra
+                  <div style={{ position: "absolute", left: 0, top: 0, right: 0, height: GRID.img, background: BRAND.soft, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <Ware art={p.art} size={128} />
+                  </div>
+                  <div style={{ position: "absolute", left: 18, top: 206, fontFamily: FONT.ui, fontWeight: 600, fontSize: 21, color: C.ink }}>{p.name}</div>
+                  <div style={{ position: "absolute", left: 18, top: 236, fontFamily: FONT.ui, fontWeight: 500, fontSize: 20, color: C.gray }}>{p.price}</div>
+                  <div
+                    style={{
+                      position: "absolute",
+                      left: 16,
+                      right: 16,
+                      top: GRID.btnTop,
+                      height: GRID.btnH,
+                      borderRadius: GRID.btnH / 2,
+                      background: BRAND.color,
+                      color: C.white,
+                      fontFamily: FONT.ui,
+                      fontWeight: 600,
+                      fontSize: 19,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      transform: `scale(${1 - 0.06 * press})`,
+                    }}
+                  >
+                    Adicionar
+                  </div>
                 </div>
-              </div>
+              );
+            })}
+
+            {/* Carrinho aberto */}
+            {f >= T.open ? (
               <div
                 style={{
                   position: "absolute",
-                  inset: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 14,
-                  opacity: clamp(paid * 1.5),
-                  transform: `translateY(${(1 - paid) * 30}px)`,
+                  left: POP.x,
+                  top: POP.y,
+                  width: POP.w,
+                  height: POP.h,
+                  borderRadius: 24,
+                  background: C.white,
+                  boxShadow: SHADOW_HI,
+                  overflow: "hidden",
+                  opacity: clamp(pop * 3),
+                  transformOrigin: "88% 0%",
+                  transform: `translateY(${(1 - pop) * -16}px) scale(${lerp(0.9, 1, pop)})`,
+                  zIndex: 50,
                 }}
               >
-                <div style={{ transform: `scale(${lerp(0.5, 1, clamp(check))})`, opacity: clamp(check * 2) }}>
-                  <CheckBadge size={76} bg={BRAND.color} fg={C.white} />
+                <div style={{ position: "absolute", inset: 0, opacity: clamp(1 - paid * 1.6), transform: `translateY(${-30 * paid}px)` }}>
+                  <div style={{ position: "absolute", left: 24, top: 22, fontFamily: FONT.display, fontWeight: 800, fontSize: 28, letterSpacing: "-0.03em", color: C.ink }}>Seu carrinho</div>
+                  <div style={{ position: "absolute", left: 24, top: 74, width: 76, height: 76, borderRadius: 16, background: BRAND.soft, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <Ware art={PRODUCTS[PICK].art} size={58} />
+                  </div>
+                  <div style={{ position: "absolute", left: 116, top: 84, fontFamily: FONT.ui, fontWeight: 600, fontSize: 21, color: C.ink }}>{PRODUCTS[PICK].name}</div>
+                  <div style={{ position: "absolute", left: 116, top: 114, fontFamily: FONT.ui, fontSize: 19, color: C.gray }}>1 × {PRODUCTS[PICK].price}</div>
+                  <div style={{ position: "absolute", left: 24, right: 24, top: 172, height: 2, background: C.line }} />
+                  <div style={{ position: "absolute", left: 24, top: 192, fontFamily: FONT.ui, fontWeight: 500, fontSize: 20, color: C.gray }}>Total</div>
+                  <div style={{ position: "absolute", right: 24, top: 190, fontFamily: FONT.ui, fontWeight: 700, fontSize: 22, color: C.ink }}>{PRODUCTS[PICK].price}</div>
+                  <div
+                    style={{
+                      position: "absolute",
+                      left: 24,
+                      right: 24,
+                      top: 240,
+                      height: 58,
+                      borderRadius: 29,
+                      background: BRAND.color,
+                      color: C.white,
+                      fontFamily: FONT.ui,
+                      fontWeight: 600,
+                      fontSize: 20,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      transform: `scale(${1 - 0.05 * bump(f, T.buy, 12)})`,
+                    }}
+                  >
+                    Finalizar compra
+                  </div>
                 </div>
-                <div style={{ fontFamily: FONT.display, fontWeight: 800, fontSize: 28, letterSpacing: "-0.03em", color: C.ink, marginTop: 6 }}>Pagamento aprovado</div>
-                <div style={{ fontFamily: FONT.ui, fontSize: 19, color: C.gray }}>Obrigado pela compra.</div>
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 14,
+                    opacity: clamp(paid * 1.5),
+                    transform: `translateY(${(1 - paid) * 30}px)`,
+                  }}
+                >
+                  <div style={{ transform: `scale(${lerp(0.5, 1, clamp(check))})`, opacity: clamp(check * 2) }}>
+                    <CheckBadge size={76} bg={BRAND.color} fg={C.white} />
+                  </div>
+                  <div style={{ fontFamily: FONT.display, fontWeight: 800, fontSize: 28, letterSpacing: "-0.03em", color: C.ink, marginTop: 6 }}>Pagamento aprovado</div>
+                  <div style={{ fontFamily: FONT.ui, fontSize: 19, color: C.gray }}>Obrigado pela compra.</div>
+                </div>
               </div>
-            </div>
-          ) : null}
-        </Browser>
-      </div>
-
-      {showThumb ? (
-        <div
-          style={{
-            position: "absolute",
-            left: tx - 60,
-            top: ty - 60,
-            width: 120,
-            height: 120,
-            borderRadius: 26,
-            background: BRAND.soft,
-            boxShadow: shadowK(clamp(lift) * 1.2),
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            transform: `scale(${thumbScale}) rotate(${-10 * Math.sin(Math.PI * fly)}deg)`,
-            zIndex: 55,
-          }}
-        >
-          <Ware art={PRODUCTS[PICK].art} size={92} />
+            ) : null}
+          </Browser>
         </div>
-      ) : null}
-      {f >= T.toast ? <Toast x={270} y={lerp(-130, 22, toast)} w={500} h={96} title="Novo pedido recebido" sub={`${BRAND.full} · agora`} z={60} /> : null}
-      <Ripple x={ADD.x} y={ADD.y} frame={f} start={T.add} color={BRAND.color} />
-      <Ripple x={CART_C.x} y={CART_C.y} frame={f} start={T.land} color={BRAND.color} maxR={46} dur={20} />
-      <Ripple x={BUY.x} y={BUY.y} frame={f} start={T.buy} color={BRAND.color} maxR={90} />
-      <Cursor
-        x={cur.x}
-        y={cur.y}
-        size={48}
-        scale={1 - 0.14 * (bump(f, T.add, 9) + bump(f, T.buy, 9))}
-        opacity={ramp(f, 60, 64) * (1 - ramp(f, 262, 276))}
-      />
+
+        {showThumb ? (
+          <div
+            style={{
+              position: "absolute",
+              left: tx - 60,
+              top: ty - 60,
+              width: 120,
+              height: 120,
+              borderRadius: 26,
+              background: BRAND.soft,
+              boxShadow: shadowK(clamp(lift) * 1.2),
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              transform: `scale(${thumbScale}) rotate(${-10 * Math.sin(Math.PI * fly)}deg)`,
+              zIndex: 55,
+            }}
+          >
+            <Ware art={PRODUCTS[PICK].art} size={92} />
+          </div>
+        ) : null}
+        {f >= T.toast ? <Toast x={270} y={lerp(-130, 22, toast)} w={500} h={96} title="Novo pedido recebido" sub={`${BRAND.full} · agora`} z={60} /> : null}
+        <Ripple x={ADD.x} y={ADD.y} frame={f} start={T.add} color={BRAND.color} />
+        <Ripple x={CART_C.x} y={CART_C.y} frame={f} start={T.land} color={BRAND.color} maxR={46} dur={20} />
+        <Ripple x={BUY.x} y={BUY.y} frame={f} start={T.buy} color={BRAND.color} maxR={90} />
+        <Cursor
+          x={cur.x}
+          y={cur.y}
+          size={48}
+          scale={1 - 0.14 * (bump(f, T.add, 9) + bump(f, T.buy, 9))}
+          opacity={ramp(f, 60, 64) * (1 - ramp(f, 262, 276))}
+        />
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };

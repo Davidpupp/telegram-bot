@@ -108,9 +108,9 @@ const DemoSite: React.FC = () => {
 
   // Troca de página: a anterior sai para a esquerda, a nova entra pela direita.
   const out1 = sp(f, T.toServ, "snappy");
-  const in1 = sp(f, T.toServ + 4, "base");
+  const in1 = sp(f, T.toServ + 2, "base");
   const out2 = sp(f, T.toCont, "snappy");
-  const in2 = sp(f, T.toCont + 4, "base");
+  const in2 = sp(f, T.toCont + 2, "base");
 
   // Sublinhado do menu desliza de item em item.
   const u0 = sp(f, 14, "snappy");
@@ -148,206 +148,208 @@ const DemoSite: React.FC = () => {
   const clicks = [T.toServ, T.toCont, T.field, T.send];
 
   return (
-    <AbsoluteFill style={{ backgroundColor: C.paper, opacity: 1 - exit, transform: `translateY(${-30 * exit}px)` }}>
-      <div style={{ opacity: clamp(pageIn * 1.5), transform: `translateY(${(1 - pageIn) * 40}px)` }}>
-        <Browser x={B.x} y={B.y} w={B.w} h={B.h} bar={B.bar} url={url} radius={26}>
-          {/* Menu */}
-          <div style={{ position: "absolute", left: 36, top: 24, fontFamily: FONT.display, fontWeight: 800, fontSize: 30, color: BRAND.color, letterSpacing: "-0.03em" }}>
-            {BRAND.name}
-          </div>
-          {NAV.map((n, i) => (
-            <div
-              key={n.label}
-              style={{
-                position: "absolute",
-                left: n.x,
-                top: NAV_Y,
-                fontFamily: FONT.ui,
-                fontWeight: 500,
-                fontSize: 20,
-                lineHeight: "26px",
-                whiteSpace: "nowrap",
-                color: interpolateColors(clamp(active[i]), [0, 1], [C.gray, C.ink]),
-              }}
-            >
-              {n.label}
+    <AbsoluteFill style={{ backgroundColor: C.paper }}>
+      <AbsoluteFill style={{ opacity: 1 - exit, transform: `translateY(${-30 * exit}px)` }}>
+        <div style={{ opacity: clamp(pageIn * 1.5), transform: `translateY(${(1 - pageIn) * 40}px)` }}>
+          <Browser x={B.x} y={B.y} w={B.w} h={B.h} bar={B.bar} url={url} radius={26}>
+            {/* Menu */}
+            <div style={{ position: "absolute", left: 36, top: 24, fontFamily: FONT.display, fontWeight: 800, fontSize: 30, color: BRAND.color, letterSpacing: "-0.03em" }}>
+              {BRAND.name}
             </div>
-          ))}
-          <div style={{ position: "absolute", left: ux, top: NAV_Y + 34, width: uw, height: 3, borderRadius: 2, background: BRAND.color }} />
-
-          {/* Início */}
-          {f < T.toServ + 30 ? (
-            <div style={{ position: "absolute", inset: 0, opacity: clamp(1 - out1 * 1.6), transform: `translateX(${-70 * out1}px)` }}>
-              <Words text={"Arquitetura\npara viver bem."} frame={f} start={12} size={54} color={C.ink} align="left" x={36} y={96} width={648} letterSpacing="-0.035em" />
-              <div style={{ position: "absolute", left: 36, top: 224, fontFamily: FONT.ui, fontSize: 20, color: C.gray, ...rise(sp(f, 26, "soft"), 16) }}>
-                Casas, interiores e reformas do projeto à obra.
+            {NAV.map((n, i) => (
+              <div
+                key={n.label}
+                style={{
+                  position: "absolute",
+                  left: n.x,
+                  top: NAV_Y,
+                  fontFamily: FONT.ui,
+                  fontWeight: 500,
+                  fontSize: 20,
+                  lineHeight: "26px",
+                  whiteSpace: "nowrap",
+                  color: interpolateColors(clamp(active[i]), [0, 1], [C.gray, C.ink]),
+                }}
+              >
+                {n.label}
               </div>
+            ))}
+            <div style={{ position: "absolute", left: ux, top: NAV_Y + 34, width: uw, height: 3, borderRadius: 2, background: BRAND.color }} />
+
+            {/* Início */}
+            {f < T.toServ + 30 ? (
+              <div style={{ position: "absolute", inset: 0, opacity: clamp(1 - out1 * 1.3), transform: `translateX(${-70 * out1}px)` }}>
+                <Words text={"Arquitetura\npara viver bem."} frame={f} start={12} size={54} color={C.ink} align="left" x={36} y={96} width={648} letterSpacing="-0.035em" />
+                <div style={{ position: "absolute", left: 36, top: 224, fontFamily: FONT.ui, fontSize: 20, color: C.gray, ...rise(sp(f, 26, "soft"), 16) }}>
+                  Casas, interiores e reformas do projeto à obra.
+                </div>
+                <div
+                  style={{
+                    position: "absolute",
+                    left: 36,
+                    top: 272,
+                    width: 648,
+                    height: 280,
+                    borderRadius: 22,
+                    background: BRAND.soft,
+                    display: "flex",
+                    alignItems: "flex-end",
+                    justifyContent: "center",
+                    paddingBottom: 30,
+                    ...rise(sp(f, 34, "soft"), 50),
+                  }}
+                >
+                  <HouseScene p={sp(f, 44, "heavy")} />
+                </div>
+              </div>
+            ) : null}
+
+            {/* Serviços */}
+            {f >= T.toServ && f < T.toCont + 30 ? (
               <div
                 style={{
                   position: "absolute",
-                  left: 36,
-                  top: 272,
-                  width: 648,
-                  height: 280,
-                  borderRadius: 22,
-                  background: BRAND.soft,
-                  display: "flex",
-                  alignItems: "flex-end",
-                  justifyContent: "center",
-                  paddingBottom: 30,
-                  ...rise(sp(f, 34, "soft"), 50),
+                  inset: 0,
+                  opacity: clamp(in1 * 1.6) * clamp(1 - out2 * 1.3),
+                  transform: `translateX(${90 * (1 - in1) - 70 * out2}px)`,
                 }}
               >
-                <HouseScene p={sp(f, 44, "heavy")} />
+                <Words text="Do projeto à obra." frame={f} start={T.toServ + 2} size={54} color={C.ink} align="left" x={36} y={96} width={648} letterSpacing="-0.035em" />
+                <div style={{ position: "absolute", left: 36, top: 166, fontFamily: FONT.ui, fontSize: 20, color: C.gray, ...rise(sp(f, T.toServ + 14, "soft"), 16) }}>
+                  Cada etapa com prazo e orçamento claros.
+                </div>
+                {SERVICES.map(([t, d], i) => (
+                  <div
+                    key={t}
+                    style={{
+                      position: "absolute",
+                      left: 36 + i * 222,
+                      top: 214,
+                      width: 204,
+                      height: 290,
+                      borderRadius: 22,
+                      background: C.white,
+                      boxShadow: `inset 0 0 0 2px ${C.line}`,
+                      overflow: "hidden",
+                      ...rise(sp(f, T.toServ + 20 + i * 8, "soft"), 60),
+                    }}
+                  >
+                    <div style={{ position: "absolute", left: 0, top: 0, right: 0, height: 168, background: BRAND.soft, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <ServiceArt kind={i as 0 | 1 | 2} />
+                    </div>
+                    <div style={{ position: "absolute", left: 20, top: 184, fontFamily: FONT.ui, fontWeight: 600, fontSize: 24, lineHeight: "30px", color: C.ink }}>{t}</div>
+                    <div style={{ position: "absolute", left: 20, right: 14, top: 218, fontFamily: FONT.ui, fontSize: 19, lineHeight: "25px", color: C.gray }}>{d}</div>
+                  </div>
+                ))}
               </div>
-            </div>
-          ) : null}
+            ) : null}
 
-          {/* Serviços */}
-          {f >= T.toServ && f < T.toCont + 30 ? (
-            <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                opacity: clamp(in1 * 1.6) * clamp(1 - out2 * 1.6),
-                transform: `translateX(${90 * (1 - in1) - 70 * out2}px)`,
-              }}
-            >
-              <Words text="Do projeto à obra." frame={f} start={T.toServ + 10} size={54} color={C.ink} align="left" x={36} y={96} width={648} letterSpacing="-0.035em" />
-              <div style={{ position: "absolute", left: 36, top: 166, fontFamily: FONT.ui, fontSize: 20, color: C.gray, ...rise(sp(f, T.toServ + 22, "soft"), 16) }}>
-                Cada etapa com prazo e orçamento claros.
-              </div>
-              {SERVICES.map(([t, d], i) => (
+            {/* Contato */}
+            {f >= T.toCont ? (
+              <div style={{ position: "absolute", inset: 0, opacity: clamp(in2 * 1.6), transform: `translateX(${90 * (1 - in2)}px)` }}>
+                <Words text="Conte sua ideia." frame={f} start={T.toCont + 2} size={54} color={C.ink} align="left" x={36} y={96} width={648} letterSpacing="-0.035em" />
+                <div style={{ position: "absolute", left: 36, top: 166, fontFamily: FONT.ui, fontSize: 20, color: C.gray, ...rise(sp(f, T.toCont + 14, "soft"), 16) }}>
+                  Escreva o que você quer construir ou reformar.
+                </div>
                 <div
-                  key={t}
                   style={{
                     position: "absolute",
-                    left: 36 + i * 222,
-                    top: 214,
-                    width: 204,
-                    height: 290,
-                    borderRadius: 22,
+                    left: FORM.x,
+                    top: FORM.y,
+                    width: FORM.w,
+                    height: FORM.h,
+                    borderRadius: 24,
                     background: C.white,
                     boxShadow: `inset 0 0 0 2px ${C.line}`,
-                    overflow: "hidden",
-                    ...rise(sp(f, T.toServ + 28 + i * 8, "soft"), 60),
+                    ...rise(sp(f, T.toCont + 20, "soft"), 50),
                   }}
                 >
-                  <div style={{ position: "absolute", left: 0, top: 0, right: 0, height: 168, background: BRAND.soft, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <ServiceArt kind={i as 0 | 1 | 2} />
-                  </div>
-                  <div style={{ position: "absolute", left: 20, top: 184, fontFamily: FONT.ui, fontWeight: 600, fontSize: 24, lineHeight: "30px", color: C.ink }}>{t}</div>
-                  <div style={{ position: "absolute", left: 20, right: 14, top: 218, fontFamily: FONT.ui, fontSize: 19, lineHeight: "25px", color: C.gray }}>{d}</div>
-                </div>
-              ))}
-            </div>
-          ) : null}
-
-          {/* Contato */}
-          {f >= T.toCont ? (
-            <div style={{ position: "absolute", inset: 0, opacity: clamp(in2 * 1.6), transform: `translateX(${90 * (1 - in2)}px)` }}>
-              <Words text="Conte sua ideia." frame={f} start={T.toCont + 10} size={54} color={C.ink} align="left" x={36} y={96} width={648} letterSpacing="-0.035em" />
-              <div style={{ position: "absolute", left: 36, top: 166, fontFamily: FONT.ui, fontSize: 20, color: C.gray, ...rise(sp(f, T.toCont + 22, "soft"), 16) }}>
-                Escreva o que você quer construir ou reformar.
-              </div>
-              <div
-                style={{
-                  position: "absolute",
-                  left: FORM.x,
-                  top: FORM.y,
-                  width: FORM.w,
-                  height: FORM.h,
-                  borderRadius: 24,
-                  background: C.white,
-                  boxShadow: `inset 0 0 0 2px ${C.line}`,
-                  ...rise(sp(f, T.toCont + 28, "soft"), 50),
-                }}
-              >
-                <div style={{ position: "absolute", left: 32, top: 26, fontFamily: FONT.ui, fontWeight: 600, fontSize: 19, color: C.ink }}>Sua mensagem</div>
-                <div
-                  style={{
-                    position: "absolute",
-                    left: 32,
-                    right: 32,
-                    top: 62,
-                    height: 104,
-                    borderRadius: 16,
-                    boxShadow: `inset 0 0 0 2px ${focus ? BRAND.color : C.line}${focus ? `, 0 0 0 4px ${BRAND.soft}` : ""}`,
-                    padding: "16px 18px",
-                    fontFamily: FONT.ui,
-                    fontSize: 20,
-                    lineHeight: "28px",
-                    color: C.ink,
-                  }}
-                >
-                  {typed}
-                  <span style={{ display: "inline-block", width: 2, height: 24, marginLeft: 2, verticalAlign: "-5px", background: BRAND.color, opacity: caret ? 1 : 0 }} />
-                </div>
-                <div
-                  style={{
-                    position: "absolute",
-                    left: 32,
-                    right: 32,
-                    top: 196,
-                    height: 60,
-                    borderRadius: 30,
-                    background: interpolateColors(clamp(sent), [0, 1], [BRAND.color, BRAND.soft]),
-                    overflow: "hidden",
-                    transform: `scale(${1 - 0.04 * press})`,
-                  }}
-                >
+                  <div style={{ position: "absolute", left: 32, top: 26, fontFamily: FONT.ui, fontWeight: 600, fontSize: 19, color: C.ink }}>Sua mensagem</div>
                   <div
                     style={{
                       position: "absolute",
-                      inset: 0,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
+                      left: 32,
+                      right: 32,
+                      top: 62,
+                      height: 104,
+                      borderRadius: 16,
+                      boxShadow: `inset 0 0 0 2px ${focus ? BRAND.color : C.line}${focus ? `, 0 0 0 4px ${BRAND.soft}` : ""}`,
+                      padding: "16px 18px",
                       fontFamily: FONT.ui,
-                      fontWeight: 600,
                       fontSize: 20,
-                      color: C.white,
-                      transform: `translateY(${-60 * sent}px)`,
+                      lineHeight: "28px",
+                      color: C.ink,
                     }}
                   >
-                    Enviar mensagem
+                    {typed}
+                    <span style={{ display: "inline-block", width: 2, height: 24, marginLeft: 2, verticalAlign: "-5px", background: BRAND.color, opacity: caret ? 1 : 0 }} />
                   </div>
                   <div
                     style={{
                       position: "absolute",
-                      inset: 0,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: 10,
-                      fontFamily: FONT.ui,
-                      fontWeight: 600,
-                      fontSize: 20,
-                      color: BRAND.color,
-                      transform: `translateY(${60 * (1 - sent)}px)`,
+                      left: 32,
+                      right: 32,
+                      top: 196,
+                      height: 60,
+                      borderRadius: 30,
+                      background: interpolateColors(clamp(sent), [0, 1], [BRAND.color, BRAND.soft]),
+                      overflow: "hidden",
+                      transform: `scale(${1 - 0.04 * press})`,
                     }}
                   >
-                    <CheckBadge size={30} bg={BRAND.color} fg={C.white} />
-                    Mensagem enviada
+                    <div
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontFamily: FONT.ui,
+                        fontWeight: 600,
+                        fontSize: 20,
+                        color: C.white,
+                        transform: `translateY(${-60 * sent}px)`,
+                      }}
+                    >
+                      Enviar mensagem
+                    </div>
+                    <div
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: 10,
+                        fontFamily: FONT.ui,
+                        fontWeight: 600,
+                        fontSize: 20,
+                        color: BRAND.color,
+                        transform: `translateY(${60 * (1 - sent)}px)`,
+                      }}
+                    >
+                      <CheckBadge size={30} bg={BRAND.color} fg={C.white} />
+                      Mensagem enviada
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ) : null}
-        </Browser>
-      </div>
-      {f >= T.toast ? <Toast x={270} y={lerp(-130, 22, toast)} w={500} h={96} title="Nova mensagem pelo site" sub={`${BRAND.full} · agora`} z={60} /> : null}
-      <Ripple x={S.x} y={S.y} frame={f} start={T.toServ} color={BRAND.color} />
-      <Ripple x={K.x} y={K.y} frame={f} start={T.toCont} color={BRAND.color} />
-      <Ripple x={FIELD.x} y={FIELD.y} frame={f} start={T.field} color={BRAND.color} />
-      <Ripple x={SEND.x} y={SEND.y} frame={f} start={T.send} color={BRAND.color} maxR={90} />
-      <Cursor
-        x={cur.x}
-        y={cur.y}
-        size={48}
-        scale={1 - 0.14 * clicks.reduce((a, c) => a + bump(f, c, 9), 0)}
-        opacity={ramp(f, 52, 56) * (1 - ramp(f, 404, 418))}
-      />
+            ) : null}
+          </Browser>
+        </div>
+        {f >= T.toast ? <Toast x={270} y={lerp(-130, 22, toast)} w={500} h={96} title="Nova mensagem pelo site" sub={`${BRAND.full} · agora`} z={60} /> : null}
+        <Ripple x={S.x} y={S.y} frame={f} start={T.toServ} color={BRAND.color} />
+        <Ripple x={K.x} y={K.y} frame={f} start={T.toCont} color={BRAND.color} />
+        <Ripple x={FIELD.x} y={FIELD.y} frame={f} start={T.field} color={BRAND.color} />
+        <Ripple x={SEND.x} y={SEND.y} frame={f} start={T.send} color={BRAND.color} maxR={90} />
+        <Cursor
+          x={cur.x}
+          y={cur.y}
+          size={48}
+          scale={1 - 0.14 * clicks.reduce((a, c) => a + bump(f, c, 9), 0)}
+          opacity={ramp(f, 52, 56) * (1 - ramp(f, 404, 418))}
+        />
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };

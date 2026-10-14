@@ -9,10 +9,10 @@ export const DEMO_BY_SERVICE = {
 
 export const DEMO_LABELS: Record<string, string> = {
   "landing-pages": "Animação: uma landing page se monta, alguém preenche o formulário e o pedido chega como notificação.",
-  sites: "Animação: um site institucional troca de página entre início, serviços e contato.",
-  "lojas-virtuais": "Animação: um produto vai para o carrinho e o pagamento é aprovado.",
-  sistemas: "Animação: um painel organiza pedidos e agenda da equipe.",
-  aplicativos: "Animação: um aplicativo no celular recebe um aviso e confirma um agendamento.",
+  sites: "Animação: o site de um escritório de arquitetura troca de página e recebe uma mensagem pelo contato.",
+  "lojas-virtuais": "Animação: um vaso vai para a sacola, a compra é finalizada e o pagamento é aprovado.",
+  sistemas: "Animação: um painel marca um pedido como pronto e recebe um pedido novo no topo da lista.",
+  aplicativos: "Animação: o app de uma academia recebe um aviso de aula e o aluno confirma a presença.",
 };
 
 export const STEPS = [

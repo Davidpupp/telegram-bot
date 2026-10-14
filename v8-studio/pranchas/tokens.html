@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tokens — V8 Studio</title>
+<meta name="description" content="Prancha de tokens do V8 Studio: cores, tipografia, raios, sombras e espaçamentos.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/styles.css">
+<style>
+  .board { display: grid; gap: 72px; }
+  .board > *, .spec > * { min-width: 0; }
+  .board h2 { font-size: var(--h3); margin-bottom: 24px; }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: var(--gutter); }
+  .swatch { border-radius: 22px; overflow: hidden; border: 1px solid var(--color-line); }
+  .swatch i { display: block; height: 120px; }
+  .swatch div { padding: 14px 16px; font-size: var(--text-sm); }
+  .swatch b { display: block; font-family: var(--font-display); }
+  .swatch code { color: var(--color-gray); font-family: var(--font-body); }
+  .type-row { display: grid; grid-template-columns: 220px 1fr; gap: var(--gutter); padding: 24px 0; border-top: 1px solid var(--color-line); align-items: baseline; }
+  .type-row:last-child { border-bottom: 1px solid var(--color-line); }
+  .type-row .meta { font-size: var(--text-sm); color: var(--color-gray); }
+  .type-row .meta b { display: block; color: var(--color-ink); font-weight: 600; }
+  .shapes { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 40px 24px; }
+  .shape { display: grid; gap: 14px; font-size: var(--text-sm); }
+  .shape i { display: block; height: 120px; background: var(--color-white); }
+  .shape b { font-family: var(--font-display); }
+  .shape code { color: var(--color-gray); font-family: var(--font-body); font-size: var(--text-xs); }
+  .space { display: grid; gap: 14px; font-size: var(--text-sm); }
+  .space div { display: grid; grid-template-columns: 220px 1fr; gap: var(--gutter); align-items: center; }
+  .space i { display: block; height: 18px; background: var(--color-blue); border-radius: 4px; }
+  .space code { color: var(--color-gray); font-family: var(--font-body); }
+  .cols12 { display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--gutter); }
+  .cols12 i { display: block; height: 48px; background: rgba(35,71,214,0.12); border: 1px solid rgba(35,71,214,0.3); border-radius: 6px; }
+  @media (max-width: 720px) { .type-row, .space div { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div data-header></div>
+<main>
+  <section class="section container board">
+    <div class="section-head">
+      <p class="kicker">Prancha · Tokens</p>
+      <h1 style="font-size:var(--h2)">Cores, tipografia, raios, sombras e espaçamentos</h1>
+      <p class="lead muted measure">Tudo que está nesta prancha vive em <code>assets/styles.css</code> como variável CSS. Nomes das camadas em inglês; textos em português.</p>
+    </div>
+
+    <div>
+      <h2>Color</h2>
+      <div class="swatches">
+        <div class="swatch"><i style="background:#FFFFFF;border-bottom:1px solid var(--color-line)"></i><div><b>Color/White</b><code>#FFFFFF</code> · fundo da página e dos cards</div></div>
+        <div class="swatch"><i style="background:#2347D6"></i><div><b>Color/Royal Blue</b><code>#2347D6</code> · faixas chapadas, botões, links de ação</div></div>
+        <div class="swatch"><i style="background:#1A37AE"></i><div><b>Color/Royal Blue Pressed</b><code>#1A37AE</code> · hover do botão azul</div></div>
+        <div class="swatch"><i style="background:#0B1220"></i><div><b>Color/Ink</b><code>#0B1220</code> · texto principal</div></div>
+        <div class="swatch"><i style="background:#5B6478"></i><div><b>Color/Gray</b><code>#5B6478</code> · texto de apoio</div></div>
+        <div class="swatch"><i style="background:#F5F7FB"></i><div><b>Color/Paper</b><code>#F5F7FB</code> · fundo neutro de blocos secundários</div></div>
+        <div class="swatch"><i style="background:#E3E7F0"></i><div><b>Color/Line</b><code>#E3E7F0</code> · linhas finas, bordas de campo</div></div>
+        <div class="swatch"><i style="background:#1B8A5A"></i><div><b>Color/Status Ok</b><code>#1B8A5A</code> · só no admin (ponto de status)</div></div>
+        <div class="swatch"><i style="background:#C98A12"></i><div><b>Color/Status Warn</b><code>#C98A12</code> · só no admin</div></div>
+        <div class="swatch"><i style="background:#C8323B"></i><div><b>Color/Status Bad</b><code>#C8323B</code> · só no admin, erros de campo</div></div>
+      </div>
+      <p class="small muted" style="margin-top:16px">Regra: branco e azul royal chapados, como duas folhas de papel. Nunca gradiente, nunca duas faixas azuis seguidas, nunca modo escuro.</p>
+    </div>
+
+    <div>
+      <h2>Type</h2>
+      <div class="type-row"><div class="meta"><b>Type/Display 1</b>Bricolage Grotesque 700 · 88 px desktop / 44 px mobile · tracking −0,03em · altura 1,02</div><h1>Seu negócio merece um site que vende.</h1></div>
+      <div class="type-row"><div class="meta"><b>Type/Display 2</b>Bricolage Grotesque 700 · 56 / 34 px · tracking −0,02em</div><h2 style="margin:0">Você se identifica?</h2></div>
+      <div class="type-row"><div class="meta"><b>Type/Heading 3</b>Bricolage Grotesque 700 · 28 / 24 px</div><h3>Design que converte</h3></div>
+      <div class="type-row"><div class="meta"><b>Type/Heading 4</b>Bricolage Grotesque 700 · 24 px</div><h4>Seu Instagram não passa credibilidade</h4></div>
+      <div class="type-row"><div class="meta"><b>Type/Lead</b>Inter 400 · 20 px · altura 1,5</div><p class="lead">Clientes procuram no Google, encontram o concorrente e fecham com ele.</p></div>
+      <div class="type-row"><div class="meta"><b>Type/Body</b>Inter 400 · 17 px · altura 1,6</div><p>O site certo responde a pergunta do cliente antes de ele ligar para o concorrente. Esse é o nosso trabalho.</p></div>
+      <div class="type-row"><div class="meta"><b>Type/Small</b>Inter 400 · 15 px</div><p class="small muted">Leva 2 minutos. Sem compromisso.</p></div>
+      <div class="type-row"><div class="meta"><b>Type/Label</b>Inter 600 · 13 px (cabeçalhos de tabela)</div><p style="font-size:13px;font-weight:600;color:var(--color-gray)">Pontuação</p></div>
+      <div class="type-row"><div class="meta"><b>Type/Button</b>Inter 600 · 17 px</div><a class="btn btn--primary" href="../comecar.html">Começar</a></div>
+      <p class="small muted" style="margin-top:16px">Sem fonte serifada em lugar nenhum. Títulos em sentence case; nada em caixa alta.</p>
+    </div>
+
+    <div>
+      <h2>Radius &amp; Shadow</h2>
+      <div class="shapes">
+        <div class="shape"><i style="border-radius:28px;box-shadow:var(--shadow-card)"></i><b>Radius/Card · 28 px</b><code>Shadow/Card: 0 24px 64px -24px rgba(13,32,96,.28), 0 8px 24px -12px rgba(13,32,96,.16)</code></div>
+        <div class="shape"><i style="border-radius:28px;box-shadow:var(--shadow-card-hover);transform:translateY(-8px)"></i><b>Shadow/Card Hover · sobe 8 px</b><code>0 40px 88px -28px rgba(13,32,96,.38), 0 14px 32px -12px rgba(13,32,96,.22)</code></div>
+        <div class="shape"><i style="border-radius:18px;box-shadow:var(--shadow-float)"></i><b>Shadow/Float · peça flutuante sobre imagem</b><code>Radius/Float 18 px · 0 32px 80px -32px rgba(13,32,96,.36), 0 10px 28px -14px rgba(13,32,96,.2)</code></div>
+        <div class="shape"><i style="border-radius:16px;border:2px solid var(--color-line)"></i><b>Radius/Field · 16 px</b><code>borda 2 px Color/Line; foco: Color/Royal Blue + anel 4 px a 14%</code></div>
+        <div class="shape"><i style="border-radius:22px;border:2px solid var(--color-line)"></i><b>Radius/Option · 22 px</b><code>opção do formulário</code></div>
+        <div class="shape"><i style="border-radius:999px;background:var(--color-blue);height:56px"></i><b>Radius/Pill · 999 px</b><code>botões, 56 px de altura</code></div>
+      </div>
+    </div>
+
+    <div>
+      <h2>Spacing</h2>
+      <div class="space">
+        <div><span><b>Space/Section</b> · 120 px desktop, 96 tablet, 72 mobile</span><i style="width:120px"></i></div>
+        <div><span><b>Space/Gutter</b> · 24 px desktop, 16 mobile</span><i style="width:24px"></i></div>
+        <div><span><b>Space/Card padding</b> · 36 px (48 em cards grandes, 28 no mobile)</span><i style="width:36px"></i></div>
+        <div><span><b>Space/Stack</b> · 16 px entre elementos, 32 entre grupos</span><i style="width:16px"></i></div>
+        <div><span><b>Size/Button</b> · 56 px de altura, 32 px laterais</span><i style="width:56px;height:56px;border-radius:999px"></i></div>
+        <div><span><b>Size/Header</b> · 76 px desktop, 64 mobile</span><i style="width:76px"></i></div>
+      </div>
+      <h3 style="margin:40px 0 16px;font-size:var(--text-xl)">Grid/12 · largura máxima 1200 px · gutter 24 px</h3>
+      <div class="cols12"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <p class="small muted" style="margin-top:12px">Mobile em 375 px: uma coluna, gutter lateral 16 px, sem rolagem horizontal.</p>
+    </div>
+
+    <div>
+      <h2>Motion</h2>
+      <div class="grid">
+        <div class="card" style="grid-column:span 4"><h3>Motion/Ease Out</h3><p>cubic-bezier(0.22, 1, 0.36, 1) · 320 ms. Hover de cards e botões, revelação, troca de tela do formulário (420 ms).</p></div>
+        <div class="card" style="grid-column:span 4"><h3>Motion/Ease In Out</h3><p>cubic-bezier(0.65, 0, 0.35, 1) · linha dos passos (1,6 s) e desenho do logo.</p></div>
+        <div class="card" style="grid-column:span 4"><h3>Motion/Marquee</h3><p>Linear, 55 s por volta, pausa no hover. Fileira de cima para a esquerda, de baixo para a direita.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+<div data-footer></div>
+<script src="../assets/app.js" data-root="../" defer></script>
+</body>
+</html>

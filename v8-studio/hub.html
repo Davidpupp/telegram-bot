@@ -1,0 +1,82 @@
+<title>V8 Studio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700&family=Inter:wght@400;500;600&family=Montserrat:wght@600&display=swap">
+<style>
+  /* Página-índice das pranchas do V8 Studio: papel branco, azul royal, cards flutuantes. */
+  :root { color-scheme: light; --bg: #FFFFFF; --fg: #0B1220; --blue: #2347D6; --gray: #5B6478; --paper: #F5F7FB; --line: #E3E7F0;
+    --shadow: 0 24px 64px -24px rgba(13,32,96,0.28), 0 8px 24px -12px rgba(13,32,96,0.16);
+    --shadow-hover: 0 40px 88px -28px rgba(13,32,96,0.38), 0 14px 32px -12px rgba(13,32,96,0.22);
+    --display: "Bricolage Grotesque", "Inter", system-ui, sans-serif; --body: "Inter", system-ui, sans-serif; }
+  body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1248px; margin-inline: auto; padding-block: 56px 80px; padding-left: max(24px, env(safe-area-inset-left, 0px)); padding-right: max(24px, env(safe-area-inset-right, 0px)); }
+  h1, h2, h3 { font-family: var(--display); font-weight: 700; letter-spacing: -0.02em; line-height: 1.05; margin: 0; text-wrap: balance; }
+  h1 { font-size: clamp(40px, 6vw, 72px); max-width: 16ch; letter-spacing: -0.03em; }
+  h2 { font-size: 28px; margin-bottom: 20px; }
+  h3 { font-size: 22px; margin-bottom: 6px; }
+  p { margin: 0; }
+  .lead { color: var(--gray); font-size: 20px; max-width: 56ch; margin-top: 20px; }
+  .group { margin-top: 64px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 24px; }
+  .card { display: block; background: #fff; color: inherit; text-decoration: none; border-radius: 28px; box-shadow: var(--shadow); padding: 28px; transition: transform 320ms cubic-bezier(0.22,1,0.36,1), box-shadow 320ms; min-width: 0; }
+  .card:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); }
+  .card p { color: var(--gray); font-size: 15px; }
+  .card small { display: block; margin-top: 14px; color: var(--blue); font-weight: 600; font-size: 14px; }
+  .band { background: var(--blue); color: #fff; border-radius: 28px; padding: 40px; margin-top: 64px; display: grid; gap: 16px; }
+  .band p { color: rgba(255,255,255,0.86); max-width: 60ch; }
+  .band a { color: #fff; font-weight: 600; }
+  .note { margin-top: 24px; color: var(--gray); font-size: 15px; }
+  .logo { display: inline-flex; align-items: center; gap: 10px; color: var(--blue); margin-bottom: 32px; }
+  .logo svg { height: 34px; width: auto; }
+  .logo span { font-family: "Montserrat", var(--body); font-weight: 600; font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--fg); padding-top: 2px; }
+  :focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+  @media (max-width: 720px) { .wrap { padding-block: 32px 56px; } .band { padding: 28px; } }
+</style>
+<div class="wrap">
+  <div class="logo" aria-label="V8 Studio"><svg viewBox="0 0 308 186" fill="currentColor" fill-rule="evenodd" aria-hidden="true"><path d="M93 186 L125 186 L171 94 L149 56 L109 133 L43 0 L0 0 Z M161 0 L119 0 L96 46 L117 90 Z M171 112 L171 164 L192 186 L288 186 L308 164 L308 112 L286 93 L308 74 L308 22 L287 0 L192 0 L171 22 L171 74 L193 93 Z M208 111 L270 111 L270 151 L208 151 Z M208 35 L270 35 L270 75 L208 75 Z"/></svg><span>Studio</span></div>
+  <h1>Site institucional e hub de vendas do V8 Studio</h1>
+  <p class="lead">Protótipo navegável em HTML, CSS e JavaScript. Abra cada página no desktop (1440 px) e no celular (375 px): o layout responde sozinho. Sem gradientes, sem modo escuro, azul royal e branco como duas folhas de papel.</p>
+
+  <div class="group">
+    <h2>Pranchas</h2>
+    <div class="cards">
+      <a class="card" href="pranchas/tokens.html"><h3>Tokens</h3><p>Cores, tipografia, raios, sombras, espaçamentos e grid.</p><small>Abrir prancha</small></a>
+      <a class="card" href="pranchas/componentes.html"><h3>Componentes</h3><p>Botões, cards, card alto, molduras de navegador, notebook e celular, acordeão, barra de progresso, opção do formulário, tabela do admin.</p><small>Abrir prancha</small></a>
+      <a class="card" href="pranchas/keyframes.html"><h3>Keyframes da abertura</h3><p>Posição da câmera, escala e progresso do traço da animação do logo, com controle para percorrer.</p><small>Abrir prancha</small></a>
+    </div>
+  </div>
+
+  <div class="group">
+    <h2>Páginas públicas</h2>
+    <div class="cards">
+      <a class="card" href="index.html"><h3>Home</h3><p>Hero com marquees, dores, serviços, carrossel, números, passos, formulário embutido, blog e FAQ. Roda a animação de abertura uma vez por sessão.</p><small>Abrir página</small></a>
+      <a class="card" href="servicos/landing-pages.html"><h3>Landing pages (modelo completo)</h3><p>Landing de serviço de referência.</p><small>Abrir página</small></a>
+      <a class="card" href="servicos/sites.html"><h3>Sites (variação)</h3><p>Mesmo modelo, com hero lateral e grade de inclusos.</p><small>Abrir página</small></a>
+      <a class="card" href="servicos/lojas-virtuais.html"><h3>Lojas virtuais</h3><p>Variação do modelo.</p><small>Abrir página</small></a>
+      <a class="card" href="servicos/sistemas.html"><h3>Sistemas</h3><p>Variação do modelo.</p><small>Abrir página</small></a>
+      <a class="card" href="servicos/aplicativos.html"><h3>Aplicativos</h3><p>Variação do modelo, com mockups de celular.</p><small>Abrir página</small></a>
+      <a class="card" href="blog/index.html"><h3>Blog</h3><p>Listagem com post em destaque e grade de cards.</p><small>Abrir página</small></a>
+      <a class="card" href="blog/artigo.html"><h3>Artigo</h3><p>Leitura em 720 px, sumário fixo, barra de progresso, autor, compartilhar.</p><small>Abrir página</small></a>
+      <a class="card" href="comecar.html"><h3>Formulário "Começar"</h3><p>Uma pergunta por tela, frases de retorno, contato e resultado com anel de compatibilidade.</p><small>Abrir página</small></a>
+      <a class="card" href="sobre.html"><h3>Sobre</h3><p>Posicionamento, método e por que não somos uma fábrica de templates.</p><small>Abrir página</small></a>
+      <a class="card" href="privacidade.html"><h3>Política de privacidade</h3><p>Página de apoio linkada no rodapé.</p><small>Abrir página</small></a>
+    </div>
+  </div>
+
+  <div class="group">
+    <h2>Painel admin</h2>
+    <div class="cards">
+      <a class="card" href="admin/login.html"><h3>Login</h3><p>Card centralizado.</p><small>Abrir tela</small></a>
+      <a class="card" href="admin/index.html"><h3>Dashboard</h3><p>Quatro números e últimos leads.</p><small>Abrir tela</small></a>
+      <a class="card" href="admin/leads.html"><h3>Leads</h3><p>Tabela com filtros por status, serviço e pontuação.</p><small>Abrir tela</small></a>
+      <a class="card" href="admin/lead.html"><h3>Detalhe do lead</h3><p>Respostas, pontuação, notas e status.</p><small>Abrir tela</small></a>
+      <a class="card" href="admin/post.html"><h3>Editor de post</h3><p>Markdown à esquerda, pré-visualização à direita, SEO com contadores.</p><small>Abrir tela</small></a>
+      <a class="card" href="admin/config.html"><h3>Configurações</h3><p>Números da home e dados do fundador.</p><small>Abrir tela</small></a>
+    </div>
+  </div>
+
+  <div class="band">
+    <h2 style="margin:0">Fotos e vídeos</h2>
+    <p>Onde entra fotografia real há um espaço neutro marcado com o prompt. A lista completa de prompts, um por slot, está em <a href="PROMPTS-IMAGENS.md">PROMPTS-IMAGENS.md</a> no repositório.</p>
+  </div>
+</div>

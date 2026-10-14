@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Keyframes da abertura — V8 Studio</title>
+<meta name="description" content="Prancha com os keyframes da animação de abertura do logo V8: progresso do traço, posição da câmera e escala.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/styles.css">
+<style>
+  .board { display: grid; gap: 40px; }
+  .board > * { min-width: 0; }
+  .viewer { display: grid; grid-template-columns: 7fr 5fr; gap: var(--gutter); align-items: start; }
+  .screen { position: relative; aspect-ratio: 16 / 10; background: var(--color-white); border-radius: var(--radius-card); box-shadow: var(--shadow-card); overflow: hidden; }
+  .screen__stage { position: absolute; inset: 0; display: grid; place-items: center; transform-origin: 0 0; }
+  .screen__stage svg { width: 40%; color: var(--color-blue); }
+  .screen__word { position: absolute; font-family: "Montserrat", var(--font-body); font-weight: 600; font-size: 14px; letter-spacing: 0.42em; text-transform: uppercase; text-align: center; padding-left: 0.42em; color: var(--color-ink); opacity: 0; }
+  .screen__hud { position: absolute; left: 16px; top: 16px; font-size: 12px; color: var(--color-gray); font-variant-numeric: tabular-nums; background: rgba(255,255,255,0.9); padding: 6px 10px; border-radius: 10px; }
+  .screen__frame { position: absolute; inset: 0; border: 2px dashed rgba(35,71,214,0.35); pointer-events: none; }
+  .controls { display: grid; gap: 16px; }
+  .controls input[type="range"] { width: 100%; accent-color: var(--color-blue); }
+  .phase { display: grid; grid-template-columns: 80px 1fr; gap: 12px; padding: 16px 0; border-top: 1px solid var(--color-line); font-size: var(--text-sm); }
+  .phase b { font-family: var(--font-display); font-size: var(--text-lg); color: var(--color-blue); }
+  .phase p { color: var(--color-gray); }
+  .kf { font-size: var(--text-sm); min-width: 760px; }
+  .kf th:first-child, .kf td:first-child { white-space: nowrap; }
+  .timeline { display: grid; grid-template-columns: repeat(25, 1fr); gap: 2px; height: 56px; }
+  .timeline i { display: block; border-radius: 4px; background: var(--color-paper); position: relative; }
+  .timeline i.draw { background: var(--color-blue); }
+  .timeline i.zoom { background: #7F95E6; }
+  .timeline i.dock { background: #C5CFF4; }
+  .legend { display: flex; gap: 20px; font-size: var(--text-sm); color: var(--color-gray); flex-wrap: wrap; }
+  .legend i { display: inline-block; width: 14px; height: 14px; border-radius: 4px; vertical-align: -2px; margin-right: 6px; }
+  @media (max-width: 1024px) { .viewer { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div data-header></div>
+<main>
+  <section class="section container board">
+    <div class="section-head">
+      <p class="kicker">Prancha · Animação de abertura</p>
+      <h1 style="font-size:var(--h2)">Keyframes do logo V8</h1>
+      <p class="lead muted measure">Roda uma vez por sessão, 2,5 segundos no máximo, com botão "Pular". O contorno nasce no vértice do V e sobe; a câmera acompanha a ponta do traço enquanto ele sobe, vira e desenha o 8; ao fechar o 8 a câmera se afasta, o preenchimento entra e revela o logo centralizado; o logo então diminui e se encaixa no canto superior esquerdo do cabeçalho enquanto o hero aparece por baixo.</p>
+    </div>
+
+    <div class="viewer">
+      <div>
+        <div class="screen" id="screen">
+          <div class="screen__stage" id="stage"></div>
+          <span class="screen__word" id="word">Studio</span>
+          <div class="screen__hud" id="hud">t = 0 ms</div>
+          <div class="screen__frame" aria-hidden="true"></div>
+        </div>
+        <div class="controls" style="margin-top:20px">
+          <label for="t" class="small muted">Tempo (ms) — arraste para percorrer os keyframes</label>
+          <input type="range" id="t" min="0" max="2500" step="10" value="0">
+          <div class="row">
+            <button class="btn btn--primary btn--sm" type="button" id="play">Reproduzir</button>
+            <button class="btn btn--ghost btn--sm" type="button" id="reset">Voltar ao início</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Fases</h3>
+        <div class="phase"><b>0–240 ms</b><div><strong>Aproximação</strong><p>Câmera vai de escala 1,0 para 2,6 sobre o vértice. O traço começa a nascer de baixo para cima; o braço esquerdo cresce junto, do mesmo ponto.</p></div></div>
+        <div class="phase"><b>240–1450 ms</b><div><strong>Desenho</strong><p>Escala fixa em 2,6. A câmera segue a ponta do traço com suavização (14% por quadro). O contorno nasce no vértice do V, sobe o braço direito, contorna o corte diagonal, desce o braço esquerdo, desenha a cunha e segue para o 8 e seus contadores.</p></div></div>
+        <div class="phase"><b>1450–1950 ms</b><div><strong>Zoom out</strong><p>Escala 2,6 → 1,0 e centro da câmera → centro da tela (ease-out cúbico). O preenchimento sólido substitui o contorno e "STUDIO" surge a partir de 45% da fase.</p></div></div>
+        <div class="phase"><b>1950–2500 ms</b><div><strong>Encaixe</strong><p>O logo diminui até a altura do logo do cabeçalho (30 px) e desliza para o canto superior esquerdo. O fundo branco da abertura some e o hero aparece por baixo.</p></div></div>
+      </div>
+    </div>
+
+    <div>
+      <h2 style="font-size:var(--h3);margin-bottom:20px">Linha do tempo</h2>
+      <div class="timeline" id="timeline" aria-hidden="true"></div>
+      <div class="legend" style="margin-top:12px"><span><i style="background:var(--color-blue)"></i>Desenho</span><span><i style="background:#7F95E6"></i>Zoom out</span><span><i style="background:#C5CFF4"></i>Encaixe</span></div>
+    </div>
+
+    <div>
+      <h2 style="font-size:var(--h3);margin-bottom:20px">Tabela de keyframes</h2>
+      <div class="table-wrap"><table class="table kf" id="kf">
+        <thead><tr><th>Tempo</th><th>Evento</th><th>Progresso do traço</th><th>Centro da câmera (unidades do SVG)</th><th>Escala</th><th>Outros</th></tr></thead>
+        <tbody></tbody>
+      </table></div>
+      <p class="small muted" style="margin-top:16px">Unidades do SVG: viewBox do logo. Progresso do traço = fração do comprimento total do contorno (stroke-dashoffset do único path). A posição da câmera na fase de desenho é a posição da ponta do traço; na implementação há suavização, então a câmera chega alguns quadros depois.</p>
+    </div>
+
+    <div class="card">
+      <h3>Implementação</h3>
+      <p>O código real está em <code>assets/app.js</code>, função <code>intro()</code>. A ponta é lida com <code>getPointAtLength(progresso × comprimento)</code>; a câmera é um <code>transform: translate() scale()</code> no palco; o encaixe lê o retângulo do logo do cabeçalho com <code>getBoundingClientRect()</code> para que o logo pouse exatamente onde o cabeçalho o desenha, em qualquer largura de tela.</p>
+    </div>
+  </section>
+</main>
+<div data-footer></div>
+<script src="../assets/app.js" data-root="../" defer></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var stage = document.getElementById("stage"), screen = document.getElementById("screen"), word = document.getElementById("word"), hud = document.getElementById("hud");
+  stage.innerHTML = V8.logoSvg("", "kf");
+  var svg = stage.querySelector("svg"), main = document.getElementById("kf-main");
+  var lenM = main.getTotalLength();
+  main.style.strokeDasharray = lenM; main.style.stroke = "currentColor"; main.style.strokeWidth = "3"; main.style.strokeLinejoin = "round";
+  var T_DRAW = 1450, T_ZOOM = 1950, T_DOCK = 2500, Z = 2.6;
+  function ease(p) { return p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2; }
+  function easeOut(p) { return 1 - Math.pow(1 - p, 3); }
+  function tipLocal(progress) {
+    var pt = main.getPointAtLength(progress * lenM);
+    var m = svg.getScreenCTM(), s = screen.getBoundingClientRect();
+    return { x: m.a * pt.x + m.c * pt.y + m.e - s.left, y: m.b * pt.x + m.d * pt.y + m.f - s.top, sx: pt.x, sy: pt.y };
+  }
+  function render(t) {
+    var W = screen.clientWidth, H = screen.clientHeight, cx = W / 2, cy = H / 2;
+    stage.style.transform = "none";
+    var r = svg.getBoundingClientRect(), s = screen.getBoundingClientRect();
+    word.style.left = (r.left - s.left) + "px"; word.style.top = (r.bottom - s.top + 10) + "px"; word.style.width = r.width + "px";
+    var info = "";
+    if (t < T_DRAW) {
+      var p = ease(t / T_DRAW);
+      main.style.strokeDashoffset = lenM * (1 - p); main.style.fillOpacity = 0; main.style.strokeOpacity = 1;
+      var tip = tipLocal(p), z = 1 + (Z - 1) * Math.min(1, t / 240);
+      stage.style.transform = "translate(" + (cx - z * tip.x) + "px," + (cy - z * tip.y) + "px) scale(" + z + ")";
+      word.style.opacity = 0;
+      info = "traço " + Math.round(p * 100) + "% · câmera (" + tip.sx.toFixed(0) + ", " + tip.sy.toFixed(0) + ") · escala " + z.toFixed(2);
+    } else if (t < T_ZOOM) {
+      main.style.strokeDashoffset = 0;
+      var q = easeOut((t - T_DRAW) / (T_ZOOM - T_DRAW)), tipE = tipLocal(1), z2 = Z + (1 - Z) * q;
+      main.style.fillOpacity = Math.min(1, q * 1.6); main.style.strokeOpacity = 1 - Math.min(1, q * 1.6);
+      stage.style.transform = "translate(" + ((cx - Z * tipE.x) * (1 - q)) + "px," + ((cy - Z * tipE.y) * (1 - q)) + "px) scale(" + z2 + ")";
+      word.style.opacity = Math.max(0, (q - 0.45) / 0.55);
+      info = "traço 100% · zoom out · escala " + z2.toFixed(2);
+    } else {
+      main.style.strokeDashoffset = 0; main.style.fillOpacity = 1; main.style.strokeOpacity = 0;
+      var d = easeOut((t - T_ZOOM) / (T_DOCK - T_ZOOM));
+      var from = svg.getBoundingClientRect(); var sc = 1 + (30 / from.height - 1) * d;
+      var dx = (24 - (from.left - s.left)) * d, dy = (23 - (from.top - s.top)) * d;
+      stage.style.transformOrigin = (from.left - s.left) + "px " + (from.top - s.top) + "px";
+      stage.style.transform = "translate(" + dx + "px," + dy + "px) scale(" + sc + ")";
+      word.style.opacity = 1 - Math.min(1, d * 2);
+      info = "encaixe no cabeçalho · escala " + sc.toFixed(2) + " · fundo " + Math.round((1 - d) * 100) + "%";
+    }
+    hud.textContent = "t = " + Math.round(t) + " ms · " + info;
+  }
+  var range = document.getElementById("t");
+  range.addEventListener("input", function () { stop(); render(+range.value); });
+  var raf = 0, start = null;
+  function play() { stop(); start = null; function f(now) { if (!start) start = now; var t = Math.min(2500, now - start); range.value = t; render(t); if (t < 2500) raf = requestAnimationFrame(f); } raf = requestAnimationFrame(f); }
+  function stop() { cancelAnimationFrame(raf); }
+  document.getElementById("play").addEventListener("click", play);
+  document.getElementById("reset").addEventListener("click", function () { stop(); range.value = 0; render(0); });
+  render(0);
+
+  /* Linha do tempo (25 blocos de 100 ms) */
+  var tl = document.getElementById("timeline");
+  for (var i = 0; i < 25; i++) { var ms = i * 100; var el = document.createElement("i"); el.className = ms < T_DRAW ? "draw" : ms < T_ZOOM ? "zoom" : "dock"; tl.appendChild(el); }
+
+  /* Tabela: inverte o ease para achar os tempos em que a ponta passa pelos pontos notáveis */
+  var seg = [
+    [0, "Nascimento no vértice do V", "ponta sai pela base, para a direita"],
+    [0.075, "Sobe o braço direito do V", "câmera acompanha a subida"],
+    [0.23, "Contorna o corte diagonal e desce o braço esquerdo", "vira"],
+    [0.34, "Fecha o V, desenha a cunha do braço direito", ""],
+    [0.44, "Entra no 8 pela cintura", "vira para baixo"],
+    [0.62, "Contorna a base e o lado direito do 8", "ponto mais baixo, depois sobe"],
+    [0.80, "Topo do 8 e volta à cintura", "ponto mais alto"],
+    [1, "Contadores do 8; contorno completo", "preenchimento entra no zoom out"]
+  ];
+  function invEase(y) { var lo = 0, hi = 1; for (var k = 0; k < 40; k++) { var mid = (lo + hi) / 2; if (ease(mid) < y) lo = mid; else hi = mid; } return lo; }
+  var rows = [];
+  seg.forEach(function (sgm) {
+    var p = sgm[0], t = Math.round(invEase(p) * T_DRAW), pt = main.getPointAtLength(p * lenM);
+    var z = t < 240 ? (1 + (Z - 1) * t / 240).toFixed(2) : "2,60";
+    rows.push([t + " ms", sgm[1], Math.round(p * 100) + "%", "(" + pt.x.toFixed(0) + ", " + pt.y.toFixed(0) + ")", z, sgm[2]]);
+  });
+  rows.push(["1700 ms", "Metade do zoom out", "100%", "a caminho do centro (60, 60)", (Z + (1 - Z) * easeOut(0.5)).toFixed(2), "\"Studio\" começa a aparecer"]);
+  rows.push(["1950 ms", "Logo centralizado", "100%", "centro da tela", "1,00", "\"Studio\" 100%"]);
+  rows.push(["2200 ms", "Metade do encaixe", "100%", "entre o centro e o canto", "~0,45", "fundo branco 38%"]);
+  rows.push(["2500 ms", "Encaixado no cabeçalho", "100%", "canto superior esquerdo, 30 px de altura", "0,12 aprox.", "abertura removida; hero visível"]);
+  var tb = document.querySelector("#kf tbody");
+  rows.forEach(function (r) { var tr = document.createElement("tr"); r.forEach(function (c) { var td = document.createElement("td"); td.textContent = c; tr.appendChild(td); }); tb.appendChild(tr); });
+});
+</script>
+</body>
+</html>

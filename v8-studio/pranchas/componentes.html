@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Componentes — V8 Studio</title>
+<meta name="description" content="Prancha de componentes do V8 Studio: botões, cards, molduras, acordeão, barra de progresso, opção do formulário e tabela do admin.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/styles.css">
+<style>
+  .board { display: grid; gap: 72px; }
+  .board > *, .spec > *, .spec__demo > *, .stack > * { min-width: 0; }
+  .spec { display: grid; grid-template-columns: 260px 1fr; gap: var(--gutter); align-items: start; padding-top: 24px; border-top: 1px solid var(--color-line); }
+  .spec__meta { font-size: var(--text-sm); color: var(--color-gray); position: sticky; top: calc(var(--header-h) + 24px); }
+  .spec__meta b { display: block; font-family: var(--font-display); font-size: var(--text-lg); color: var(--color-ink); margin-bottom: 8px; letter-spacing: -0.01em; }
+  .spec__meta code { font-family: var(--font-body); color: var(--color-blue); }
+  .spec__demo { display: grid; gap: 24px; padding: 40px; background: var(--color-paper); border-radius: var(--radius-card); min-width: 0; }
+  .spec__demo--blue { background: var(--color-blue); color: var(--color-white); }
+  .demo-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+  @media (max-width: 1024px) { .spec { grid-template-columns: 1fr; } .spec__meta { position: static; } .spec__demo { padding: 24px; } }
+</style>
+</head>
+<body>
+<div data-header></div>
+<main>
+  <section class="section container board">
+    <div class="section-head">
+      <p class="kicker">Prancha · Componentes</p>
+      <h1 style="font-size:var(--h2)">Biblioteca de componentes</h1>
+      <p class="lead muted measure">Cada bloco mostra o componente ao vivo, o nome da camada e a classe correspondente em <code>assets/styles.css</code>.</p>
+    </div>
+
+    <div class="spec">
+      <div class="spec__meta"><b>Button/Primary</b><code>.btn.btn--primary</code><p>Pílula, 56 px, azul royal com texto branco. Hover escurece para #1A37AE. Dentro de uma faixa azul vira branco com texto azul (Button/Light) sem trocar de classe.</p></div>
+      <div class="stack">
+        <div class="spec__demo"><div class="demo-row"><a class="btn btn--primary" href="../comecar.html">Começar</a><a class="btn btn--primary btn--sm" href="../comecar.html">Começar</a><button class="btn btn--ghost" type="button">Ver exemplos</button><button class="btn btn--quiet" type="button">Voltar</button><button class="btn btn--primary" type="button" disabled>Ver meu resultado</button></div></div>
+        <div class="spec__demo spec__demo--blue band"><div class="demo-row"><a class="btn btn--primary" href="../comecar.html">Começar</a><button class="btn btn--ghost" type="button">Ver exemplos</button><button class="btn btn--quiet" type="button">Voltar</button></div><p class="btn-note">Button/Light · Button/Ghost on Blue · Button/Quiet on Blue</p></div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec__meta"><b>Card/Floating</b><code>.card</code> · <code>.card--hover</code><p>Branco, raio 28, sombra Shadow/Card. No hover sobe 8 px e a sombra cresce. Dentro das faixas azuis continua branco.</p></div>
+      <div class="stack">
+        <div class="spec__demo"><div class="grid"><div class="card card--hover" style="grid-column:span 6"><h3>Seu Instagram não passa credibilidade</h3><p>Quem chega pelo perfil quer ver um lugar sério para decidir. Sem site, a decisão vai para o concorrente.</p></div><a class="card" href="../servicos/sites.html" style="grid-column:span 6"><h3>Sites</h3><p>Card/Floating/Link: o card inteiro é clicável.</p></a></div></div>
+        <div class="spec__demo spec__demo--blue band"><div class="grid"><div class="card card--hover" style="grid-column:span 6"><h3>Você não aparece no Google</h3><p>Card/Floating on Blue: mesmo card, mesmo branco.</p></div></div></div>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec__meta"><b>Card/Tall</b><code>.card-tall</code><p>Proporção 3:4. Título e descrição no topo em área branca sólida; a imagem ocupa o restante; uma peça de interface flutua sobre a imagem (Card/Tall/Float); seta no canto inferior direito (Card/Tall/Arrow).</p></div>
+      <div class="spec__demo"><div style="max-width:360px"><article class="card-tall"><div class="card-tall__head"><h3>Design que converte</h3><p>Cada seção responde uma dúvida e leva ao próximo passo.</p></div><div class="card-tall__media"><div class="photo" data-prompt="Foto: mesa de trabalho com notebook aberto, luz natural, tons neutros"></div><div class="card-tall__float"><div class="mini" style="position:static;padding:0;font-size:9px"><div class="mini__form"><div class="mini__field"></div><div class="mini__field"></div><div class="mini__btn" style="width:46%">Quero orçamento</div></div></div></div></div><a class="card-tall__arrow" href="../servicos/sites.html" aria-label="Ver mais" data-arrow></a></article></div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec__meta"><b>Frame/Browser</b><code>.browser</code> · <code>.browser--wide</code> (16:10)<p>Moldura branca com três pontos e barra de endereço. O conteúdo é um mini-site desenhado em CSS (Mini/*), nunca foto de banco.</p></div>
+      <div class="spec__demo"><div style="max-width:480px"><div class="browser browser--wide"><div class="browser__bar"><i></i><i></i><i></i><div class="browser__url">mendesadvocacia.com.br</div></div><div class="browser__body"><div class="mini" style="--p:#1F2A44;--p-soft:#ECEFF5"><div class="mini__nav"><div class="mini__logo">Mendes</div><div class="mini__links"><i></i><i></i><i></i></div><div class="mini__btn">Falar com advogado</div></div><div class="mini__img mini__img--p" style="min-height:56px;padding:8px;display:grid;align-content:end"><div class="mini__h mini__h--light">Defesa com estratégia</div><div class="mini__line mini__line--light mini__line--short"></div></div><div class="mini__cols"><div class="mini__card"><div class="mini__line"></div><div class="mini__line mini__line--short"></div></div><div class="mini__card"><div class="mini__line"></div><div class="mini__line mini__line--short"></div></div><div class="mini__card"><div class="mini__line"></div><div class="mini__line mini__line--short"></div></div></div></div></div></div></div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec__meta"><b>Frame/Laptop</b><code>.laptop</code><p>Tela em card branco com moldura de navegador dentro e base fina. Usada no hero das landing pages de serviço.</p></div>
+      <div class="spec__demo"><div class="laptop" style="max-width:560px"><div class="laptop__screen"><div class="browser browser--wide"><div class="browser__bar"><i></i><i></i><i></i><div class="browser__url">sabordaserra.com.br</div></div><div class="browser__body"><div class="mini" style="--p:#B5471F;--p-soft:#F8EBE4"><div class="mini__nav"><div class="mini__logo">Sabor da Serra</div><div class="mini__links"><i></i><i></i><i></i></div><div class="mini__btn">Reservar</div></div><div class="mini__split"><div class="mini__img" style="min-height:50px"></div><div class="mini__hero"><div class="mini__h">Comida de verdade, feita na hora</div><div class="mini__line"></div><div class="mini__btn" style="width:40%">Reservar</div></div></div><div class="mini__cols mini__cols--2"><div class="mini__card"><div class="mini__line"></div></div><div class="mini__card"><div class="mini__line"></div></div></div></div></div></div></div><div class="laptop__base"></div></div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec__meta"><b>Frame/Phone</b><code>.phone</code><p>Moldura branca 9:19 com raio 44, entalhe escuro e tela interna com raio 34. Usada para aplicativos.</p></div>
+      <div class="spec__demo"><div class="phone" style="max-width:240px"><div class="phone__notch"></div><div class="phone__screen"><div class="mini" style="--p:#2347D6;--p-soft:#E8ECFB;padding:16% 8% 8%;gap:5%"><div class="mini__h" style="font-size:1.7em">Seus pedidos de hoje</div><div class="mini__chart"><i style="height:40%"></i><i style="height:70%"></i><i style="height:55%"></i><i style="height:90%"></i><i style="height:65%"></i><i style="height:80%"></i></div><div class="mini__card mini__card--white"><div class="mini__line"></div><div class="mini__line mini__line--short"></div></div><div class="mini__card mini__card--white"><div class="mini__line"></div><div class="mini__line mini__line--short"></div></div><div class="mini__btn" style="height:14px;justify-content:center">Novo pedido</div></div></div></div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec__meta"><b>Accordion</b><code>.accordion</code><p>Pergunta em Bricolage 24 px, ícone + que gira 45° e vira azul ao abrir, resposta em cinza. Um item aberto por vez.</p></div>
+      <div class="spec__demo"><div class="accordion" style="background:var(--color-white);padding:0 32px;border-radius:22px"><div class="accordion__item is-open"><button class="accordion__btn" type="button">Quanto tempo leva?</button><div class="accordion__panel"><div><div class="accordion__content">Uma landing page fica pronta em 2 a 3 semanas. Um site completo, em 4 a 6. O prazo entra na proposta e você acompanha cada etapa.</div></div></div></div><div class="accordion__item"><button class="accordion__btn" type="button">Preciso ter domínio e hospedagem?</button><div class="accordion__panel"><div><div class="accordion__content">Não. A gente registra o domínio no seu nome e configura a hospedagem. Tudo fica seu.</div></div></div></div></div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec__meta"><b>ProgressBar</b><code>.progress</code><p>4 px de altura, trilho Color/Line, preenchimento azul. Na faixa azul inverte para branco.</p></div>
+      <div class="stack"><div class="spec__demo"><div class="progress"><div class="progress__bar" style="width:37.5%"></div></div><p class="small muted">Pergunta 3 de 8</p></div><div class="spec__demo spec__demo--blue band"><div class="progress"><div class="progress__bar" style="width:62%"></div></div></div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec__meta"><b>Form/Option</b><code>.option</code> · <code>.is-selected</code><p>Card clicável com título e uma linha de descrição. Hover sobe 4 px; selecionado ganha borda azul e anel.</p></div>
+      <div class="spec__demo"><div class="grid"><button class="option" type="button" style="grid-column:span 6"><strong>Landing page</strong><span>Uma página focada em um objetivo, para anúncios e campanhas.</span></button><button class="option is-selected" type="button" style="grid-column:span 6" aria-pressed="true"><strong>Site institucional</strong><span>Várias páginas para apresentar a empresa e gerar contatos.</span></button></div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec__meta"><b>Form/Field</b><code>.field</code> · <code>.check</code><p>Campo de 56 px, raio 16, borda 2 px; foco azul com anel. Dica abaixo com contador.</p></div>
+      <div class="spec__demo"><div class="grid"><div class="field" style="grid-column:span 6"><label for="d-nome">Nome</label><input id="d-nome" type="text" placeholder="Como podemos te chamar?"></div><div class="field" style="grid-column:span 6"><label for="d-zap">WhatsApp</label><input id="d-zap" type="tel" placeholder="(11) 90000-0000"><div class="field__hint"><span>Só para enviar a proposta.</span></div></div><div class="field" style="grid-column:span 12"><label for="d-seo">Título SEO</label><input id="d-seo" type="text" value="Quanto custa um site profissional em 2026 | V8 Studio"><div class="field__hint"><span>Aparece na aba do navegador e no Google.</span><span class="over">66/60</span></div></div><label class="check" style="grid-column:span 12"><input type="checkbox" id="d-priv"> Li e aceito a política de privacidade.</label></div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec__meta"><b>Table/Admin</b><code>.table-wrap .table</code> · <code>.score</code> · <code>.status</code><p>Cabeçalho em 13 px cinza, linhas com hover em Color/Paper, pontuação como número com barra, status como texto com ponto colorido.</p></div>
+      <div class="spec__demo"><div class="table-wrap"><table class="table"><thead><tr><th>Lead</th><th>Serviço</th><th>Pontuação</th><th>Status</th><th>Data</th></tr></thead><tbody><tr><td><a href="../admin/lead.html">Renata Lopes</a><br><span class="muted">Clínica Vida</span></td><td>Site</td><td><div class="score"><b>86</b><i style="--v:86%"></i></div></td><td><span class="status status--novo">Novo</span></td><td class="tnum">14/10/2026</td></tr><tr><td><a href="../admin/lead.html">Carlos Mendes</a><br><span class="muted">Mendes Advocacia</span></td><td>Landing page</td><td><div class="score"><b>72</b><i style="--v:72%"></i></div></td><td><span class="status status--proposta">Proposta</span></td><td class="tnum">12/10/2026</td></tr><tr><td><a href="../admin/lead.html">Ana Beatriz</a><br><span class="muted">Sabor da Serra</span></td><td>Loja virtual</td><td><div class="score"><b>54</b><i style="--v:54%"></i></div></td><td><span class="status status--fechado">Fechado</span></td><td class="tnum">09/10/2026</td></tr></tbody></table></div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec__meta"><b>Stats/Row</b><code>.stats</code><p>Três números grandes com rótulo curto. Contam de 0 ao entrar na tela.</p></div>
+      <div class="spec__demo"><div class="stats"><div class="stat"><div class="stat__n" data-count="120" data-suffix="+">120+</div><div class="stat__l">projetos entregues</div></div><div class="stat"><div class="stat__n" data-count="7">7</div><div class="stat__l">anos de experiência</div></div><div class="stat"><div class="stat__n" data-count="98" data-suffix="%">98%</div><div class="stat__l">de clientes satisfeitos</div></div></div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec__meta"><b>Steps/Line</b><code>.steps</code><p>Quatro passos ligados por uma linha que se desenha ao entrar na tela; os círculos ficam azuis em sequência.</p></div>
+      <div class="spec__demo"><div class="steps"><span class="steps__line"></span><div class="step"><h3>Diagnóstico</h3><p>Entendemos o negócio e quem compra de você.</p></div><div class="step"><h3>Proposta</h3><p>Escopo, prazo e valor por escrito.</p></div><div class="step"><h3>Produção</h3><p>Design, textos e desenvolvimento com revisões.</p></div><div class="step"><h3>Lançamento</h3><p>Publicação, Google e ajustes nos primeiros 30 dias.</p></div></div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec__meta"><b>Marquee/Row</b><code>.marquee</code> · <code>.marquee--reverse</code><p>Fileira infinita de Frame/Browser 16:10. Para a esquerda na fileira de cima, para a direita na de baixo. Pausa no hover.</p></div>
+      <div class="spec__demo" style="padding-inline:0;overflow:hidden"><div class="marquee"><div class="marquee__track"><div class="marquee__item"><div class="browser browser--wide"><div class="browser__bar"><i></i><i></i><i></i><div class="browser__url">academiaforca.com.br</div></div><div class="browser__body"><div class="mini" style="--p:#E8532A;--p-soft:#FBE9E3;--mini-bg:#15161A;--p-ink:#fff"><div class="mini__nav"><div class="mini__logo">Força</div><div class="mini__links"><i style="background:#fff"></i><i style="background:#fff"></i></div><div class="mini__btn">Matricule-se</div></div><div class="mini__h mini__h--light">Treine no seu horário</div><div class="mini__cols"><div class="mini__card" style="background:#24262C"></div><div class="mini__card" style="background:#24262C"></div><div class="mini__card" style="background:#24262C"></div></div></div></div></div></div><div class="marquee__item"><div class="browser browser--wide"><div class="browser__bar"><i></i><i></i><i></i><div class="browser__url">studioarq.com.br</div></div><div class="browser__body"><div class="mini" style="--p:#4A4A45;--p-soft:#EFEEE9"><div class="mini__nav"><div class="mini__logo">Studio Arq</div><div class="mini__links"><i></i><i></i><i></i></div></div><div class="mini__split"><div class="mini__img" style="min-height:60px"></div><div class="mini__hero"><div class="mini__h">Projetos que respiram</div><div class="mini__line mini__line--short"></div></div></div></div></div></div></div><div class="marquee__item"><div class="browser browser--wide"><div class="browser__bar"><i></i><i></i><i></i><div class="browser__url">lojamaré.com.br</div></div><div class="browser__body"><div class="mini" style="--p:#0E7C86;--p-soft:#E3F3F4"><div class="mini__nav"><div class="mini__logo">Maré</div><div class="mini__links"><i></i><i></i><i></i></div><div class="mini__btn">Sacola</div></div><div class="mini__cols"><div class="mini__card"><div class="mini__img" style="min-height:26px"></div><div class="mini__line mini__line--short"></div></div><div class="mini__card"><div class="mini__img" style="min-height:26px"></div><div class="mini__line mini__line--short"></div></div><div class="mini__card"><div class="mini__img" style="min-height:26px"></div><div class="mini__line mini__line--short"></div></div></div></div></div></div></div></div></div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec__meta"><b>Nav/Header</b> · <b>Nav/Footer</b><code>[data-header]</code> · <code>[data-footer]</code><p>Injetados por <code>app.js</code>. Cabeçalho fixo branco de 76 px com logo, Serviços (submenu com cinco itens), Blog, Sobre e Button/Primary "Começar". Rodapé branco com linha superior fina, logo, colunas Serviços / Empresa / Blog e Política de privacidade. Sem telefone, e-mail, WhatsApp ou redes sociais. Veja no topo e no fim desta página.</p></div>
+      <div class="spec__demo"><p class="muted small">O cabeçalho desta página é o componente real.</p></div>
+    </div>
+  </section>
+</main>
+<div data-footer></div>
+<script src="../assets/app.js" data-root="../" defer></script>
+</body>
+</html>

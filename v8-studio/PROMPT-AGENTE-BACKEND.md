@@ -102,7 +102,7 @@ Antes de começar, rode `git log` na branch e confira o que existe: páginas pod
 6. **Admin:** login, painel, leads com filtros, detalhe do lead, editor de post em Markdown com contadores de SEO, editor das landing pages do LP Hub e configurações. Porte o visual de `admin/*.html` para o sistema novo.
 7. Página 404 no estilo do site, `sitemap.xml`, `robots.txt` e imagens de compartilhamento.
 8. `v8-studio/PROMPTS-IMAGENS.md` com o prompt exato de cada foto do site: ambiente real, tons neutros, luz natural, sem pessoas olhando para a câmera e sem filtros de cor.
-9. Atualize as pranchas (`pranchas/` e `hub.html`) para o site novo: tokens, componentes, páginas no computador e no celular e quadros-chave da abertura do logo.
+9. Pranchas: as de tokens, componentes e movimento já existem em `/pranchas/`. Complete a de páginas: para cada página nova, salve uma captura de página inteira em 1440 px (reduzida para 720 px de largura) e outra em 390 px, em WebP, como `site/public/pranchas/paginas/<rota>-d.webp` e `<rota>-m.webp` (os nomes estão em `app/pranchas/paginas/page.tsx`); a prancha mostra só as páginas que já têm as duas. O antigo `hub.html` e a pasta `v8-studio/pranchas/` ficam só como referência.
 
 ## Parte B · Backend
 
